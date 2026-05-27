@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Metafore — {{Surface name}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff; --panel: #ffffff;
+    --ink: #0a0a0a; --ink-2: #2a2a2a; --ink-3: #6b6b6b; --ink-4: #9a9a9a;
+    --line: #ececec; --line-2: #f3f3f3; --hover: #f7f7f7; --chip: #f4f4f4;
+
+    --logo-dark: #035657;
+    --logo-light: #67A4A4;
+    --teal-dark: #004D50;
+    --teal: #006B6F;
+    --teal-accent: #00989E;
+    --teal-bright: #00C4CC;
+    --teal-light: #E8F4F5;
+    --accent: var(--teal);
+
+    --success: #00896A; --success-bg: #E6F2EE;
+    --warn: #C48800;    --warn-bg: #FBF3DF;
+    --danger: #D94A30;  --danger-bg: #FBEAE5;
+
+    --header: var(--ink);
+    --header-2: var(--logo-dark);
+    --serif: 'Brut Grotesque', 'Geist', 'Inter', sans-serif;
+
+    /* Canonical type scale — Perfect Fifth default, Perfect Fourth floor */
+    --h1-size: 36px;   --h1-floor: 28px;
+    --h2-size: 24px;   --h2-floor: 21px;
+    --h3-size: 18px;
+    --body-size: 16px;       /* never shrinks */
+    --lede-size: 18px;       /* never shrinks */
+    --eyebrow-size: 11px;    /* Plex Mono */
+    --lh-header: 1.125;
+    --lh-body:   1.200;
+    --tracking:  0;
+    --h1-max-width: 24em;
+  }
+  * { box-sizing: border-box; letter-spacing: var(--tracking); }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: var(--body-size); line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased; }
+
+  /* shell */
+  .app { display: grid; grid-template-columns: 64px 1fr; min-height: 100vh; }
+
+  /* sidebar */
+  .side { border-right: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; padding: 18px 0 14px; gap: 6px; position: sticky; top: 0; height: 100vh; }
+  .side .logo { width: 32px; height: 32px; display: grid; place-items: center; margin-bottom: 14px; }
+  .side .nav { display: flex; flex-direction: column; gap: 2px; align-items: center; }
+  .side .nav a { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; color: var(--ink-3); text-decoration: none; transition: background .15s; }
+  .side .nav a:hover { background: var(--hover); color: var(--ink); }
+  .side .nav a.active { background: #0a0a0a; color: #fff; }
+  .side .nav a svg { width: 18px; height: 18px; stroke-width: 1.6; }
+  .side .footer { margin-top: auto; }
+  .side .ws { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; background: #f0f0f0; color: var(--ink); font-weight: 600; font-size: var(--eyebrow-size); letter-spacing: 0; }
+
+  /* topbar */
+  .main { padding: 0 0 56px; }
+  .topbar { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 14px 28px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); z-index: 5; }
+  .search { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; min-width: 280px; max-width: 520px; color: var(--ink-3); font-size: 13px; }
+  .search svg { width: 14px; height: 14px; }
+  .search input { border: 0; outline: 0; background: transparent; color: var(--ink); width: 100%; font: inherit; }
+  .kbd { font: 500 10px 'IBM Plex Mono', monospace; color: var(--ink-3); border: 1px solid var(--line); padding: 2px 6px; border-radius: 4px; }
+  .topbar .right { display: flex; align-items: center; gap: 10px; }
+  .iconbtn { border: 1px solid var(--line); background: #fff; height: 36px; padding: 0 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); cursor: pointer; font: 500 13px 'Inter', sans-serif; }
+  .iconbtn:hover { background: var(--hover); }
+  .iconbtn svg { width: 14px; height: 14px; }
+  .iconbtn.icon-only { width: 36px; padding: 0; justify-content: center; }
+  .iconbtn.icon-only svg { width: 16px; height: 16px; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#222,#666); border: 1px solid var(--line); }
+
+  /* hero */
+  .hero { padding: 36px 28px 18px; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 24px; container-type: inline-size; }
+  .hero h1 {
+    margin: 0; font-family: var(--serif); font-weight: 400;
+    font-size: clamp(var(--h1-floor), 6.5cqw, var(--h1-size));
+    line-height: var(--lh-header); letter-spacing: 0;
+    color: var(--header); max-width: var(--h1-max-width);
+  }
+  .hero h1 .it { font-style: normal; color: var(--header-2); }
+  .hero p { margin: calc(var(--lede-size) * 0.4) 0 0; color: var(--ink-3); font-size: var(--lede-size); line-height: var(--lh-body); }
+  .hero .controls { display: flex; align-items: center; gap: 10px; }
+
+  .live { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; font: 500 12px 'Inter', sans-serif; color: var(--ink-2); background: #fff; }
+  .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #1f7a4d; box-shadow: 0 0 0 4px rgba(31,122,77,.12); }
+
+  .pill { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; font: 500 13px/1 'Inter', sans-serif; color: var(--ink-2); cursor: pointer; }
+  .pill svg { width: 14px; height: 14px; color: var(--ink-3); }
+  .pill .caret { width: 10px; height: 10px; }
+
+  .seg { display: inline-flex; gap: 6px; height: 36px; align-items: center; }
+  .seg button { height: 36px; padding: 0 14px; background: #f4f4f4; border: 1px solid transparent; font: 500 13px 'Inter', sans-serif; color: var(--ink-3); border-radius: 8px; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .seg button:hover { background: #ececec; color: var(--ink-2); }
+  .seg button.on { background: #fff; border-color: var(--line); color: var(--ink); }
+
+  /* card grid */
+  .grid { padding: 22px 28px 8px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  .card { position: relative; border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 20px 20px 18px; min-height: 168px; display: flex; flex-direction: column; gap: 8px; transition: border-color .15s; }
+  .card:hover { border-color: #d6d6d6; }
+  /* side accent bar disabled by default — enable via .card::before in components.md if needed */
+
+  .card .label { display: flex; align-items: center; gap: 8px; justify-content: space-between; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; font-size: var(--eyebrow-size); line-height: var(--lh-body); letter-spacing: 0; text-transform: uppercase; padding-left: 10px; }
+  .card .label .nm { display: inline-flex; align-items: center; gap: 8px; }
+  .card .label .nm::before { content:""; width: 6px; height: 6px; border-radius: 50%; background: #1f7a4d; }
+  .card .label.warn .nm::before { background: #c89321; }
+  .card .label.bad  .nm::before { background: #a02b1d; }
+  .card .body { padding-left: 10px; flex: 1; container-type: inline-size; }
+  .card .stat { font-family: var(--serif); font-weight: 400; font-size: clamp(var(--h1-floor), 6.5cqw, var(--h1-size)); line-height: var(--lh-header); letter-spacing: 0; color: var(--header); margin-top: 4px; }
+  .card .stat .unit { font-family: 'Inter', sans-serif; font-size: var(--body-size); line-height: var(--lh-body); color: var(--ink-3); margin-left: 6px; font-weight: 500; }
+  .card .footnote { padding-left: 10px; color: var(--ink-3); font-size: var(--body-size); line-height: var(--lh-body); margin-top: 6px; }
+  .card .footnote.warn { color: #8a5a13; }
+  .card .footnote.bad  { color: #8a2a1f; }
+  .card .spark { position: absolute; right: 16px; top: 18px; width: 80px; height: 28px; }
+  .card .spark svg { width: 100%; height: 100%; }
+  .spark .up   { stroke: var(--logo-dark); }
+  .spark .down { stroke: var(--logo-light); }
+  .spark .flat { stroke: var(--teal-accent); }
+
+  /* span helpers */
+  .span-2 { grid-column: span 2; }
+  .span-4 { grid-column: span 4; }
+
+  /* status list */
+  .list { padding-left: 10px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .list .row { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+  .list .dot { width: 7px; height: 7px; border-radius: 50%; background: #1f7a4d; }
+  .list .dot.amber { background: #c89321; }
+  .list .dot.red   { background: #a02b1d; }
+  .list .dot.gray  { background: #b8b8b8; }
+  .list .name { color: var(--ink); }
+  .list .tag { color: var(--ink-4); font-family: 'IBM Plex Mono', monospace; font-size: var(--eyebrow-size); line-height: var(--lh-body); letter-spacing: 0; }
+
+  /* footlink */
+  .card .footlink { color: var(--ink-3); font-size: var(--body-size); line-height: var(--lh-body); padding-left: 10px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line-2); }
+  .card .footlink a { color: var(--ink-2); text-decoration: none; }
+  .card .footlink a:hover { color: var(--ink); text-decoration: underline; }
+
+  /* chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 22px 28px 6px; justify-content: center; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font: 500 13px 'Inter', sans-serif; color: var(--ink-2); background: #fff; cursor: pointer; }
+  .chip:hover { background: var(--hover); }
+  .chip svg { width: 14px; height: 14px; }
+
+  /* prompt + composer */
+  .prompt-wrap { padding: 12px 28px 0; max-width: 980px; margin: 0 auto; }
+  .iwant { background: #f6f6f6; border-radius: 14px; padding: 6px 14px; }
+  .iwant .row { padding: 10px 6px; border-bottom: 1px solid #ececec; color: var(--ink-3); font-size: var(--body-size); line-height: var(--lh-body); }
+  .iwant .row:last-child { border-bottom: 0; }
+  .iwant .row b { color: var(--ink); font-weight: 500; }
+  .composer { margin: 14px auto 0; max-width: 980px; border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 14px 16px; }
+  .composer input { width: 100%; border: 0; outline: 0; font: 500 16px 'Inter', sans-serif; color: var(--ink); background: transparent; }
+  .composer input::placeholder { color: var(--ink-3); font-weight: 500; }
+  .composer .row { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+  .composer .tools { display: flex; gap: 6px; color: var(--ink-3); }
+  .composer .tools button { width: 28px; height: 28px; border-radius: 6px; background: transparent; border: 0; display: grid; place-items: center; color: var(--ink-3); cursor: pointer; }
+  .composer .tools button:hover { background: var(--hover); color: var(--ink); }
+  .composer .send { width: 32px; height: 32px; border-radius: 8px; background: #0a0a0a; color: #fff; border: 0; display: grid; place-items: center; cursor: pointer; }
+
+  /* tab switcher (only when more than one dashboard exists in the folder) */
+  .switcher { position: fixed; top: 14px; right: 28px; z-index: 10; display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+  .switcher a { padding: 8px 14px; font: 500 12px 'Inter', sans-serif; color: var(--ink-3); text-decoration: none; }
+  .switcher a.on { background: #0a0a0a; color: #fff; }
+
+  @media (max-width: 1180px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .span-2, .span-4 { grid-column: span 2; }
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .span-2, .span-4 { grid-column: auto; }
+    /* No font-size override — auto-shrink via clamp() handles the narrow case */
+    .search { min-width: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="side">
+    <div class="logo" title="Metafore">
+      <svg width="30" height="24" viewBox="0 0 53 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.8328 5.05059C19.8864 2.40323 16.9732 1.02428 14.3258 1.9706C11.6785 2.91693 10.2995 5.83019 11.2458 8.47755L21.1748 36.2538C22.1211 38.9012 25.0344 40.2801 27.6817 39.3338C30.3291 38.3875 31.708 35.4742 30.7617 32.8269L20.8328 5.05059Z" fill="#67A4A4"/>
+        <path d="M10.146 34.1029C10.3217 36.9029 8.19623 39.3134 5.39627 39.489C2.5963 39.6647 0.185781 37.5393 0.0101466 34.7393C-0.165488 31.9393 1.95994 29.5288 4.75991 29.3532C7.55988 29.1775 9.9704 31.303 10.146 34.1029Z" fill="#035657"/>
+        <path d="M21.004 25.7285C23.8088 25.7285 26.0825 23.4548 26.0825 20.65C26.0825 17.8453 23.8088 15.5715 21.004 15.5715C18.1992 15.5715 15.9255 17.8453 15.9255 20.65C15.9255 23.4548 18.1992 25.7285 21.004 25.7285Z" fill="#035657"/>
+        <path d="M41.0169 4.79351C40.0706 2.14615 37.1573 0.767198 34.51 1.71353C31.8626 2.65985 30.4837 5.57311 31.43 8.22047L41.3589 35.9967C42.3053 38.6441 45.2185 40.0231 47.8659 39.0767C50.5132 38.1304 51.8922 35.2171 50.9459 32.5698L41.0169 4.79351Z" fill="#67A4A4"/>
+        <path d="M36.2182 11.6061C39.0228 11.6061 41.2963 9.33259 41.2963 6.52804C41.2963 3.72349 39.0228 1.44995 36.2182 1.44995C33.4137 1.44995 31.1401 3.72349 31.1401 6.52804C31.1401 9.33259 33.4137 11.6061 36.2182 11.6061Z" fill="#035657"/>
+      </svg>
+    </div>
+    <nav class="nav">
+      <a class="active" title="Home" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l9-8 9 8v10a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1z"/></svg></a>
+      <a title="Targets" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></a>
+      <a title="Pipelines" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 7h6a3 3 0 010 6H7a3 3 0 000 6h12"/></svg></a>
+      <a title="Settings" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.8A7 7 0 0014 5.4l-.4-2.4h-3.2L10 5.4a7 7 0 00-2.6 1.3l-2.3-.8-2 3.4 2 1.5A7 7 0 005 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-.8c.8.5 1.7 1 2.6 1.3l.4 2.4h3.2l.4-2.4a7 7 0 002.6-1.3l2.3.8 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></a>
+    </nav>
+    <div class="footer">
+      <div class="ws" title="Workspace">{{WS}}</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input placeholder="Search …" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <div class="right">
+        <button class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Activity</button>
+        <div class="avatar"></div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div>
+        <h1>{{First word}} <span class="it">{{last word}}</span></h1>
+        <p>{{One editorial sentence under the headline.}}</p>
+      </div>
+      <div class="controls">
+        <span class="live">Live · {{Source A + Source B}}</span>
+        <button class="iconbtn icon-only" title="Layout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17 14v7M21 17.5h-8"/></svg>
+        </button>
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          1 year
+          <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+        <div class="seg">
+          <button class="on">Overview</button>
+          <button>Metrics</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <!-- KPI card with sparkline -->
+      <article class="card">
+        <div class="label"><span class="nm">{{KPI Label}}</span></div>
+        <div class="spark"><svg viewBox="0 0 80 28" preserveAspectRatio="none"><path class="up" d="M0 22 L12 20 L24 18 L36 19 L48 14 L60 9 L72 6 L80 4" fill="none" stroke-width="1.6"/></svg></div>
+        <div class="body">
+          <div class="stat">{{$0.0M}}</div>
+        </div>
+        <div class="footnote">{{Source}}</div>
+      </article>
+
+      <!-- KPI card, warn variant -->
+      <article class="card">
+        <div class="label warn"><span class="nm">{{KPI Label}}</span></div>
+        <div class="spark"><svg viewBox="0 0 80 28" preserveAspectRatio="none"><path class="flat" d="M0 22 L12 20 L24 16 L36 13 L48 11 L60 9 L72 7 L80 5" fill="none" stroke-width="1.6"/></svg></div>
+        <div class="body">
+          <div class="stat">{{0}}</div>
+        </div>
+        <div class="footnote warn">{{Context}}</div>
+      </article>
+
+      <!-- Status list card -->
+      <article class="card span-2">
+        <div class="label">{{Section Label}}</div>
+        <div class="list">
+          <div class="row"><span class="dot"></span><span class="name">{{Item}}</span><span class="tag">LIVE</span></div>
+          <div class="row"><span class="dot amber"></span><span class="name">{{Item}}</span><span class="tag">SYNC</span></div>
+          <div class="row"><span class="dot gray"></span><span class="name">{{Item}}</span><span class="tag">IDLE</span></div>
+        </div>
+        <div class="footlink"><a href="#">Manage →</a></div>
+      </article>
+
+      <!-- Wide block placeholder — drop a table or chart here -->
+      <article class="card span-4">
+        <div class="label">{{Wide block label}}</div>
+        <p style="padding-left: 10px; color: var(--ink-3);">
+          Drop a table, bar chart, decision feed, or executive summary here. See <code>references/components.md</code> for the patterns.
+        </p>
+      </article>
+    </section>
+
+    <div class="chips">
+      <button class="chip">{{Chip 1}}</button>
+      <button class="chip">{{Chip 2}}</button>
+      <button class="chip">{{Chip 3}}</button>
+    </div>
+
+    <div class="prompt-wrap">
+      <div class="iwant">
+        <div class="row"><b>I want to</b> {{domain-specific question 1}}</div>
+        <div class="row"><b>I want to</b> {{domain-specific question 2}}</div>
+        <div class="row"><b>I want to</b> {{domain-specific question 3}}</div>
+      </div>
+
+      <div class="composer">
+        <input placeholder="I want to…" />
+        <div class="row">
+          <div class="tools">
+            <button title="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg></button>
+            <button title="Run"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></button>
+            <button title="Web"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></button>
+            <button title="History"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/></svg></button>
+          </div>
+          <button class="send" title="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

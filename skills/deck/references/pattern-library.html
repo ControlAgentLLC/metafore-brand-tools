@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Metafore Deck — Slide Pattern Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --bg-solid: #F8FAFA;
+    --ink: #1A1A1A;
+    --ink-2: #404040;
+    --ink-3: #666666;
+    --ink-4: #999999;
+    --line: #ECECEC;
+    --line-2: #E0E0E0;
+    --teal-dark: #004D50;
+    --teal: #006B6F;
+    --teal-accent: #00989E;
+    --teal-light: #E8F4F5;
+    --logo-dark: #035657;
+    --logo-light: #67A4A4;
+    --card-grey: #F4F4F4;
+    --header-font: 'Geist', 'Inter', sans-serif;
+    --body-font: 'Inter', sans-serif;
+    --mono-font: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body-font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 80px 64px 120px;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 48px;
+    margin-bottom: 64px;
+  }
+  .hero .eyebrow {
+    font-family: var(--mono-font);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin: 0 0 24px;
+  }
+  .hero h1 {
+    font-family: var(--header-font);
+    font-weight: 400;
+    font-size: 64px;
+    letter-spacing: -1.4px;
+    line-height: 1.04;
+    margin: 0 0 24px;
+    max-width: 1000px;
+  }
+  .hero h1 .accent { color: var(--logo-dark); }
+  .hero .lede {
+    font-family: var(--body-font);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 760px;
+    margin: 0;
+  }
+
+  /* ===== SECTION ===== */
+  .section { margin-bottom: 88px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+  }
+  .section-head h2 {
+    font-family: var(--header-font);
+    font-weight: 400;
+    font-size: 32px;
+    letter-spacing: -0.6px;
+    margin: 0;
+    color: var(--ink);
+  }
+  .section-head h2 .accent { color: var(--logo-dark); }
+  .section-head .count {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ===== UNIVERSAL INVARIANTS PANEL ===== */
+  .invariants {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+  .inv {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    background: var(--bg);
+  }
+  .inv h3 {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin: 0 0 18px;
+  }
+  .inv .body {
+    font-family: var(--body-font);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .palette {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 14px 0 18px;
+  }
+  .swatch {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    position: relative;
+    font-family: var(--mono-font);
+    font-size: 9px;
+    color: rgba(255,255,255,0.85);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 6px;
+    letter-spacing: 0.05em;
+  }
+  .swatch.light { color: var(--ink-3); }
+  .swatch.bordered { border: 1px solid var(--line); }
+  .type-stack {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 14px 18px;
+    align-items: center;
+  }
+  .type-stack .role {
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+  .type-stack .sample-header { font-family: var(--header-font); font-weight: 400; font-size: 28px; letter-spacing: -0.6px; color: var(--ink); }
+  .type-stack .sample-body { font-family: var(--body-font); font-size: 14px; color: var(--ink-2); }
+  .type-stack .sample-mono { font-family: var(--mono-font); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); }
+
+  /* ===== CHROME DIAGRAM ===== */
+  .chrome-demo {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    position: relative;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+  .chrome-demo .label {
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    position: absolute;
+  }
+  .chrome-demo .label.tl { top: 10px; left: 14px; }
+  .chrome-demo .label.bl { bottom: 10px; left: 14px; color: var(--ink-3); font-size: 8px; }
+  .chrome-demo .label.br { bottom: 10px; right: 14px; color: var(--ink-3); font-size: 8px; }
+  .chrome-demo .icon-tr {
+    position: absolute;
+    top: 8px; right: 14px;
+    width: 18px; height: 14px;
+    color: var(--logo-dark);
+  }
+  .chrome-demo .content-well {
+    position: absolute;
+    top: 30%; left: 14%;
+    right: 14%; bottom: 24%;
+    background: var(--bg-solid);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--ink-4);
+  }
+
+  /* ===== PATTERN GRID ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 0;
+    background: var(--bg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-head {
+    padding: 20px 24px 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .card-head .label {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .card-head .pid {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+  }
+  .card-head .pname {
+    font-family: var(--header-font);
+    font-weight: 400;
+    font-size: 20px;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+  }
+  .tier {
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+  }
+  .tier.hybrid { color: var(--teal); }
+  .tier.semantic { color: var(--logo-dark); }
+  .tier.image { color: var(--ink-3); }
+
+  /* The thumbnail is a 16:9 mini-slide showing the pattern's layout regions */
+  .thumb {
+    aspect-ratio: 16 / 9;
+    background: var(--bg-solid);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .thumb.dark { background: var(--teal-dark); }
+  .thumb .chrome {
+    position: absolute;
+    font-family: var(--mono-font);
+    font-size: 7px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .thumb .chrome.tl { top: 8px; left: 12px; color: var(--teal); }
+  .thumb.dark .chrome.tl { color: rgba(255,255,255,0.7); }
+  .thumb .chrome.icon { top: 6px; right: 12px; width: 14px; height: 11px; color: var(--logo-dark); }
+  .thumb.dark .chrome.icon { color: rgba(255,255,255,0.85); }
+  .thumb .chrome.footer-l { bottom: 8px; left: 12px; font-size: 6px; color: var(--ink-4); }
+  .thumb.dark .chrome.footer-l { color: rgba(255,255,255,0.55); }
+  .thumb .chrome.footer-r { bottom: 8px; right: 12px; font-size: 6px; color: var(--ink-4); }
+  .thumb.dark .chrome.footer-r { color: rgba(255,255,255,0.55); }
+
+  /* Inner content well for thumbnails */
+  .well {
+    position: absolute;
+    top: 22%; left: 7%;
+    right: 7%; bottom: 18%;
+  }
+
+  /* Common thumb building blocks */
+  .block { background: var(--ink); border-radius: 2px; }
+  .block.light { background: var(--ink-3); }
+  .block.faint { background: var(--line-2); }
+  .block.teal { background: var(--teal); }
+  .block.tealdark { background: var(--logo-dark); }
+  .block.tealaccent { background: var(--teal-accent); }
+  .thumb.dark .block { background: rgba(255,255,255,0.92); }
+  .thumb.dark .block.light { background: rgba(255,255,255,0.55); }
+  .thumb.dark .block.faint { background: rgba(255,255,255,0.18); }
+  .thumb.dark .block.teal { background: var(--teal-accent); }
+  .thumb.dark .block.tealdark { background: var(--teal-accent); }
+
+  .mini-card {
+    background: var(--bg);
+    border: 0.5px solid var(--line);
+    border-radius: 3px;
+    position: absolute;
+  }
+  .thumb.dark .mini-card { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.16); }
+
+  /* Card body */
+  .card-body {
+    padding: 18px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  .card-body .when {
+    font-family: var(--body-font);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .card-body .spec {
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+  .card-body .spec .k { color: var(--teal); margin-right: 4px; }
+  .card-body .pitfall {
+    font-family: var(--body-font);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-3);
+    padding: 10px 14px;
+    background: var(--bg-solid);
+    border-left: 2px solid var(--teal);
+    border-radius: 4px;
+  }
+  .card-body .pitfall b { color: var(--ink-2); font-weight: 600; }
+
+  /* ===== SEQUENCE STRIP ===== */
+  .sequence {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 24px;
+    background: var(--bg-solid);
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+  .sequence .step {
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sequence .step .pid {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  /* ===== FOOTER NOTES ===== */
+  .notes {
+    border-top: 1px solid var(--line);
+    margin-top: 64px;
+    padding-top: 32px;
+    font-family: var(--mono-font);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">METAFORE DECK · SLIDE PATTERN LIBRARY</div>
+    <h1>Sixteen patterns. One <span class="accent">deck.</span></h1>
+    <p class="lede">
+      Every slide in a Metafore deck maps to one pattern from this catalog.
+      Pick the pattern that fits the content shape — a problem statement, a 4-up grid,
+      a KPI band — not the prettiest layout. The thumbnails below show the region structure
+      of each pattern; the body explains when to reach for it.
+    </p>
+  </header>
+
+  <!-- UNIVERSAL INVARIANTS -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Universal <span class="accent">invariants</span></h2>
+      <span class="count">Apply to every pattern</span>
+    </div>
+
+    <div class="invariants">
+
+      <div class="inv">
+        <h3>Approved palette · teal stack + grayscale only</h3>
+        <div class="palette">
+          <div class="swatch" style="background: #E8F4F5; color: var(--ink-3)">E8F4F5</div>
+          <div class="swatch" style="background: #67A4A4">67A4A4</div>
+          <div class="swatch" style="background: #00989E">00989E</div>
+          <div class="swatch" style="background: #006B6F">006B6F</div>
+          <div class="swatch" style="background: #035657">035657</div>
+          <div class="swatch" style="background: #004D50">004D50</div>
+          <div class="swatch bordered" style="background: #FFFFFF; color: var(--ink-3)">FFFFFF</div>
+          <div class="swatch" style="background: #F8FAFA; color: var(--ink-3)">F8FAFA</div>
+          <div class="swatch" style="background: #ECECEC; color: var(--ink-3)">ECECEC</div>
+          <div class="swatch" style="background: #666666">666666</div>
+          <div class="swatch" style="background: #1A1A1A">1A1A1A</div>
+        </div>
+        <div class="body">
+          <b>Forbidden:</b> <code>#00C4CC</code> (retired), any non-teal hue, status colors as decoration,
+          gradients on cards, drop shadows on cards, accent lines under titles.
+        </div>
+      </div>
+
+      <div class="inv">
+        <h3>Type stack · three fonts, three roles</h3>
+        <div class="type-stack">
+          <span class="role">Header</span>
+          <span class="sample-header">Sense, reason, and <span style="color:var(--logo-dark)">act.</span></span>
+          <span class="role">Body</span>
+          <span class="sample-body">A connected reality across every function — every signal traced back through the relationships that produced it.</span>
+          <span class="role">Mono</span>
+          <span class="sample-mono">THE PROBLEM · METAFORE LIVE BRIEFING</span>
+        </div>
+        <div class="body" style="margin-top:18px;">
+          Header = Geist (Brut Grotesque fallback), weight 400, never bold.<br/>
+          Body = Inter (GT America fallback), weight 400.<br/>
+          Mono = IBM Plex Mono, never bold and never tracked in PPTX.
+        </div>
+      </div>
+
+      <div class="inv">
+        <h3>Chrome alignment · 36px corner offset</h3>
+        <div class="chrome-demo">
+          <span class="label tl">THE SECTION</span>
+          <svg class="icon-tr" viewBox="0 0 43 36" fill="currentColor"><circle cx="6" cy="30" r="3"/><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="content-well">CONTENT WELL · 120PX PADDING</div>
+          <span class="label bl">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="label br">03 / 13</span>
+        </div>
+        <div class="body" style="margin-top:14px;">
+          Section label top-left · icon top-right · footer copyright bottom-left · page number bottom-right.
+          All four anchor to <code>--chrome-offset: 36px</code>, tighter than the content well's 120px padding.
+        </div>
+      </div>
+
+      <div class="inv">
+        <h3>Tier decision · default to hybrid</h3>
+        <div class="body" style="line-height:1.7;">
+          <b style="color:var(--logo-dark)">semantic</b> · pure-text composition. No illustration. Section dividers, agendas, closings.<br/>
+          <b style="color:var(--teal)">hybrid</b> · the default. Text frames over a baked illustration / diagram / chart background.<br/>
+          <b style="color:var(--ink-3)">image</b> · 100% visual, no editable text. Reserve for rare pure-graphic slides.
+        </div>
+        <div class="body" style="margin-top:14px; padding:12px 16px; background:var(--bg-solid); border-left:2px solid var(--teal); border-radius:4px;">
+          <b>Ask yourself:</b> could the customer want to edit this label? If yes → it's a text frame, not part of the picture.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PATTERN CATALOG -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Pattern <span class="accent">catalog</span></h2>
+      <span class="count">P-01 · P-13 · core · P-14 · P-16 · occasional</span>
+    </div>
+
+    <div class="grid">
+
+      <!-- P-01 COVER -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-01</span><span class="pname">Cover</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb">
+          <!-- left text, right glasscard on dark -->
+          <div style="position:absolute; left:0; top:0; bottom:0; width:55%; background:var(--bg);"></div>
+          <div style="position:absolute; right:0; top:0; bottom:0; width:45%; background:var(--teal-dark);"></div>
+          <!-- wordmark TL -->
+          <svg style="position:absolute; top:8px; left:12px; width:30px; height:8px;" viewBox="0 0 60 14" fill="var(--logo-dark)"><rect x="0" y="3" width="3" height="8" rx="1"/><rect x="5" y="0" width="3" height="11" rx="1"/><rect x="10" y="3" width="3" height="8" rx="1"/><text x="16" y="10" font-family="Geist" font-size="10" fill="#1A1A1A">Metafore</text></svg>
+          <!-- big two-tone headline blocks -->
+          <div class="block" style="position:absolute; left:7%; top:42%; width:32%; height:9%;"></div>
+          <div class="block tealdark" style="position:absolute; left:7%; top:54%; width:25%; height:9%;"></div>
+          <div class="block light" style="position:absolute; left:7%; top:68%; width:34%; height:3%;"></div>
+          <!-- glasscard right -->
+          <div class="mini-card" style="left:60%; top:25%; width:32%; height:50%;">
+            <div class="block faint" style="position:absolute; left:10%; top:12%; width:60%; height:5%;"></div>
+            <div class="block" style="position:absolute; left:10%; top:25%; width:70%; height:4%;"></div>
+            <div class="block faint" style="position:absolute; left:10%; top:34%; width:40%; height:3%;"></div>
+            <div class="block faint" style="position:absolute; left:10%; top:50%; width:80%; height:3%;"></div>
+            <div class="block faint" style="position:absolute; left:10%; top:58%; width:80%; height:3%;"></div>
+            <div class="block faint" style="position:absolute; left:10%; top:66%; width:80%; height:3%;"></div>
+            <div class="block tealaccent" style="position:absolute; left:10%; top:78%; width:80%; height:10%; opacity:0.4;"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="when">Slide 1, always. Sets the two-tone hero. Three variants: <b>1A</b> bare canvas, <b>1B</b> split with glasscard, <b>1C</b> split with conversational agent demo.</p>
+          <div class="spec"><span class="k">Type</span> Geist 96–120px headline · Inter 28px subtitle. <span class="k">Chrome</span> wordmark top-left only — no section label, no icon-tr.</div>
+          <div class="pitfall"><b>Pitfall:</b> centering body copy under the headline, or repeating the wordmark on later slides (later slides use icon-only).</div>
+        </div>
+      </article>
+
+      <!-- P-02 SECTION DIVIDER -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-02</span><span class="pname">Section divider</span></div>
+          <span class="tier semantic">Semantic</span>
+        </div>
+        <div class="thumb dark">
+          <span class="chrome tl">PHASE TWO</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+            <div style="display:flex; gap:8px;">
+              <div class="block" style="width:80px; height:14px;"></div>
+              <div class="block tealaccent" style="width:60px; height:14px;"></div>
+            </div>
+            <div class="block faint" style="width:120px; height:4px; margin-top:8px;"></div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">07 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Mark a narrative phase change. Use sparingly — one or two per deck.</p>
+          <div class="spec"><span class="k">Surface</span> --teal-dark. <span class="k">Type</span> Geist 144px two-tone with .accent-light. Optional Inter 22px sub.</div>
+          <div class="pitfall"><b>Pitfall:</b> putting body copy on a divider. If it has more than one line of subtitle, it isn't a divider — it's P-05.</div>
+        </div>
+      </article>
+
+      <!-- P-03 AGENDA -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-03</span><span class="pname">Agenda</span></div>
+          <span class="tier semantic">Semantic</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">AGENDA</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well">
+            <div class="block" style="position:absolute; left:0; top:0; width:50%; height:9%;"></div>
+            <!-- 6 items in 2x3 grid -->
+            <div style="position:absolute; top:24%; left:0; right:0; bottom:0; display:grid; grid-template-columns:1fr 1fr; gap:6px 24px;">
+              <!-- repeat 6 items -->
+              <div style="display:flex; gap:8px; align-items:flex-start;">
+                <div class="block light" style="width:14px; height:5px; margin-top:2px;"></div>
+                <div style="flex:1;"><div class="block" style="width:60%; height:5px;"></div><div class="block faint" style="width:80%; height:3px; margin-top:3px;"></div></div>
+              </div>
+              <div style="display:flex; gap:8px; align-items:flex-start;">
+                <div class="block light" style="width:14px; height:5px; margin-top:2px;"></div>
+                <div style="flex:1;"><div class="block" style="width:55%; height:5px;"></div><div class="block faint" style="width:78%; height:3px; margin-top:3px;"></div></div>
+              </div>
+              <div style="display:flex; gap:8px; align-items:flex-start;">
+                <div class="block light" style="width:14px; height:5px; margin-top:2px;"></div>
+                <div style="flex:1;"><div class="block" style="width:62%; height:5px;"></div><div class="block faint" style="width:70%; height:3px; margin-top:3px;"></div></div>
+              </div>
+              <div style="display:flex; gap:8px; align-items:flex-start;">
+                <div class="block light" style="width:14px; height:5px; margin-top:2px;"></div>
+                <div style="flex:1;"><div class="block" style="width:64%; height:5px;"></div><div class="block faint" style="width:84%; height:3px; margin-top:3px;"></div></div>
+              </div>
+              <div style="display:flex; gap:8px; align-items:flex-start;">
+                <div class="block light" style="width:14px; height:5px; margin-top:2px;"></div>
+                <div style="flex:1;"><div class="block" style="width:58%; height:5px;"></div><div class="block faint" style="width:72%; height:3px; margin-top:3px;"></div></div>
+              </div>
+              <div style="display:flex; gap:8px; align-items:flex-start;">
+                <div class="block light" style="width:14px; height:5px; margin-top:2px;"></div>
+                <div style="flex:1;"><div class="block" style="width:50%; height:5px;"></div><div class="block faint" style="width:76%; height:3px; margin-top:3px;"></div></div>
+              </div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">02 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Slide 2 of decks longer than ~8 slides. Skip in short decks. 4–6 items, Title Case, "The" only where it reads naturally.</p>
+          <div class="spec"><span class="k">Items</span> Plex Mono 24px number · Geist 30px title · Inter 16px sub.</div>
+          <div class="pitfall"><b>Pitfall:</b> 7+ items — split into two slides. Verb phrases instead of noun phrases ("Reviewing the problem" vs "The Problem").</div>
+        </div>
+      </article>
+
+      <!-- P-04 COMPANY -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-04</span><span class="pname">Company / About</span></div>
+          <span class="tier semantic">Semantic</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">THE COMPANY</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:grid; grid-template-columns: 1fr 1fr; gap:18px;">
+            <div>
+              <div class="block" style="width:80%; height:10px;"></div>
+              <div class="block tealdark" style="width:50%; height:10px; margin-top:4px;"></div>
+              <div class="block faint" style="width:100%; height:4px; margin-top:14px;"></div>
+              <div class="block faint" style="width:96%; height:4px; margin-top:4px;"></div>
+              <div class="block faint" style="width:88%; height:4px; margin-top:4px;"></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px; padding-top:8px;">
+              <div style="display:grid; grid-template-columns:60px 1fr; gap:8px; align-items:center;">
+                <div class="block teal" style="width:50px; height:4px;"></div>
+                <div class="block" style="width:80%; height:6px;"></div>
+              </div>
+              <div style="display:grid; grid-template-columns:60px 1fr; gap:8px; align-items:center;">
+                <div class="block teal" style="width:46px; height:4px;"></div>
+                <div class="block" style="width:70%; height:6px;"></div>
+              </div>
+              <div style="display:grid; grid-template-columns:60px 1fr; gap:8px; align-items:center;">
+                <div class="block teal" style="width:54px; height:4px;"></div>
+                <div class="block" style="width:84%; height:6px;"></div>
+              </div>
+              <div style="display:grid; grid-template-columns:60px 1fr; gap:8px; align-items:center;">
+                <div class="block teal" style="width:50px; height:4px;"></div>
+                <div class="block" style="width:74%; height:6px;"></div>
+              </div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">03 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Slide 3, after the agenda. <b>One slide max</b> — never multiple "about us" slides.</p>
+          <div class="spec"><span class="k">Left</span> h2 72px + mission paragraph. <span class="k">Right</span> 3–5 Plex Mono label / Geist value rows.</div>
+          <div class="pitfall"><b>Pitfall:</b> bullet list of company facts. Use the label/value pairs — they read like a spec sheet, not a sales deck.</div>
+        </div>
+      </article>
+
+      <!-- P-05 STATEMENT -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-05</span><span class="pname">Statement / Problem / Why</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">THE PROBLEM</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:grid; grid-template-columns: 1.05fr 0.9fr; gap:18px;">
+            <div>
+              <div class="block" style="width:96%; height:10px;"></div>
+              <div class="block" style="width:78%; height:10px; margin-top:4px;"></div>
+              <div class="block tealdark" style="width:42%; height:10px; margin-top:4px;"></div>
+              <div class="block faint" style="width:100%; height:4px; margin-top:18px;"></div>
+              <div class="block faint" style="width:96%; height:4px; margin-top:3px;"></div>
+              <div class="block faint" style="width:88%; height:4px; margin-top:3px;"></div>
+              <div class="block faint" style="width:80%; height:4px; margin-top:3px;"></div>
+            </div>
+            <!-- Single brand-style Pulse UI card -->
+            <div class="mini-card" style="width:88%; margin:5% auto 0; padding:8px 10px; background:#FFFFFF;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="block teal" style="width:54%; height:3px;"></div>
+                <div class="block light" style="width:18%; height:2.5px;"></div>
+              </div>
+              <div style="height:1px; background:var(--line); margin-top:6px;"></div>
+              <div class="block" style="width:88%; height:7px; margin-top:8px;"></div>
+              <div class="block" style="width:70%; height:7px; margin-top:3px;"></div>
+              <div class="block faint" style="width:56%; height:2.5px; margin-top:5px;"></div>
+              <div style="height:1px; background:var(--line); margin-top:7px;"></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:7px;">
+                <div class="block light" style="width:24%; height:3px;"></div>
+                <div class="block tealdark" style="width:18%; height:6px;"></div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <div class="block light" style="width:30%; height:3px;"></div>
+                <div class="block tealdark" style="width:22%; height:6px;"></div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                <div class="block light" style="width:22%; height:3px;"></div>
+                <div class="block" style="width:14%; height:6px; background:var(--ink-3);"></div>
+              </div>
+              <div style="margin-top:8px; padding:6px 8px; background:var(--teal-light); border-radius:4px;">
+                <div class="block teal" style="width:42%; height:2.5px;"></div>
+                <div class="block faint" style="width:86%; height:2.5px; margin-top:4px;"></div>
+                <div class="block faint" style="width:70%; height:2.5px; margin-top:1.5px;"></div>
+              </div>
+              <div class="block tealdark" style="width:100%; height:9px; margin-top:8px; border-radius:99px;"></div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">04 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">A slide whose job is to land a single message — the problem, the insight, the strategic claim. Hero h2 + body + supporting illustration on the right.</p>
+          <div class="spec"><span class="k">Type</span> Geist 60–64px h2 two-tone · Inter 22px body. <span class="k">Art</span> typographic Pulse mini-cards, radial diagram, or convergence.</div>
+          <div class="pitfall"><b>Pitfall:</b> a chart-shaped illustration (donut + bar + line). That reads as a generic dashboard, not Metafore. Use typographic Pulse cards instead.</div>
+        </div>
+      </article>
+
+      <!-- P-06 CAPABILITY 4-UP -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-06</span><span class="pname">Capability grid (4-up)</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">ARCHITECTURE</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well">
+            <div class="block" style="width:60%; height:9%;"></div>
+            <div class="block tealdark" style="width:24%; height:9%; margin-top:2px;"></div>
+            <div style="position:absolute; top:32%; left:0; right:0; bottom:0; display:grid; grid-template-columns:repeat(4, 1fr); gap:6px;">
+              <div class="mini-card" style="padding:6px;">
+                <div style="display:flex; gap:2px; flex-wrap:wrap; justify-content:center; align-items:center; height:30%;">
+                  <div class="block teal" style="width:3px; height:3px; border-radius:50%;"></div>
+                  <div class="block teal" style="width:3px; height:3px; border-radius:50%;"></div>
+                  <div class="block teal" style="width:3px; height:3px; border-radius:50%;"></div>
+                  <div class="block teal" style="width:3px; height:3px; border-radius:50%;"></div>
+                </div>
+                <div class="block teal" style="width:60%; height:2px; margin-top:6px;"></div>
+                <div class="block" style="width:80%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:100%; height:2px; margin-top:6px;"></div>
+                <div class="block faint" style="width:96%; height:2px; margin-top:1px;"></div>
+              </div>
+              <div class="mini-card" style="padding:6px;">
+                <div style="height:30%; display:flex; align-items:center; justify-content:center;"><div class="block tealaccent" style="width:14px; height:6px; border-radius:50%;"></div></div>
+                <div class="block tealaccent" style="width:55%; height:2px; margin-top:6px;"></div>
+                <div class="block" style="width:75%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:100%; height:2px; margin-top:6px;"></div>
+                <div class="block faint" style="width:90%; height:2px; margin-top:1px;"></div>
+              </div>
+              <div class="mini-card" style="padding:6px;">
+                <div style="height:30%; display:flex; align-items:center; justify-content:center;"><div class="block tealdark" style="width:12px; height:10px; transform:rotate(45deg);"></div></div>
+                <div class="block tealdark" style="width:50%; height:2px; margin-top:6px;"></div>
+                <div class="block" style="width:70%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:100%; height:2px; margin-top:6px;"></div>
+                <div class="block faint" style="width:88%; height:2px; margin-top:1px;"></div>
+              </div>
+              <div class="mini-card" style="padding:6px;">
+                <div style="height:30%; display:flex; align-items:center; justify-content:center; position:relative;">
+                  <div class="block faint" style="width:18px; height:1px; position:absolute; top:50%;"></div>
+                  <div class="block faint" style="width:1px; height:14px; position:absolute; left:50%;"></div>
+                </div>
+                <div class="block" style="width:58%; height:2px; margin-top:6px; background:var(--logo-dark);"></div>
+                <div class="block" style="width:72%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:100%; height:2px; margin-top:6px;"></div>
+                <div class="block faint" style="width:84%; height:2px; margin-top:1px;"></div>
+              </div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">05 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Exactly 4 parallel items with illustrations. The 4 graphs, the 4 pillars, the 4 stages.</p>
+          <div class="spec"><span class="k">Card</span> Plex Mono 15px eyebrow → Geist 38px name → Inter 19px body. <span class="k">Eyebrow</span> steps through the teal stack per card.</div>
+          <div class="pitfall"><b>Pitfall:</b> more than 4 cards in this layout — drop to P-07 (8-up) or P-08 (12-up). Emoji or photos inside cards.</div>
+        </div>
+      </article>
+
+      <!-- P-07 CAPABILITY 8-UP -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-07</span><span class="pname">Capability grid (8-up)</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">PLATFORM</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well">
+            <div class="block" style="width:62%; height:8%;"></div>
+            <div class="block tealdark" style="width:28%; height:8%; margin-top:2px;"></div>
+            <div class="block faint" style="width:80%; height:3px; margin-top:8px;"></div>
+            <div class="block faint" style="width:76%; height:3px; margin-top:2px;"></div>
+            <div style="position:absolute; top:42%; left:0; right:0; bottom:0; display:grid; grid-template-columns:repeat(4, 1fr); grid-template-rows: 1fr 1fr; gap:5px;">
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:50%; margin-top:4px;"></div><div class="block" style="width:55%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:90%; height:2px; margin-top:3px;"></div></div>
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:1px; margin-top:4px;"></div><div class="block" style="width:50%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:88%; height:2px; margin-top:3px;"></div></div>
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:50%; margin-top:4px;"></div><div class="block" style="width:62%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:84%; height:2px; margin-top:3px;"></div></div>
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:2px; margin-top:4px;"></div><div class="block" style="width:48%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:80%; height:2px; margin-top:3px;"></div></div>
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:50%; margin-top:4px;"></div><div class="block" style="width:60%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:90%; height:2px; margin-top:3px;"></div></div>
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:1px; margin-top:4px;"></div><div class="block" style="width:46%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:88%; height:2px; margin-top:3px;"></div></div>
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:50%; margin-top:4px;"></div><div class="block" style="width:56%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:84%; height:2px; margin-top:3px;"></div></div>
+              <div class="mini-card" style="padding:5px;"><div class="block teal" style="width:30%; height:2px;"></div><div class="block teal" style="width:7px; height:7px; border-radius:2px; margin-top:4px;"></div><div class="block" style="width:52%; height:3px; margin-top:4px;"></div><div class="block faint" style="width:82%; height:2px; margin-top:3px;"></div></div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">08 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Platform capabilities, integrations, feature inventory. 6–10 parallel items with line-icon SVGs.</p>
+          <div class="spec"><span class="k">Card</span> Plex Mono 14px eyebrow · 24×24 line-icon (stroke only) · Geist 24px title · Inter 15px body.</div>
+          <div class="pitfall"><b>Pitfall:</b> filling the icons (use stroke only). Mixing icon styles within a single grid.</div>
+        </div>
+      </article>
+
+      <!-- P-08 MODULES 12-UP -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-08</span><span class="pname">Module grid (12-up)</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">THE SUITE</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well">
+            <div class="block" style="width:50%; height:8%;"></div>
+            <div class="block tealdark" style="width:22%; height:8%; margin-top:2px;"></div>
+            <div style="position:absolute; top:28%; left:0; right:0; bottom:0; display:grid; grid-template-columns:repeat(4, 1fr); grid-template-rows: 1fr 1fr 1fr; gap:4px;">
+            </div>
+            <script type="text/template"></script>
+            <div style="position:absolute; top:28%; left:0; right:0; bottom:0; display:grid; grid-template-columns:repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap:4px;">
+              <!-- 12 module thumbnails -->
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:18%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:90%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:80%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:22%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:88%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:76%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:26%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:92%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:84%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:16%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:90%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:80%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:22%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:90%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:82%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:18%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:86%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:74%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:20%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:90%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:80%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:24%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:88%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:80%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:22%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:86%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:78%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:20%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:90%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:80%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:20%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:86%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:74%; height:1px; margin-top:1px;"></div></div>
+              <div class="mini-card" style="padding:4px;"><div class="block light" style="width:25%; height:1.5px;"></div><div style="display:flex; gap:2px; margin-top:3px; align-items:baseline;"><div class="block" style="width:34%; height:3px;"></div><div class="block tealdark" style="width:16%; height:3px;"></div></div><div class="block teal" style="width:30%; height:1.5px; margin-top:3px;"></div><div class="block faint" style="width:84%; height:1px; margin-top:3px;"></div><div class="block faint" style="width:72%; height:1px; margin-top:1px;"></div></div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">07 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Exactly twelve parallel items with a strong product-name pattern (MetaWorks Focus, MetaWorks Transform, etc.). The densest slide in the system — use sparingly.</p>
+          <div class="spec"><span class="k">Name</span> two spans: <code>.m</code> ink + space + <code>.t</code> --logo-dark. <span class="k">h2</span> 56px (don't downgrade to h3 to save space).</div>
+          <div class="pitfall"><b>Pitfall:</b> brand word and accent word running together (<code>MetaWorksFocus</code>). Verify each card renders as <i>Brand Accent</i> with the accent in teal.</div>
+        </div>
+      </article>
+
+      <!-- P-09 KPI BAND -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-09</span><span class="pname">KPI band</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb dark">
+          <span class="chrome tl">THE SYSTEM AT A GLANCE</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0; padding-top:8%;">
+            <div style="padding:0 14px 0 0;">
+              <div class="block" style="width:30%; height:22px;"></div>
+              <div class="block faint" style="width:90%; height:3px; margin-top:6px;"></div>
+              <div class="block faint" style="width:80%; height:3px; margin-top:2px;"></div>
+            </div>
+            <div style="padding:0 14px; border-left:1px solid rgba(255,255,255,0.18);">
+              <div class="block" style="width:20%; height:22px;"></div>
+              <div class="block faint" style="width:85%; height:3px; margin-top:6px;"></div>
+              <div class="block faint" style="width:78%; height:3px; margin-top:2px;"></div>
+            </div>
+            <div style="padding:0 14px; border-left:1px solid rgba(255,255,255,0.18);">
+              <div style="display:flex; align-items:baseline; gap:2px;">
+                <div class="block" style="width:40%; height:22px;"></div>
+                <div class="block faint" style="width:14%; height:8px;"></div>
+              </div>
+              <div class="block faint" style="width:90%; height:3px; margin-top:6px;"></div>
+              <div class="block faint" style="width:82%; height:3px; margin-top:2px;"></div>
+            </div>
+            <div style="padding:0 0 0 14px; border-left:1px solid rgba(255,255,255,0.18);">
+              <div style="display:flex; align-items:baseline; gap:2px;">
+                <div class="block" style="width:42%; height:22px;"></div>
+                <div class="block faint" style="width:10%; height:8px;"></div>
+              </div>
+              <div class="block faint" style="width:92%; height:3px; margin-top:6px;"></div>
+              <div class="block faint" style="width:84%; height:3px; margin-top:2px;"></div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">10 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">End-of-section impact slide. Four hero metrics that anchor the case.</p>
+          <div class="spec"><span class="k">Surface</span> --teal-dark full-bleed. <span class="k">Number</span> Geist 84px tabular-nums, white-space nowrap. <span class="k">Suffix</span> 30px Geist 90% opacity. <span class="k">Label</span> Inter 19px max-width 280px.</div>
+          <div class="pitfall"><b>Pitfall:</b> numbers above 90px — they wrap or overflow at quarter-width. Centering the labels under the numbers.</div>
+        </div>
+      </article>
+
+      <!-- P-10 INTEGRATION -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-10</span><span class="pname">Integration ecosystem / pills</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb dark">
+          <span class="chrome tl">INTEGRATIONS</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:grid; grid-template-columns: 1.05fr 0.95fr; gap:14px;">
+            <div>
+              <div class="block" style="width:80%; height:10px;"></div>
+              <div class="block tealdark" style="width:40%; height:10px; margin-top:4px;"></div>
+              <div class="block faint" style="width:90%; height:3px; margin-top:14px;"></div>
+              <div class="block faint" style="width:96%; height:3px; margin-top:2px;"></div>
+              <div class="block faint" style="width:80%; height:3px; margin-top:2px;"></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div>
+                <div class="block" style="width:30%; height:3px; background: var(--teal-accent);"></div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
+                  <div style="padding:1px 6px; background:rgba(255,255,255,0.15); border-radius:99px; width:20px; height:6px;"></div>
+                  <div style="padding:1px 6px; background:rgba(255,255,255,0.15); border-radius:99px; width:14px; height:6px;"></div>
+                  <div style="padding:1px 6px; background:rgba(255,255,255,0.15); border-radius:99px; width:22px; height:6px;"></div>
+                  <div style="padding:1px 6px; background:rgba(255,255,255,0.15); border-radius:99px; width:16px; height:6px;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="block" style="width:26%; height:3px; background: var(--teal-accent);"></div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:18px; height:6px;"></div>
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:22px; height:6px;"></div>
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:16px; height:6px;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="block" style="width:24%; height:3px; background: var(--teal-accent);"></div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:14px; height:6px;"></div>
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:20px; height:6px;"></div>
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:18px; height:6px;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="block" style="width:18%; height:3px; background: var(--teal-accent);"></div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:18px; height:6px;"></div>
+                  <div style="background:rgba(255,255,255,0.15); border-radius:99px; width:24px; height:6px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">09 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Showing what the platform connects to — enterprise systems, LLM providers, sources of record. Pills are the most likely thing a customer will want to swap.</p>
+          <div class="spec"><span class="k">Pill</span> Inter 14px --ink-2 · 999px radius · --card-grey fill · no border. <span class="k">Cluster label</span> Plex Mono 12px --teal.</div>
+          <div class="pitfall"><b>Pitfall:</b> filling pills with teal accent — keep them neutral grey. Logos inside pills — text only.</div>
+        </div>
+      </article>
+
+      <!-- P-11 TIMELINE -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-11</span><span class="pname">Timeline / stepper</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">DEPLOYMENT</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well">
+            <div class="block" style="width:62%; height:9%;"></div>
+            <div class="block tealdark" style="width:24%; height:9%; margin-top:2px;"></div>
+            <div class="block faint" style="width:80%; height:3px; margin-top:8px;"></div>
+            <div class="block faint" style="width:74%; height:3px; margin-top:2px;"></div>
+            <!-- timeline row -->
+            <div style="position:absolute; left:0; right:0; bottom:8%; display:grid; grid-template-columns: repeat(5, 1fr); gap:6px;">
+              <div>
+                <div class="block teal" style="width:60%; height:2px;"></div>
+                <div class="block light" style="width:30%; height:6px; margin-top:6px;"></div>
+                <div class="block" style="width:80%; height:8px; margin-top:6px; background:transparent; border-top:1px solid var(--logo-dark);"></div>
+                <div class="block" style="width:80%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:96%; height:2px; margin-top:4px;"></div>
+                <div class="block faint" style="width:80%; height:2px; margin-top:1px;"></div>
+              </div>
+              <div>
+                <div class="block teal" style="width:60%; height:2px;"></div>
+                <div class="block light" style="width:30%; height:6px; margin-top:6px;"></div>
+                <div class="block" style="width:80%; height:8px; margin-top:6px; background:transparent; border-top:1px solid var(--logo-dark);"></div>
+                <div class="block" style="width:84%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:92%; height:2px; margin-top:4px;"></div>
+                <div class="block faint" style="width:76%; height:2px; margin-top:1px;"></div>
+              </div>
+              <div>
+                <div class="block teal" style="width:60%; height:2px;"></div>
+                <div class="block light" style="width:30%; height:6px; margin-top:6px;"></div>
+                <div class="block" style="width:80%; height:8px; margin-top:6px; background:transparent; border-top:1px solid var(--logo-dark);"></div>
+                <div class="block" style="width:74%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:90%; height:2px; margin-top:4px;"></div>
+                <div class="block faint" style="width:80%; height:2px; margin-top:1px;"></div>
+              </div>
+              <div>
+                <div class="block teal" style="width:60%; height:2px;"></div>
+                <div class="block light" style="width:30%; height:6px; margin-top:6px;"></div>
+                <div class="block" style="width:80%; height:8px; margin-top:6px; background:transparent; border-top:1px solid var(--logo-dark);"></div>
+                <div class="block" style="width:84%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:88%; height:2px; margin-top:4px;"></div>
+                <div class="block faint" style="width:72%; height:2px; margin-top:1px;"></div>
+              </div>
+              <div>
+                <div class="block teal" style="width:60%; height:2px;"></div>
+                <div class="block light" style="width:30%; height:6px; margin-top:6px;"></div>
+                <div class="block" style="width:80%; height:8px; margin-top:6px; background:transparent; border-top:1px solid var(--logo-dark);"></div>
+                <div class="block" style="width:80%; height:3px; margin-top:4px;"></div>
+                <div class="block faint" style="width:88%; height:2px; margin-top:4px;"></div>
+                <div class="block faint" style="width:74%; height:2px; margin-top:1px;"></div>
+              </div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">12 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Deployment plan, phased rollout, time-to-value. 4–6 sequential steps with a hairline running underneath.</p>
+          <div class="spec"><span class="k">Step</span> Plex Mono 12px week range · 32px step number · Geist 22px title · Inter 14px body.</div>
+          <div class="pitfall"><b>Pitfall:</b> more than 6 steps — wraps badly, split into two slides. Step bodies that wrap to 3+ lines.</div>
+        </div>
+      </article>
+
+      <!-- P-12 RADIAL DIAGRAM -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-12</span><span class="pname">Radial diagram / knowledge graph</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb dark">
+          <span class="chrome tl">WHY METAWORKS</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+            <div>
+              <div class="block" style="width:96%; height:9px;"></div>
+              <div class="block" style="width:78%; height:9px; margin-top:4px;"></div>
+              <div class="block" style="width:42%; height:9px; margin-top:4px; background: var(--teal-accent);"></div>
+              <div class="block faint" style="width:96%; height:3px; margin-top:14px;"></div>
+              <div class="block faint" style="width:88%; height:3px; margin-top:2px;"></div>
+              <div class="block faint" style="width:78%; height:3px; margin-top:2px;"></div>
+              <div style="display:flex; gap:12px; margin-top:14px;">
+                <div>
+                  <div class="block" style="width:24px; height:14px; background:var(--teal-accent);"></div>
+                  <div class="block faint" style="width:34px; height:2px; margin-top:4px;"></div>
+                </div>
+                <div>
+                  <div class="block" style="width:30px; height:14px; background:var(--teal-accent);"></div>
+                  <div class="block faint" style="width:40px; height:2px; margin-top:4px;"></div>
+                </div>
+              </div>
+            </div>
+            <!-- radial -->
+            <svg viewBox="0 0 200 200" style="width:100%; height:100%;">
+              <g stroke="var(--teal-accent)" stroke-width="0.6" opacity="0.45">
+                <line x1="100" y1="100" x2="100" y2="20"/>
+                <line x1="100" y1="100" x2="160" y2="40"/>
+                <line x1="100" y1="100" x2="180" y2="100"/>
+                <line x1="100" y1="100" x2="160" y2="160"/>
+                <line x1="100" y1="100" x2="100" y2="180"/>
+                <line x1="100" y1="100" x2="40" y2="160"/>
+                <line x1="100" y1="100" x2="20" y2="100"/>
+                <line x1="100" y1="100" x2="40" y2="40"/>
+              </g>
+              <g stroke="var(--teal-accent)" stroke-width="0.4" opacity="0.2" stroke-dasharray="2 3">
+                <line x1="100" y1="20" x2="160" y2="40"/>
+                <line x1="160" y1="40" x2="180" y2="100"/>
+                <line x1="180" y1="100" x2="160" y2="160"/>
+                <line x1="160" y1="160" x2="100" y2="180"/>
+                <line x1="100" y1="180" x2="40" y2="160"/>
+                <line x1="40" y1="160" x2="20" y2="100"/>
+                <line x1="20" y1="100" x2="40" y2="40"/>
+                <line x1="40" y1="40" x2="100" y2="20"/>
+              </g>
+              <circle cx="100" cy="100" r="14" fill="var(--teal-dark)" stroke="var(--teal-accent)" stroke-width="0.6"/>
+              <circle cx="100" cy="100" r="5" fill="var(--teal-accent)"/>
+              <g fill="var(--teal-dark)" stroke="var(--teal-accent)" stroke-width="0.6">
+                <circle cx="100" cy="20" r="6"/>
+                <circle cx="160" cy="40" r="6"/>
+                <circle cx="180" cy="100" r="6"/>
+                <circle cx="160" cy="160" r="6"/>
+                <circle cx="100" cy="180" r="6"/>
+                <circle cx="40" cy="160" r="6"/>
+                <circle cx="20" cy="100" r="6"/>
+                <circle cx="40" cy="40" r="6"/>
+              </g>
+            </svg>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">11 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Showing topology, connectivity, the "one connected reality" claim. Pairs with a Why-style left column.</p>
+          <div class="spec"><span class="k">Diagram</span> stroke #00989E only — never #00C4CC. Center node teal-dark with teal-accent inner dot. <span class="k">Stats</span> .s-num 64px teal-accent.</div>
+          <div class="pitfall"><b>Pitfall:</b> using the retired #00C4CC color for spokes. Filling satellites with solid teal-bright instead of outlining them.</div>
+        </div>
+      </article>
+
+      <!-- P-17 CONTENT HERO -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-17</span><span class="pname">Content hero with right image</span></div>
+          <span class="tier hybrid">Hybrid</span>
+        </div>
+        <div class="thumb">
+          <!-- left light panel + right full-bleed dark teal -->
+          <div style="position:absolute; left:0; top:0; bottom:0; width:56%; background:var(--bg);"></div>
+          <div style="position:absolute; right:0; top:0; bottom:0; width:44%; background:var(--teal-dark);"></div>
+          <!-- chrome: section label TL on light, icon TR on dark, footer spans both -->
+          <span class="chrome tl" style="color:var(--teal);">PULSE PREVIEW</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" style="color:rgba(255,255,255,0.92);" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <span class="chrome footer-l" style="color:var(--ink-4);">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r" style="color:rgba(255,255,255,0.55);">07 / 14</span>
+          <!-- LEFT content blocks -->
+          <div style="position:absolute; left:7%; top:30%; right:48%;">
+            <div class="block teal" style="width:38%; height:3px;"></div>
+            <div class="block" style="width:96%; height:9px; margin-top:10px;"></div>
+            <div class="block" style="width:80%; height:9px; margin-top:4px;"></div>
+            <div class="block tealdark" style="width:42%; height:9px; margin-top:4px;"></div>
+            <div class="block faint" style="width:100%; height:3px; margin-top:14px;"></div>
+            <div class="block faint" style="width:92%; height:3px; margin-top:2px;"></div>
+            <div class="block faint" style="width:78%; height:3px; margin-top:2px;"></div>
+            <div style="display:flex; gap:10px; margin-top:14px;">
+              <div><div class="block teal" style="width:18px; height:2px;"></div><div class="block" style="width:24px; height:7px; margin-top:3px;"></div></div>
+              <div><div class="block teal" style="width:22px; height:2px;"></div><div class="block" style="width:30px; height:7px; margin-top:3px;"></div></div>
+              <div><div class="block teal" style="width:16px; height:2px;"></div><div class="block" style="width:12px; height:7px; margin-top:3px;"></div></div>
+            </div>
+          </div>
+          <!-- RIGHT solid white card on dark stage -->
+          <div class="mini-card" style="background:#FFFFFF; border-color:rgba(0,0,0,0.08); left:62%; top:18%; right:6%; bottom:18%; padding:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div class="block teal" style="width:32%; height:2px;"></div>
+              <div class="block light" style="width:18%; height:2px;"></div>
+            </div>
+            <div class="block" style="width:1px; height:1px; background:var(--line); margin-top:6px;"></div>
+            <div class="block" style="width:82%; height:7px; margin-top:7px;"></div>
+            <div class="block faint" style="width:62%; height:2px; margin-top:4px;"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+              <div class="block light" style="width:30%; height:3px;"></div>
+              <div class="block tealdark" style="width:38%; height:6px;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+              <div class="block light" style="width:34%; height:3px;"></div>
+              <div class="block tealdark" style="width:28%; height:6px;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+              <div class="block light" style="width:24%; height:3px;"></div>
+              <div class="block" style="width:22%; height:6px; background:var(--ink-3);"></div>
+            </div>
+            <div style="margin-top:8px; padding:6px 8px; background:var(--teal-light); border-radius:4px;">
+              <div class="block teal" style="width:36%; height:2px;"></div>
+              <div class="block faint" style="width:88%; height:2px; margin-top:3px;"></div>
+              <div class="block faint" style="width:72%; height:2px; margin-top:1px;"></div>
+            </div>
+            <div class="block tealdark" style="width:100%; height:9px; margin-top:8px; border-radius:99px;"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="when">"Here's what it looks like" slides — a Pulse view, a workflow capture, a conversational agent moment. The content-slide adaptation of cover variants 1B/1C.</p>
+          <div class="spec"><span class="k">Split</span> 56 / 44 with right column FULL-bleed --teal-dark. <span class="k">Card</span> solid WHITE, not glass. <span class="k">Icon</span> use #icon-dark (white) since chrome sits over the dark right column.</div>
+          <div class="pitfall"><b>Pitfall:</b> using glassmorphism on the right card — glass is reserved for the cover. Patterning the dark stage with dots — keep it solid.</div>
+        </div>
+      </article>
+
+      <!-- P-13 CLOSING -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-13</span><span class="pname">Closing / CTA</span></div>
+          <span class="tier semantic">Semantic</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">NEXT STEP</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:flex; flex-direction:column; justify-content:center;">
+            <!-- big mark -->
+            <svg viewBox="0 0 43 36" style="width:38px; height:32px; color:var(--logo-dark); margin-bottom:14px;" fill="currentColor"><circle cx="6" cy="30" r="3"/><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+            <div class="block" style="width:80%; height:12px;"></div>
+            <div class="block" style="width:64%; height:12px; margin-top:5px;"></div>
+            <div class="block tealdark" style="width:36%; height:12px; margin-top:5px;"></div>
+            <div class="block teal" style="width:46%; height:5px; margin-top:14px;"></div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">13 / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Final slide, always. Brandmark + hero CTA two-tone + Plex Mono contact line.</p>
+          <div class="spec"><span class="k">Mark</span> 172×144 icon-only SVG (not the wordmark). <span class="k">h1</span> Geist 104px two-tone. <span class="k">CTA</span> Plex Mono 22px --teal.</div>
+          <div class="pitfall"><b>Pitfall:</b> adding a Plex Mono tag next to the brandmark. Repeating the wordmark — the closer uses icon-only.</div>
+        </div>
+      </article>
+
+      <!-- P-14 COMPARISON -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-14</span><span class="pname">Two-column comparison</span></div>
+          <span class="tier hybrid">Hybrid · occasional</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">THE DIFFERENCE</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well">
+            <div class="block" style="width:60%; height:9%;"></div>
+            <div class="block tealdark" style="width:22%; height:9%; margin-top:2px;"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px;">
+              <div>
+                <div class="block teal" style="width:60%; height:3px;"></div>
+                <div class="block" style="width:50%; height:14px; margin-top:6px;"></div>
+                <div class="block faint" style="width:100%; height:2px; margin-top:10px;"></div>
+                <div class="block faint" style="width:96%; height:2px; margin-top:2px;"></div>
+                <div class="block faint" style="width:84%; height:2px; margin-top:2px;"></div>
+              </div>
+              <div>
+                <div class="block tealdark" style="width:60%; height:3px;"></div>
+                <div class="block" style="width:50%; height:14px; margin-top:6px;"></div>
+                <div class="block faint" style="width:100%; height:2px; margin-top:10px;"></div>
+                <div class="block faint" style="width:96%; height:2px; margin-top:2px;"></div>
+                <div class="block faint" style="width:88%; height:2px; margin-top:2px;"></div>
+              </div>
+            </div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">— / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">A single binary comparison where <b>both sides matter</b>. Not for "look how bad the old way is" rhetoric — both states must be real states the customer experiences.</p>
+          <div class="spec"><span class="k">Header</span> match P-05 (statement). <span class="k">Numbers</span> match P-09 KPI but in --logo-dark on light.</div>
+          <div class="pitfall"><b>Pitfall:</b> using this as a rhetorical device. If one side is a strawman, it's not a comparison — it's just decoration.</div>
+        </div>
+      </article>
+
+      <!-- P-15 PULL QUOTE -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-15</span><span class="pname">Pull-quote</span></div>
+          <span class="tier semantic">Semantic · occasional</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">VOICE OF</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:flex; flex-direction:column; justify-content:center;">
+            <div class="block teal" style="width:8px; height:8px; border-radius:50%; margin-bottom:10px;"></div>
+            <div class="block" style="width:96%; height:9px;"></div>
+            <div class="block" style="width:92%; height:9px; margin-top:5px;"></div>
+            <div class="block" style="width:84%; height:9px; margin-top:5px;"></div>
+            <div class="block" style="width:58%; height:9px; margin-top:5px;"></div>
+            <div class="block teal" style="width:36%; height:3px; margin-top:18px;"></div>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">— / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Customer quote, analyst quote, or marquee internal insight that earns a whole slide. <b>One per deck max.</b></p>
+          <div class="spec"><span class="k">Quote</span> Geist 64px line-height 1.18 max-width 1480px. <span class="k">Attribution</span> Plex Mono 14px --teal all-caps 0.18em prefixed with em-dash.</div>
+          <div class="pitfall"><b>Pitfall:</b> italicizing the quote (no italics in this system). Using more than one pull-quote in a deck.</div>
+        </div>
+      </article>
+
+      <!-- P-16 ARCHITECTURE -->
+      <article class="card">
+        <div class="card-head">
+          <div class="label"><span class="pid">P-16</span><span class="pname">Architecture diagram</span></div>
+          <span class="tier image">Image · placeholder</span>
+        </div>
+        <div class="thumb">
+          <span class="chrome tl">ARCHITECTURE</span>
+          <svg class="chrome icon" viewBox="0 0 43 36" fill="currentColor"><rect x="2" y="2" width="8" height="20" rx="3"/><rect x="14" y="8" width="8" height="14" rx="3"/><rect x="26" y="2" width="8" height="20" rx="3"/></svg>
+          <div class="well" style="display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 200 100" style="width:100%; height:100%;">
+              <rect x="20" y="20" width="40" height="20" rx="3" fill="none" stroke="var(--teal)" stroke-width="0.8"/>
+              <rect x="80" y="20" width="40" height="20" rx="3" fill="none" stroke="var(--teal)" stroke-width="0.8"/>
+              <rect x="140" y="20" width="40" height="20" rx="3" fill="none" stroke="var(--teal)" stroke-width="0.8"/>
+              <rect x="50" y="60" width="100" height="20" rx="3" fill="var(--teal-light)" stroke="var(--logo-dark)" stroke-width="0.8"/>
+              <line x1="40" y1="40" x2="70" y2="60" stroke="var(--logo-dark)" stroke-width="0.6"/>
+              <line x1="100" y1="40" x2="100" y2="60" stroke="var(--logo-dark)" stroke-width="0.6"/>
+              <line x1="160" y1="40" x2="130" y2="60" stroke="var(--logo-dark)" stroke-width="0.6"/>
+            </svg>
+          </div>
+          <span class="chrome footer-l">© 2026 METAFORE · CONFIDENTIAL</span>
+          <span class="chrome footer-r">— / 13</span>
+        </div>
+        <div class="card-body">
+          <p class="when">Placeholder pattern — no canonical recipe yet. Architecture diagrams are deck-specific.</p>
+          <div class="spec"><span class="k">Rules</span> follow P-12 for type and palette: Plex Mono labels, teal-stack fills only, no third color.</div>
+          <div class="pitfall"><b>Pitfall:</b> reaching for indigo / sky / mint to differentiate layers. Use grayscale + teal step-downs instead.</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- COMPOSING A DECK -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Composing a <span class="accent">deck</span></h2>
+      <span class="count">The MetaWorks reference sequence</span>
+    </div>
+
+    <div class="sequence">
+      <div class="step"><span class="pid">P-01</span> Cover</div>
+      <div class="step"><span class="pid">P-03</span> Agenda</div>
+      <div class="step"><span class="pid">P-04</span> Company</div>
+      <div class="step"><span class="pid">P-05</span> Problem</div>
+      <div class="step"><span class="pid">P-06</span> 4-graph</div>
+      <div class="step"><span class="pid">P-05</span> Suite Intro</div>
+      <div class="step"><span class="pid">P-08</span> 12 modules</div>
+      <div class="step"><span class="pid">P-07</span> Platform</div>
+      <div class="step"><span class="pid">P-10</span> Integrations</div>
+      <div class="step"><span class="pid">P-09</span> KPI band</div>
+      <div class="step"><span class="pid">P-05</span> Why</div>
+      <div class="step"><span class="pid">P-11</span> Deployment</div>
+      <div class="step"><span class="pid">P-13</span> Closing</div>
+    </div>
+
+    <p style="font-family:var(--body-font); font-size:14px; line-height:1.6; color:var(--ink-2); max-width:920px; margin:0;">
+      A 5–8 slide deck drops the agenda, the company, the integration ecosystem, and the timeline.
+      A 20+ slide deck adds section dividers (P-02) at narrative breaks and may use the pull-quote (P-15) once.
+      <b>Don't repeat a pattern more than 3× in a deck.</b> If you have four "statement" slides, three of them are probably overlap.
+    </p>
+  </section>
+
+  <!-- WHEN IN DOUBT -->
+  <section class="section">
+    <div class="section-head">
+      <h2>When in <span class="accent">doubt</span></h2>
+      <span class="count">Three gut checks</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:24px;">
+      <div class="inv">
+        <h3>Is the slide editable enough?</h3>
+        <div class="body">If the answer is "the title, but everything else is a picture" — promote the picture to a real layout (P-06 / P-07 / P-10) and let every label become a text frame.</div>
+      </div>
+      <div class="inv">
+        <h3>Is the headline doing the work?</h3>
+        <div class="body">If you can remove the headline and the slide still communicates, the slide is over-illustrated. If you can remove every illustration and the slide reads fine, it's under-illustrated. Headline as the spine, illustration as the proof.</div>
+      </div>
+      <div class="inv">
+        <h3>Does it look like Metafore at a glance?</h3>
+        <div class="body">Three tells: two-tone hero, Plex Mono eyebrow somewhere, single teal accent family. If a stranger could mistake it for a generic SaaS template, the brand isn't doing its job.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="notes">
+    <span>METAFORE DECK · PATTERN LIBRARY v1</span>
+    <span>SEE references/pattern-library.md FOR FULL SPECS</span>
+  </div>
+
+</div>
+</body>
+</html>

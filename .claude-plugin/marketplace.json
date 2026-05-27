@@ -1,0 +1,13 @@
+{
+  "name": "metafore",
+  "owner": {
+    "name": "David Sasson"
+  },
+  "plugins": [
+    {
+      "name": "metafore",
+      "source": "./",
+      "description": "Metafore-branded artifact suite: brochures, dashboards, slide decks, Word docs, and HTML graphics. Shared brand rules (voice, AI-tell blocklist, design tokens, Pulse vocabulary) live in assets/brand/ so every skill stays on-brand."
+    }
+  ]
+}

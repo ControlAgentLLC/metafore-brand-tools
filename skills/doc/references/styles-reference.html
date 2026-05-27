@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Metafore Doc — Styles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF; --bg-solid: #F8FAFA;
+    --ink: #111111; --ink-2: #404040; --ink-3: #666666; --ink-4: #999999;
+    --line: #ECECEC; --line-strong: #D8D8D8;
+    --teal-dark: #004D50; --teal: #006B6F; --teal-accent: #00989E; --teal-light: #E8F4F5;
+    --logo-dark: #035657;
+    --header: 'Geist', 'Inter', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 80px 64px 120px;
+  }
+
+  /* ---- top hero ---- */
+  .hero { border-bottom: 1px solid var(--line); padding-bottom: 40px; margin-bottom: 56px; }
+  .hero .eyebrow {
+    font-family: var(--mono); font-size: 8pt; color: var(--teal);
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: var(--header); font-weight: 400; font-size: 36pt;
+    line-height: 1.05; letter-spacing: -0.8px; margin-bottom: 18px; max-width: 720px;
+  }
+  .hero h1 .accent { color: var(--logo-dark); }
+  .hero p { font-size: 11pt; color: var(--ink-2); max-width: 640px; line-height: 1.6; }
+
+  /* ---- section frame ---- */
+  section.block { margin-bottom: 72px; }
+  .block-eyebrow {
+    font-family: var(--mono); font-size: 8pt; color: var(--teal);
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .block-title {
+    font-family: var(--header); font-weight: 500; font-size: 16pt;
+    margin-bottom: 24px; letter-spacing: -0.1px;
+  }
+  .block-lede { font-size: 10pt; color: var(--ink-2); margin-bottom: 28px; max-width: 640px; }
+
+  /* ---- page setup grid ---- */
+  .kv-grid {
+    display: grid; grid-template-columns: 240px 1fr; gap: 12px 32px; font-size: 10pt;
+  }
+  .kv-grid dt {
+    font-family: var(--mono); color: var(--ink-3); letter-spacing: 0.08em;
+    text-transform: uppercase; font-size: 8.5pt; padding-top: 1px;
+  }
+  .kv-grid dd { color: var(--ink); }
+  .kv-grid dd b { color: var(--teal-dark); font-weight: 500; }
+
+  /* ---- swatches ---- */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .swatch { border: 1px solid var(--line); overflow: hidden; background: #fff; }
+  .swatch .chip { height: 64px; width: 100%; border-bottom: 1px solid var(--line); }
+  .swatch .meta { padding: 10px 12px 12px; }
+  .swatch .token { font-family: var(--mono); font-size: 8.5pt; color: var(--ink); letter-spacing: 0.04em; }
+  .swatch .hex { font-family: var(--mono); font-size: 8pt; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 2px; }
+  .swatch .usage { font-size: 9pt; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+
+  /* ---- font cards ---- */
+  .fonts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .font-card { border: 1px solid var(--line); padding: 22px 24px 24px; }
+  .font-card .role {
+    font-family: var(--mono); font-size: 8pt; color: var(--teal);
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .font-card .specimen { font-size: 26pt; letter-spacing: -0.5px; line-height: 1; color: var(--ink); margin-bottom: 10px; }
+  .font-card .stack { font-family: var(--mono); font-size: 8pt; color: var(--ink-3); letter-spacing: 0.04em; }
+  .fc-header .specimen { font-family: var(--header); }
+  .fc-body .specimen { font-family: var(--body); font-size: 22pt; }
+  .fc-mono .specimen { font-family: var(--mono); font-size: 19pt; }
+
+  /* ---- element card ---- */
+  .element { border: 1px solid var(--line); margin-bottom: 20px; background: #fff; }
+  .element header { padding: 22px 26px 18px; border-bottom: 1px solid var(--line); background: var(--bg-solid); }
+  .element header .num {
+    font-family: var(--mono); font-size: 8pt; color: var(--teal);
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .element header h3 { font-family: var(--header); font-size: 16pt; font-weight: 500; letter-spacing: -0.15px; color: var(--ink); }
+  .element header p { font-size: 9.5pt; color: var(--ink-2); margin-top: 6px; max-width: 720px; }
+
+  .element-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .element-body.stacked { grid-template-columns: 1fr; }
+  .specs { padding: 22px 26px 26px; border-right: 1px solid var(--line); background: #fff; }
+  .specs.full-width { border-right: none; border-bottom: 1px solid var(--line); }
+  .specs table { width: 100%; border-collapse: collapse; }
+  .specs td { padding: 7px 0; vertical-align: top; font-size: 9pt; border-bottom: 1px dashed var(--line); }
+  .specs tr:last-child td { border-bottom: none; }
+  .specs td:first-child {
+    font-family: var(--mono); color: var(--ink-3); font-size: 8pt;
+    letter-spacing: 0.04em; width: 45%; padding-right: 14px;
+  }
+  .specs td:last-child { font-family: var(--body); color: var(--ink); }
+  .specs td b { color: var(--teal-dark); font-weight: 500; }
+  .specs td code {
+    font-family: var(--mono); font-size: 8.5pt; color: var(--ink);
+    background: var(--bg-solid); padding: 1px 6px; border: 1px solid var(--line);
+  }
+
+  .sample {
+    padding: 26px 28px; background: #fff;
+    display: flex; flex-direction: column; justify-content: flex-start; min-height: 140px;
+  }
+  .sample.tall { min-height: 320px; }
+  .sample .frame-label {
+    font-family: var(--mono); font-size: 7pt; color: var(--ink-4);
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .sample-frame { width: 100%; border: 1px dashed var(--line-strong); padding: 18px 22px; background: #FFFFFF; }
+  .sample-frame.no-pad { padding: 0; border: none; }
+  .sample-frame.page-frame { padding: 0; }
+
+  /* ---- live renderings (match docx output) ---- */
+
+  /* Cover page composite */
+  .render-cover-page {
+    width: 100%;
+    aspect-ratio: 8.5 / 11;
+    border: 1px solid var(--line);
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    position: relative;
+  }
+  .render-cover-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 38px; }
+  .render-cover-header .logo {
+    font-family: var(--header); font-weight: 500; font-size: 16pt; color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .render-cover-header .logo svg { width: 22px; height: 19px; }
+  .render-cover-header .doc-meta { text-align: right; font-family: var(--mono); font-size: 7pt;
+    letter-spacing: 1.6pt; text-transform: uppercase; line-height: 1.8; }
+  .render-cover-header .doc-meta .doc-type { color: var(--ink-3); }
+  .render-cover-header .doc-meta .date { color: var(--teal-dark); }
+
+  .render-cover-body { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; }
+  .render-cover-eyebrow {
+    font-family: var(--mono); font-size: 7pt; color: var(--teal);
+    letter-spacing: 1.6pt; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .render-cover-h1 {
+    font-family: var(--header); font-weight: 400; font-size: 28pt;
+    line-height: 1.05; letter-spacing: -0.5px; color: var(--ink); margin-bottom: 14px;
+  }
+  .render-cover-h1 .accent { color: var(--logo-dark); }
+  .render-cover-subtitle {
+    font-family: var(--header); font-weight: 600; font-size: 11pt;
+    line-height: 1.3; color: var(--ink); margin-bottom: 20px; max-width: 90%;
+  }
+  .render-cover-lead {
+    font-family: var(--body); font-size: 7.5pt; color: var(--ink);
+    line-height: 1.55; max-width: 90%;
+  }
+  .render-cover-footer { border-top: 0.5pt solid var(--line); padding-top: 10px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 32px; }
+  .render-cover-footer .col .label {
+    font-family: var(--mono); font-size: 6.5pt; color: var(--teal);
+    letter-spacing: 1.4pt; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .render-cover-footer .col .val { font-family: var(--body); font-size: 8pt; color: var(--ink); }
+
+  /* TOC page composite */
+  .render-toc-page {
+    width: 100%;
+    aspect-ratio: 8.5 / 11;
+    border: 1px solid var(--line);
+    padding: 32px 36px;
+    display: flex; flex-direction: column;
+    background: #FFFFFF;
+  }
+  .render-toc-title {
+    font-family: var(--header); font-weight: 400; font-size: 22pt; color: var(--ink);
+    line-height: 1.1; margin-bottom: 10px;
+  }
+  .render-toc-rule { border-top: 0.5pt solid var(--line); margin-bottom: 14px; }
+  .render-toc-entries .entry {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 6px 0; gap: 8px;
+  }
+  .render-toc-entries .entry .label { font-family: var(--body); }
+  .render-toc-entries .entry.l1 .label { font-size: 9.5pt; color: var(--ink); }
+  .render-toc-entries .entry.l2 { padding-left: 24px; }
+  .render-toc-entries .entry.l2 .label { font-size: 8.5pt; color: var(--ink-2); }
+  .render-toc-entries .entry .leader { flex: 1; border-bottom: 0.5pt dotted var(--line-strong); margin: 0 6px; opacity: 0.8; align-self: flex-end; height: 3px; }
+  .render-toc-entries .entry .pg { font-family: var(--body); font-size: 9pt; color: var(--ink-2); }
+
+  /* Inner page footer */
+  .render-footer {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 6.5pt; color: var(--ink-4);
+    letter-spacing: 1.4pt; padding-top: 6px;
+  }
+  .render-footer-empty {
+    font-family: var(--mono); font-size: 8pt; color: var(--ink-4);
+    letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6;
+  }
+
+  /* Section eyebrow + H2 */
+  .render-section-eyebrow {
+    font-family: var(--mono); font-size: 8pt; color: var(--teal);
+    letter-spacing: 1.4pt; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .render-section-rule { border-top: 0.5pt solid var(--line); margin-bottom: 12px; padding-top: 12px; }
+  .render-h2 {
+    font-family: var(--header); font-size: 22pt; font-weight: 400;
+    line-height: 1.2; letter-spacing: -0.2px; color: var(--ink);
+  }
+
+  /* Subhead */
+  .render-subhead {
+    font-family: var(--header); font-size: 13pt; font-weight: 600;
+    line-height: 1.3; color: var(--ink);
+  }
+
+  /* Body */
+  .render-body {
+    font-family: var(--body); font-size: 10pt; color: var(--ink);
+    line-height: 1.5; max-width: 420px;
+  }
+  .render-body b { font-weight: 500; }
+
+  /* Takeaway */
+  .render-takeaway {
+    font-family: var(--body); font-size: 10pt; color: var(--ink-2);
+    line-height: 1.5; max-width: 420px;
+  }
+
+  /* Bullets */
+  .render-list { list-style: none; padding: 0; }
+  .render-list li {
+    font-family: var(--body); font-size: 10pt; color: var(--ink);
+    line-height: 1.4; padding-left: 18px; position: relative; margin-bottom: 2px;
+  }
+  .render-list li::before {
+    content: "•"; position: absolute; left: 0; top: 0; font-size: 10.5pt; color: var(--ink);
+  }
+  .render-list li b { font-weight: 500; }
+
+  /* Callout — white-paper style */
+  .render-callout {
+    background: var(--teal-light);
+    border-left: 3pt solid var(--teal-dark);
+    padding: 14px 18px;
+  }
+  .render-callout .text {
+    font-family: var(--body); font-size: 11pt; color: var(--ink); line-height: 1.5;
+  }
+
+  /* Data table */
+  .render-table { width: 100%; border-collapse: collapse; }
+  .render-table thead th {
+    text-align: left; background: var(--teal-light); color: var(--teal-dark);
+    font-family: var(--mono); font-size: 6.5pt; font-weight: 500;
+    letter-spacing: 1.6pt; text-transform: uppercase;
+    padding: 9px 12px; border-bottom: 0.5pt solid var(--line-strong);
+  }
+  .render-table tbody td {
+    font-family: var(--body); font-size: 8pt; color: var(--ink);
+    padding: 7px 12px; border-bottom: 0.5pt solid var(--line); vertical-align: top;
+  }
+  .render-table tbody tr:last-child td { border-bottom: none; }
+  .render-table .node-id { font-family: var(--mono); font-size: 7.5pt; color: var(--teal-dark); letter-spacing: 0.4pt; font-weight: 500; }
+  .render-table .node-layer { font-family: var(--mono); font-size: 7pt; color: var(--ink-2); letter-spacing: 0.6pt; text-transform: uppercase; }
+  .render-table .node-states { font-family: var(--mono); font-size: 7.5pt; color: var(--ink-2); letter-spacing: 0.2pt; }
+
+  .render-table-spacer {
+    height: 14pt;
+    border-left: 1px dashed var(--line);
+    margin-left: 8px;
+    position: relative;
+  }
+  .render-table-spacer::after {
+    content: "↕ 14pt spacer";
+    position: absolute;
+    left: 16px; top: 50%; transform: translateY(-50%);
+    font-family: var(--mono); font-size: 7pt; color: var(--ink-4);
+    letter-spacing: 0.08em;
+  }
+
+  /* Signature */
+  .render-signature { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .render-signature .col .label {
+    font-family: var(--mono); font-size: 7pt; color: var(--teal-dark);
+    letter-spacing: 1.6pt; text-transform: uppercase; font-weight: 500; margin-bottom: 22px;
+  }
+  .render-signature .col .line { border-bottom: 0.6pt solid var(--ink); height: 1px; margin-bottom: 6px; }
+  .render-signature .col .who {
+    font-family: var(--mono); font-size: 7pt; color: var(--ink-2);
+    letter-spacing: 1.4pt; text-transform: uppercase;
+  }
+  .render-signature .col .date {
+    font-family: var(--mono); font-size: 6.5pt; color: var(--ink-3);
+    letter-spacing: 1.4pt; text-transform: uppercase; margin-top: 14px;
+  }
+
+  /* Optional badge */
+  .badge {
+    display: inline-block;
+    font-family: var(--mono); font-size: 7pt; color: var(--teal-dark);
+    background: var(--teal-light); padding: 2px 8px;
+    letter-spacing: 0.14em; text-transform: uppercase; margin-left: 8px;
+    vertical-align: middle; position: relative; top: -2px;
+  }
+
+  @media (max-width: 880px) {
+    .element-body { grid-template-columns: 1fr; }
+    .specs { border-right: none; border-bottom: 1px solid var(--line); }
+    .fonts-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="eyebrow">Metafore Doc · Styles reference</div>
+    <h1>One source of truth for every element <span class="accent">in the doc.</span></h1>
+    <p>This is what the <code style="font-family: var(--mono); font-size: 10pt; padding: 1px 6px; background: var(--bg-solid); border: 1px solid var(--line);">metafore-doc-adnoc-test.docx</code> generator produces — white-paper-styled, with optional cover and TOC pages. Each element shows the spec on the left and a live rendering on the right. Mark up specific values to change and we'll roll them into the generator script.</p>
+  </header>
+
+  <!-- =================== PAGE SETUP =================== -->
+  <section class="block">
+    <div class="block-eyebrow">01 · Page setup</div>
+    <h2 class="block-title">US Letter, 0.75" margins, 7.0" content width.</h2>
+    <dl class="kv-grid">
+      <dt>Size</dt><dd>US Letter (<b>8.5 × 11</b>)</dd>
+      <dt>Margins</dt><dd><b>0.75"</b> all sides</dd>
+      <dt>Header distance from top edge</dt><dd>0.4"</dd>
+      <dt>Footer distance from bottom edge</dt><dd>0.4"</dd>
+      <dt>Content area</dt><dd><b>7.0"</b> wide × <b>9.5"</b> tall</dd>
+    </dl>
+  </section>
+
+  <!-- =================== COLORS =================== -->
+  <section class="block">
+    <div class="block-eyebrow">02 · Colors</div>
+    <h2 class="block-title">Single accent family — the teal stack plus ink + line.</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#111111"></div><div class="meta"><div class="token">ink</div><div class="hex">#111111</div><div class="usage">Body, H1 base, H2, subhead</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#404040"></div><div class="meta"><div class="token">ink-2</div><div class="hex">#404040</div><div class="usage">Takeaway body, table layer column</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#666666"></div><div class="meta"><div class="token">ink-3</div><div class="hex">#666666</div><div class="usage">Cover doc-type label, fine annotation</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#999999"></div><div class="meta"><div class="token">ink-4</div><div class="hex">#999999</div><div class="usage">Footer text — subtle</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#006B6F"></div><div class="meta"><div class="token">teal</div><div class="hex">#006B6F</div><div class="usage">Section eyebrows, cover/TOC meta labels</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#004D50"></div><div class="meta"><div class="token">teal-dark</div><div class="hex">#004D50</div><div class="usage">Cover date label, callout left border, table header text, sig label</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#E8F4F5; border-bottom: 1px solid var(--line);"></div><div class="meta"><div class="token">teal-light</div><div class="hex">#E8F4F5</div><div class="usage">Callout fill, data-table header fill</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#035657"></div><div class="meta"><div class="token">logo-dark</div><div class="hex">#035657</div><div class="usage">H1 cover accent run</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ECECEC"></div><div class="meta"><div class="token">line</div><div class="hex">#ECECEC</div><div class="usage">Section dividers, cover/TOC hairlines, table dividers</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#D8D8D8"></div><div class="meta"><div class="token">line-strong</div><div class="hex">#D8D8D8</div><div class="usage">Data-table header bottom border</div></div></div>
+    </div>
+  </section>
+
+  <!-- =================== FONTS =================== -->
+  <section class="block">
+    <div class="block-eyebrow">03 · Fonts</div>
+    <h2 class="block-title">Three families, three roles.</h2>
+    <div class="fonts-grid">
+      <div class="font-card fc-header"><div class="role">Header</div><div class="specimen">Aa</div><div class="stack">Geist → Arial</div></div>
+      <div class="font-card fc-body"><div class="role">Body</div><div class="specimen">Aa</div><div class="stack">Inter → Calibri</div></div>
+      <div class="font-card fc-mono"><div class="role">Mono</div><div class="specimen">Aa</div><div class="stack">IBM Plex Mono → Consolas</div></div>
+    </div>
+  </section>
+
+  <!-- =================== OPTIONAL PAGES =================== -->
+  <section class="block">
+    <div class="block-eyebrow">04 · Optional pages</div>
+    <h2 class="block-title">Cover and Table of Contents — opt in per doc.</h2>
+    <p class="block-lede">Generator config flags <code style="font-family:var(--mono);font-size:9pt;background:var(--bg-solid);padding:1px 5px;border:1px solid var(--line);">INCLUDE_COVER</code> and <code style="font-family:var(--mono);font-size:9pt;background:var(--bg-solid);padding:1px 5px;border:1px solid var(--line);">INCLUDE_TOC</code>. Either, both, or neither.</p>
+
+    <!-- A1 · Cover page -->
+    <article class="element">
+      <header>
+        <div class="num">A1 · Cover page <span class="badge">Optional</span></div>
+        <h3>Logo top-left, doc-type stacked top-right, big H1 + subtitle + lead, metadata strip at the bottom.</h3>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td colspan="2" style="border-bottom: 1px solid var(--line); padding-bottom: 6px;"><b style="color:var(--teal-dark);">Cover header (top of cover page)</b></td></tr>
+            <tr><td>Layout</td><td>2-col borderless table, vAlign top</td></tr>
+            <tr><td>Left cell · width</td><td>3.5"</td></tr>
+            <tr><td>Right cell · width</td><td>3.5"</td></tr>
+            <tr><td>Logo</td><td>Full Metafore wordmark · <b>1.5"</b> wide</td></tr>
+            <tr><td>Doc-type label</td><td>IBM Plex Mono · <b>8pt</b> · <code>ink-3</code> · uppercase · tracked +32</td></tr>
+            <tr><td>Date label</td><td>IBM Plex Mono · <b>8pt</b> · <code>teal-dark</code> · uppercase · tracked +32</td></tr>
+            <tr><td colspan="2" style="border-bottom: 1px solid var(--line); padding-top: 14px; padding-bottom: 6px;"><b style="color:var(--teal-dark);">Cover body</b></td></tr>
+            <tr><td>Eyebrow · font/size</td><td>IBM Plex Mono · <b>8pt</b></td></tr>
+            <tr><td>Eyebrow · color</td><td><code>teal</code>, uppercase, tracked +32</td></tr>
+            <tr><td>Eyebrow · space before</td><td><b>180pt</b> (lots of room at top)</td></tr>
+            <tr><td>H1 · font/size</td><td>Geist · <b>46pt</b>, weight 400</td></tr>
+            <tr><td>H1 · color · base</td><td><code>ink</code></td></tr>
+            <tr><td>H1 · color · accent run</td><td><code>logo-dark</code></td></tr>
+            <tr><td>H1 · line spacing</td><td>56pt (exact)</td></tr>
+            <tr><td>Subtitle · font/size</td><td>Geist · <b>18pt</b>, bold</td></tr>
+            <tr><td>Subtitle · color</td><td><code>ink</code></td></tr>
+            <tr><td>Lead · font/size</td><td>Inter · <b>11pt</b>, color <code>ink</code></td></tr>
+            <tr><td>Lead · line spacing</td><td>18pt</td></tr>
+            <tr><td colspan="2" style="border-bottom: 1px solid var(--line); padding-top: 14px; padding-bottom: 6px;"><b style="color:var(--teal-dark);">Cover footer · metadata strip</b></td></tr>
+            <tr><td>Hairline above</td><td>0.5pt <code>line</code></td></tr>
+            <tr><td>Layout</td><td>3-col borderless table (2.4" · 2.4" · 2.2")</td></tr>
+            <tr><td>Label · font/size</td><td>IBM Plex Mono · <b>7.5pt</b></td></tr>
+            <tr><td>Label · color</td><td><code>teal</code>, uppercase, tracked +28</td></tr>
+            <tr><td>Value · font/size</td><td>Inter · <b>10.5pt</b>, color <code>ink</code></td></tr>
+            <tr><td>Default labels</td><td>Prepared for · Version · Reading time</td></tr>
+          </table>
+        </div>
+        <div class="sample tall">
+          <div class="frame-label">Live rendering — cover page</div>
+          <div class="render-cover-page">
+            <div class="render-cover-header">
+              <div class="logo">
+                <svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.9 8.9C17.4 7.4 15.7 6.6 14.2 7.1C12.7 7.7 11.9 9.3 12.4 10.9L18.1 26.8C18.7 28.3 20.3 29.1 21.9 28.5C23.4 28 24.2 26.3 23.6 24.8L17.9 8.9Z" fill="#67A4A4"/>
+                  <path d="M11.8 25.5C11.9 27.1 10.7 28.5 9.1 28.6C7.5 28.7 6.1 27.5 6.0 25.9C5.9 24.3 7.1 22.9 8.7 22.8C10.3 22.7 11.7 23.9 11.8 25.5Z" fill="#035657"/>
+                  <path d="M18.0 20.7C19.6 20.7 20.9 19.4 20.9 17.8C20.9 16.2 19.6 14.9 18.0 14.9C16.4 14.9 15.1 16.2 15.1 17.8C15.1 19.4 16.4 20.7 18.0 20.7Z" fill="#035657"/>
+                  <path d="M29.5 8.7C29.0 7.2 27.3 6.4 25.8 7.0C24.2 7.5 23.5 9.2 24.0 10.7L29.7 26.6C30.2 28.1 31.9 28.9 33.4 28.4C34.9 27.8 35.7 26.2 35.2 24.7L29.5 8.7Z" fill="#67A4A4"/>
+                  <path d="M26.7 12.6C28.3 12.6 29.7 11.3 29.7 9.7C29.7 8.1 28.3 6.8 26.7 6.8C25.1 6.8 23.8 8.1 23.8 9.7C23.8 11.3 25.1 12.6 26.7 12.6Z" fill="#035657"/>
+                </svg>
+                <span>Metafore</span>
+              </div>
+              <div class="doc-meta">
+                <div class="doc-type">White Paper</div>
+                <div class="date">May 2026</div>
+              </div>
+            </div>
+            <div class="render-cover-body">
+              <div class="render-cover-eyebrow">Probabilistic Influence Network · UAE gas sector</div>
+              <div class="render-cover-h1">An agentic Bayesian engine for CNG and gas market <span class="accent">intelligence.</span></div>
+              <div class="render-cover-subtitle">A 21-node influence network sitting over a deterministic knowledge graph, for ADNOC.</div>
+              <div class="render-cover-lead">As the UAE accelerates its energy transition and industrial expansion, capital allocation in the natural gas and CNG sectors requires moving beyond historical reporting.</div>
+            </div>
+            <div class="render-cover-footer">
+              <div class="col"><div class="label">Prepared for</div><div class="val">ADNOC</div></div>
+              <div class="col"><div class="label">Version</div><div class="val">v1.0</div></div>
+              <div class="col"><div class="label">Reading time</div><div class="val">8 minutes</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- A2 · TOC page -->
+    <article class="element">
+      <header>
+        <div class="num">A2 · Table of contents page <span class="badge">Optional</span></div>
+        <h3>Auto-populated TOC field driven by outline levels.</h3>
+        <p>"Contents" title + hairline + Word TOC field. Word fills it on open (or on right-click → Update Field).</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Title · text</td><td>"Contents"</td></tr>
+            <tr><td>Title · font/size</td><td>Geist · <b>26pt</b>, weight 400</td></tr>
+            <tr><td>Title · line spacing</td><td>34pt</td></tr>
+            <tr><td>Hairline below title</td><td>0.5pt <code>line</code></td></tr>
+            <tr><td>TOC field</td><td><code>TOC \o "1-2" \h \z \u</code></td></tr>
+            <tr><td>Source · level 1</td><td>Section eyebrows (outline level 0)</td></tr>
+            <tr><td>Source · level 2</td><td>Subheads (outline level 1)</td></tr>
+            <tr><td colspan="2" style="border-bottom: 1px solid var(--line); padding-top: 14px; padding-bottom: 6px;"><b style="color:var(--teal-dark);">TOC 1 paragraph style</b></td></tr>
+            <tr><td>Font / size</td><td>Inter · <b>11pt</b>, color <code>ink</code></td></tr>
+            <tr><td>Indent</td><td>0</td></tr>
+            <tr><td>Space before / after</td><td>10pt / 2pt</td></tr>
+            <tr><td>Line spacing</td><td>16pt</td></tr>
+            <tr><td colspan="2" style="border-bottom: 1px solid var(--line); padding-top: 14px; padding-bottom: 6px;"><b style="color:var(--teal-dark);">TOC 2 paragraph style</b></td></tr>
+            <tr><td>Font / size</td><td>Inter · <b>10pt</b>, color <code>ink-2</code></td></tr>
+            <tr><td>Indent</td><td>0.32"</td></tr>
+            <tr><td>Space before / after</td><td>4pt / 2pt</td></tr>
+            <tr><td>Line spacing</td><td>14pt</td></tr>
+          </table>
+        </div>
+        <div class="sample tall">
+          <div class="frame-label">Live rendering — TOC page</div>
+          <div class="render-toc-page">
+            <div class="render-toc-title">Contents</div>
+            <div class="render-toc-rule"></div>
+            <div class="render-toc-entries">
+              <div class="entry l1"><span class="label">01 · Executive summary</span><span class="leader"></span><span class="pg">3</span></div>
+              <div class="entry l1"><span class="label">02 · Network topology</span><span class="leader"></span><span class="pg">3</span></div>
+              <div class="entry l2"><span class="label">1 · Macro-economic and policy drivers</span><span class="leader"></span><span class="pg">3</span></div>
+              <div class="entry l2"><span class="label">2 · Sector-specific activity</span><span class="leader"></span><span class="pg">4</span></div>
+              <div class="entry l2"><span class="label">3 · Regional demand aggregation</span><span class="leader"></span><span class="pg">4</span></div>
+              <div class="entry l2"><span class="label">4 · Strategic outputs</span><span class="leader"></span><span class="pg">5</span></div>
+              <div class="entry l1"><span class="label">03 · Complete 21-node topology</span><span class="leader"></span><span class="pg">5</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- =================== PERSISTENT CHROME =================== -->
+  <section class="block">
+    <div class="block-eyebrow">05 · Persistent chrome</div>
+    <h2 class="block-title">Inner pages — no header, subtle footer.</h2>
+
+    <!-- B1 · Inner-page header -->
+    <article class="element">
+      <header>
+        <div class="num">B1 · Inner-page header</div>
+        <h3>Empty.</h3>
+        <p>No logo, no doc title, no hairline on content pages — the top margin is left alone. Matches the white-paper aesthetic.</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Default header content</td><td>(empty paragraph)</td></tr>
+            <tr><td>Header distance</td><td>0.4" from top edge</td></tr>
+            <tr><td>First-page header</td><td>Cover header (see A1), only if INCLUDE_COVER</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering — top of an inner page</div>
+          <div class="sample-frame" style="background: linear-gradient(180deg, var(--bg-solid) 0%, var(--bg-solid) 30%, #fff 30%, #fff 100%); padding: 18px 22px 30px;">
+            <div class="render-footer-empty">— empty top margin —</div>
+            <div style="margin-top: 24px; height: 1px; background: var(--line);"></div>
+            <div style="margin-top: 18px;"><div class="render-section-eyebrow">01 · Executive summary</div></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- B2 · Inner-page footer -->
+    <article class="element">
+      <header>
+        <div class="num">B2 · Inner-page footer</div>
+        <h3>Subtle one-liner. No hairline.</h3>
+        <p>Doc title in light gray Plex Mono on the left, raw page number on the right (just <code>3</code>, not <code>Page 3 of 8</code>).</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Font / size</td><td>IBM Plex Mono · <b>7pt</b></td></tr>
+            <tr><td>Color</td><td><code>ink-4</code> · <b>#999999</b> (deliberately faint)</td></tr>
+            <tr><td>Style</td><td>tracked +20 (no caps)</td></tr>
+            <tr><td>Left content</td><td><code>Metafore · &lt;doc title short&gt; · 2026</code></td></tr>
+            <tr><td>Right content</td><td>PAGE field (raw number)</td></tr>
+            <tr><td>Hairline above</td><td><b>None</b> — by design, keeps the footer feather-light</td></tr>
+            <tr><td>Tab stop</td><td>Right tab at content edge (7.0")</td></tr>
+            <tr><td>Footer distance</td><td>0.4" from bottom edge</td></tr>
+            <tr><td>First-page footer</td><td>Cover metadata strip (see A1), only if INCLUDE_COVER</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering — bottom of an inner page</div>
+          <div class="sample-frame">
+            <div class="render-footer">
+              <div>Metafore · An agentic Bayesian engine for ADNOC · 2026</div>
+              <div>3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- =================== BODY ELEMENTS =================== -->
+  <section class="block">
+    <div class="block-eyebrow">06 · Body elements</div>
+    <h2 class="block-title">The reusable parts of every content page.</h2>
+
+    <!-- C1 · Section eyebrow -->
+    <article class="element">
+      <header>
+        <div class="num">C1 · Section eyebrow</div>
+        <h3>Section identifier, with an optional hairline above.</h3>
+        <p>Format: <code>NN · Section title</code>. The top hairline serves as a quiet between-section divider; the first section after the cover/TOC skips it.</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Font / size</td><td>IBM Plex Mono · <b>8pt</b></td></tr>
+            <tr><td>Color</td><td><code>teal</code></td></tr>
+            <tr><td>Style</td><td>uppercase, tracked +28</td></tr>
+            <tr><td>Outline level</td><td>0 (Heading 1 — picked up by TOC)</td></tr>
+            <tr><td>Top hairline · color/weight</td><td><code>line</code> / 0.5pt</td></tr>
+            <tr><td>Top hairline · space before/after</td><td>24pt / 24pt</td></tr>
+            <tr><td>Eyebrow · space after</td><td>10pt</td></tr>
+            <tr><td>Eyebrow · line spacing</td><td>12pt</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame">
+            <div class="render-section-rule"></div>
+            <div class="render-section-eyebrow">02 · Network topology</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C2 · H2 -->
+    <article class="element">
+      <header>
+        <div class="num">C2 · H2 — section title</div>
+        <h3>The section's lead phrase.</h3>
+        <p>Single-tone ink. Sits directly under the section eyebrow.</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Font / size</td><td>Geist · <b>26pt</b>, weight 400</td></tr>
+            <tr><td>Color</td><td><code>ink</code></td></tr>
+            <tr><td>Line spacing</td><td>34pt (exact)</td></tr>
+            <tr><td>Space after</td><td>14pt</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame">
+            <div class="render-h2">Four causal layers, twenty-one nodes.</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C3 · Subhead -->
+    <article class="element">
+      <header>
+        <div class="num">C3 · Subhead — numbered</div>
+        <h3>Sub-section within a section. Format: <code>N · Topic</code>.</h3>
+        <p>The "<code>1 ·</code>" prefix is part of the heading — not a separate eyebrow. Outline level 1, so it appears as a level-2 entry in the TOC.</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Font / size</td><td>Geist · <b>13pt</b>, bold</td></tr>
+            <tr><td>Color</td><td><code>ink</code></td></tr>
+            <tr><td>Line spacing</td><td>18pt</td></tr>
+            <tr><td>Space before / after</td><td>14pt / 8pt</td></tr>
+            <tr><td>Outline level</td><td>1 (Heading 2 — TOC level 2)</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame">
+            <div class="render-subhead">1 · Macro-economic and policy drivers</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C4 · Body -->
+    <article class="element">
+      <header>
+        <div class="num">C4 · Body paragraph</div>
+        <h3>The workhorse — every prose paragraph. Inline bold supported.</h3>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Font / size</td><td>Inter · <b>10pt</b></td></tr>
+            <tr><td>Color</td><td><code>ink</code></td></tr>
+            <tr><td>Line spacing</td><td><b>15pt</b> (exact)</td></tr>
+            <tr><td>Space after</td><td>10pt</td></tr>
+            <tr><td>Inline bold</td><td>weight 500 — used for proper nouns and key terms</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame">
+            <div class="render-body">Traditional business intelligence tools answer <b>what happened</b>. The platform you are proposing answers <b>what is about to happen, why, and which lever moves it</b>.</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C5 · Takeaway -->
+    <article class="element">
+      <header>
+        <div class="num">C5 · Body — takeaway</div>
+        <h3>Lighter sibling, used after tables or callouts.</h3>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Font / size</td><td>Inter · <b>10pt</b></td></tr>
+            <tr><td>Color</td><td><code>ink-2</code></td></tr>
+            <tr><td>Line spacing</td><td>15pt</td></tr>
+            <tr><td>Space after</td><td>0</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame">
+            <div class="render-takeaway">Variable Elimination collapses this 21-node graph into clean conditional probability matrices in milliseconds — recomputed every time new telemetry hits the root nodes.</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C6 · Bullet list -->
+    <article class="element">
+      <header>
+        <div class="num">C6 · Bullet list item</div>
+        <h3>Solid bullet · 0.24" hanging indent · tight spacing.</h3>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Font / size</td><td>Inter · <b>10pt</b></td></tr>
+            <tr><td>Color</td><td><code>ink</code></td></tr>
+            <tr><td>Bullet glyph</td><td>• (10.5pt, <code>ink</code>)</td></tr>
+            <tr><td>Left indent</td><td>0.24"</td></tr>
+            <tr><td>First-line indent</td><td>-0.24" (hanging)</td></tr>
+            <tr><td>Line spacing</td><td><b>14pt</b> (tighter than body)</td></tr>
+            <tr><td>Space after each item</td><td><b>2pt</b> (tight)</td></tr>
+            <tr><td>Lead pattern</td><td><b>Term</b> — description (inline bold)</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame">
+            <ul class="render-list">
+              <li><b>UAE Economic Growth (GDP)</b> — impacts overall energy consumption.</li>
+              <li><b>Government Policy &amp; Subsidies</b> — models decarbonization mandates.</li>
+              <li><b>Global Gas Pricing</b> — price spread dictates fuel-switching incentive.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C7 · Callout -->
+    <article class="element">
+      <header>
+        <div class="num">C7 · Callout</div>
+        <h3>Sticky-block treatment for an executive summary, key statement, or pull quote.</h3>
+        <p>Light teal fill + a 3pt teal-dark left border. <b>No label</b> — the visual treatment is the signal.</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Cell fill</td><td><code>teal-light</code></td></tr>
+            <tr><td>Left border</td><td><b>3pt</b> <code>teal-dark</code></td></tr>
+            <tr><td>Other borders</td><td>none</td></tr>
+            <tr><td>Cell padding · top/bottom</td><td>12pt</td></tr>
+            <tr><td>Cell padding · left</td><td>16pt</td></tr>
+            <tr><td>Cell padding · right</td><td>14pt</td></tr>
+            <tr><td>Body · font/size</td><td>Inter · <b>11pt</b></td></tr>
+            <tr><td>Body · color</td><td><code>ink</code></td></tr>
+            <tr><td>Body · line spacing</td><td>18pt</td></tr>
+            <tr><td>Space after the block</td><td>18pt</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame no-pad" style="border:none;">
+            <div class="render-callout">
+              <div class="text">Mega-project timelines are the absolute high-value lever for industrial demand. An on-time TA'ZIZ project yields a 64% probability of a demand surge in Abu Dhabi; if delayed, that probability collapses below 15%.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C8 · Data table -->
+    <article class="element">
+      <header>
+        <div class="num">C8 · Data table</div>
+        <h3>Teal-light header row, hairline body dividers, 14pt trailing spacer.</h3>
+        <p>Fixed layout — autofit off so column widths actually stick. Header row carries a stronger bottom border than body rows. A 14pt empty paragraph follows the table so subsequent body text has breathing room.</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Table width</td><td>7.0" (full content)</td></tr>
+            <tr><td>Layout</td><td>fixed, autofit off</td></tr>
+            <tr><td>Header fill</td><td><code>teal-light</code></td></tr>
+            <tr><td>Header text</td><td>IBM Plex Mono · <b>7pt</b> · <code>teal-dark</code> · uppercase · tracked +32</td></tr>
+            <tr><td>Header bottom border</td><td>0.5pt <code>line-strong</code></td></tr>
+            <tr><td>Header padding · top/bottom</td><td>9pt</td></tr>
+            <tr><td>Header padding · left/right</td><td>14pt</td></tr>
+            <tr><td>Body row bottom border</td><td>0.5pt <code>line</code> (last row none)</td></tr>
+            <tr><td>Body padding · top/bottom</td><td>8pt</td></tr>
+            <tr><td>Body padding · left/right</td><td>14pt</td></tr>
+            <tr><td>Body default text</td><td>Inter · <b>9.5pt</b> · <code>ink</code></td></tr>
+            <tr><td colspan="2" style="border-bottom: 1px solid var(--line); padding-top: 14px; padding-bottom: 6px;"><b style="color:var(--teal-dark);">Column variants (for 21-node topology)</b></td></tr>
+            <tr><td>Node ID col</td><td>Plex Mono · 8.5pt · <code>teal-dark</code> · tracked +8</td></tr>
+            <tr><td>Layer col</td><td>Plex Mono · 7.5pt · <code>ink-2</code> · uppercase · tracked +12</td></tr>
+            <tr><td>Name col</td><td>Inter · 9.5pt · <code>ink</code></td></tr>
+            <tr><td>States col</td><td>Plex Mono · 8.5pt · <code>ink-2</code> · tracked +4</td></tr>
+            <tr><td>Parents col</td><td>Plex Mono · 8.5pt · <code>ink-2</code> · tracked +4</td></tr>
+            <tr><td colspan="2" style="border-bottom: 1px solid var(--line); padding-top: 14px; padding-bottom: 6px;"><b style="color:var(--teal-dark);">Trailing spacer</b></td></tr>
+            <tr><td>Empty paragraph after table</td><td><b>14pt</b> space-after, 4pt line</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame no-pad" style="border:none;">
+            <table class="render-table">
+              <thead>
+                <tr><th style="width: 14%;">Node</th><th style="width: 26%;">Layer</th><th style="width: 30%;">Name</th><th>States</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="node-id">N1</td><td class="node-layer">Root Driver</td><td>Global LNG Price</td><td class="node-states">High, Avg, Low</td></tr>
+                <tr><td class="node-id">N5</td><td class="node-layer">Infrastructure</td><td>Domestic Gas Production</td><td class="node-states">High, Stable, Deficit</td></tr>
+                <tr><td class="node-id">N12</td><td class="node-layer">Sector Driver</td><td>Mega Projects</td><td class="node-states">On-time, Delayed</td></tr>
+                <tr><td class="node-id">N21</td><td class="node-layer">Strategic Action</td><td>Expansion Action</td><td class="node-states">Prime, Monitor, Unviable</td></tr>
+              </tbody>
+            </table>
+            <div class="render-table-spacer"></div>
+            <div class="render-takeaway">Variable Elimination collapses this 21-node graph into clean conditional probability matrices in milliseconds.</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C9 · Signature -->
+    <article class="element">
+      <header>
+        <div class="num">C9 · Signature block <span class="badge">Proposals only</span></div>
+        <h3>2-col borderless table with sign lines and labels.</h3>
+        <p>Drop from white papers and tech specs. Used in proposals and SOWs.</p>
+      </header>
+      <div class="element-body">
+        <div class="specs">
+          <table>
+            <tr><td>Label · font/size</td><td>IBM Plex Mono · <b>7pt</b></td></tr>
+            <tr><td>Label · color</td><td><code>teal-dark</code></td></tr>
+            <tr><td>Label · style</td><td>uppercase, tracked +32</td></tr>
+            <tr><td>Label · space after</td><td>24pt</td></tr>
+            <tr><td>Signature line</td><td>0.6pt bottom border in <code>ink</code></td></tr>
+            <tr><td>Name / title · font/size</td><td>IBM Plex Mono · <b>7pt</b></td></tr>
+            <tr><td>Name / title · color</td><td><code>ink-2</code></td></tr>
+            <tr><td>Date · font/size</td><td>IBM Plex Mono · <b>6.5pt</b></td></tr>
+            <tr><td>Date · color</td><td><code>ink-3</code></td></tr>
+            <tr><td>Date · space before</td><td>14pt</td></tr>
+          </table>
+        </div>
+        <div class="sample">
+          <div class="frame-label">Live rendering</div>
+          <div class="sample-frame">
+            <div class="render-signature">
+              <div class="col">
+                <div class="label">For ADNOC</div>
+                <div class="line"></div>
+                <div class="who">Name · Title</div>
+                <div class="date">Date</div>
+              </div>
+              <div class="col">
+                <div class="label">For Metafore</div>
+                <div class="line"></div>
+                <div class="who">Ori Sasson · CEO</div>
+                <div class="date">Date</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- =================== HOW TO USE =================== -->
+  <section class="block">
+    <div class="block-eyebrow">07 · How to mark this up</div>
+    <h2 class="block-title">Hand me back the changes you want.</h2>
+    <p style="font-size: 10pt; color: var(--ink-2); max-width: 640px; line-height: 1.6; margin-bottom: 20px;">Reference any element by its ID (A1, A2, B1, B2, C1–C9). Examples:</p>
+    <ul class="render-list" style="font-size: 10pt; line-height: 1.6; max-width: 720px;">
+      <li>A1 cover H1 — bump to 50pt</li>
+      <li>A2 TOC — drop the level-2 entries, only show top-level sections</li>
+      <li>B2 footer — change color from <code>ink-4</code> to <code>ink-3</code> (less faint)</li>
+      <li>C2 H2 — go to 28pt</li>
+      <li>C4 body — line spacing to 16pt</li>
+      <li>C6 bullets — switch glyph from • to ›, color them <code>teal</code></li>
+      <li>C7 callout — drop the left border, use a 1pt full outline in <code>line-strong</code> instead</li>
+      <li>C8 table — alternate row shading in <code>bg-solid</code> #F8FAFA</li>
+    </ul>
+  </section>
+
+</div>
+
+</body>
+</html>

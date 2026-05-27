@@ -1,0 +1,183 @@
+/* Metafore Deck — Design Tokens
+   Use these CSS custom properties verbatim. Same teal-stack, three-font stack,
+   and white-first canvas as the brochure and dashboard skills. The deck adds
+   slide-canvas tokens for the 1920×1080 frame. */
+
+:root {
+  /* Canvas */
+  --bg: #FFFFFF;
+  --bg-solid: #F8FAFA;
+  --panel: #FFFFFF;
+  --panel-hi: #FAFBFB;
+
+  /* Ink */
+  --ink: #1A1A1A;
+  --ink-2: #404040;
+  --ink-3: #666666;
+  --ink-4: #999999;
+  --line: #ECECEC;
+
+  /* Teal stack — single accent family (palette-approved only)
+     #00C4CC ("teal-bright") is OUT — too saturated/cyan for the deck palette.
+     For backwards compatibility --teal-bright resolves to --teal-accent. */
+  --teal-dark: #004D50;
+  --teal: #006B6F;
+  --teal-accent: #00989E;
+  --teal-bright: #00989E;       /* legacy alias — points at teal-accent */
+  --teal-light: #E8F4F5;
+  --logo-dark: #035657;
+  --logo-light: #67A4A4;
+
+  /* Type stacks
+     Header fallback = Geist (Brut Grotesque design intent).
+     Body fallback = Inter (GT America design intent).
+     Mono = IBM Plex Mono. */
+  --header: 'Geist', 'Inter', sans-serif;
+  --body: 'Inter', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+
+  /* Slide canvas — 16:9 at 1920×1080.
+     Maps to a 13.333" × 7.5" PPTX widescreen canvas
+     (EMU conversion: 1 px = 9525 EMU). */
+  --slide-w: 1920px;
+  --slide-h: 1080px;
+
+  /* Padding rhythm — keep the safe zone roughly proportional to the
+     brochure's 88/96 padding, scaled up to the slide canvas. */
+  --slide-pad-y: 96px;
+  --slide-pad-x: 120px;
+
+  /* Chrome offset — applies to logo/icon, section-label eyebrow, and footer.
+     All corner-aligned chrome elements share this corner distance.
+     Distinct from --slide-pad-x (120px), which is the content-well padding. */
+  --chrome-offset: 36px;
+  --logo-offset: var(--chrome-offset);   /* alias for legacy references */
+
+  /* Alternate card fill — light grey, no border. Used as an alternate
+     card style alongside the default white-with-1px-border card. */
+  --card-grey: #F4F4F4;
+
+  /* ---------------------------------------------------------------- */
+  /* CANONICAL TYPE SCALE — Perfect Fifth default, Perfect Fourth floor */
+  /*                                                                    */
+  /*  Same rule set as every other Metafore skill. On the 1920×1080     */
+  /*  slide canvas the sizes are scaled up by ~3× so the relationships  */
+  /*  hold visually at projection scale.                                */
+  /*                                                                    */
+  /*  • Headers shrink within their ladder to fit max 2 lines           */
+  /*  • Body / lede / eyebrow / footer NEVER shrink                     */
+  /*  • Line-height: headers 1.125, body+eyebrow 1.200                  */
+  /*  • Letter-spacing: 0 everywhere (HTML and PPTX)                    */
+  /* ---------------------------------------------------------------- */
+  /* Slide-scale type (≈3× the standard 16px-base scale) */
+  --h1-size: 108px;        /* default cover/hero — 36 × 3 */
+  --h1-floor: 84px;        /* floor — 28 × 3 */
+  --h2-size: 72px;         /* default section/big body — 24 × 3 */
+  --h2-floor: 63px;        /* floor — 21 × 3 */
+  --h3-size: 54px;         /* fixed — 18 × 3 */
+  --body-size: 28px;       /* slide body — FIXED, never shrinks */
+  --lede-size: 36px;       /* slide lede — FIXED */
+  --eyebrow-size: 18px;    /* Plex Mono eyebrow on slides */
+  --footer-size: 16px;     /* footer Plex Mono */
+
+  --lh-header: 1.125;
+  --lh-body:   1.200;
+  --tracking:  0;          /* zero letter-spacing — HTML and PPTX */
+
+  --h1-max-width: 24em;
+}
+
+/* Font import — paste into <head> */
+/*
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+*/
+
+/* Base */
+* { box-sizing: border-box; letter-spacing: var(--tracking); }
+html, body {
+  margin: 0; padding: 0;
+  background: #2A2A2A;          /* dark gutter between slides in preview */
+  font-family: var(--body);
+  color: var(--ink);
+  font-size: var(--body-size);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Slide frame — every slide is exactly 1920×1080. The HTML preview
+   stacks them vertically with a gutter; the PPTX generator screenshots
+   each .slide individually. */
+.slide {
+  position: relative;
+  width: var(--slide-w);
+  height: var(--slide-h);
+  margin: 24px auto;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* Two-tone hero accent — used on covers and section dividers.
+   Wrap the last word(s) of an h1 in <span class="accent">…</span>. */
+.accent { color: var(--logo-dark); }
+
+/* Plex Mono eyebrow — uppercase, tracked. NOTE: this tracking only
+   applies in HTML. The PPTX generator strips letter-spacing from
+   any Plex Mono text frame (PPTX brand rule). */
+.eyebrow {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+/* Section-label eyebrow — top-left corner chrome on slides 2+ */
+.section-label {
+  position: absolute;
+  top: var(--chrome-offset);
+  left: var(--chrome-offset);
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.section-label.on-dark { color: rgba(255,255,255,0.7); }
+
+/* Wordmark on cover (and any slide using the full wordmark) */
+.logo-tl {
+  position: absolute;
+  top: var(--chrome-offset);
+  left: var(--chrome-offset);
+}
+
+/* Icon-only mark on content slides — top-right */
+.icon-tr {
+  position: absolute;
+  top: var(--chrome-offset);
+  right: var(--chrome-offset);
+}
+
+/* Footer line — every slide. Corner-aligned (not at content padding). */
+.deck-footer {
+  position: absolute;
+  bottom: var(--chrome-offset);
+  left: var(--chrome-offset);
+  right: var(--chrome-offset);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  pointer-events: none;
+}
+.deck-footer.on-dark { color: rgba(255,255,255,0.55); }
