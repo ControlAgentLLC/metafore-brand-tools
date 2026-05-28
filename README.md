@@ -28,12 +28,12 @@ It loads the brand pack first, infers (or asks for) the right artifact type, the
 
 ## Install (teammates)
 
-You need read access to the `davidmetafore/metafore-brand-tools` GitHub repo and a GitHub account authenticated locally (`gh auth login` or SSH key).
+You need read access to the `ControlAgentLLC/metafore-brand-tools` GitHub repo and a GitHub account authenticated locally (`gh auth login` or SSH key).
 
 Inside Claude Code:
 
 ```
-/plugin marketplace add davidmetafore/metafore-brand-tools
+/plugin marketplace add ControlAgentLLC/metafore-brand-tools
 /plugin install metafore@metafore
 ```
 
@@ -45,7 +45,7 @@ To auto-pull updates, add this to your project's `.claude/settings.json`:
 {
   "extraKnownMarketplaces": {
     "metafore": {
-      "source": { "source": "github", "repo": "davidmetafore/metafore-brand-tools" },
+      "source": { "source": "github", "repo": "ControlAgentLLC/metafore-brand-tools" },
       "autoUpdate": true
     }
   }
@@ -76,7 +76,7 @@ metafore-plugin/
 For day-to-day authoring, clone this repo and run Claude with `--plugin-dir`:
 
 ```bash
-git clone git@github.com:davidmetafore/metafore-brand-tools.git
+git clone git@github.com:ControlAgentLLC/metafore-brand-tools.git
 claude --plugin-dir ./metafore-brand-tools
 ```
 
