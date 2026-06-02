@@ -22,12 +22,14 @@ These are the tokens. Don't improvise colors, fonts, or radii. Pull these into t
   --logo-dark: #035657;       /* primary brand teal — second-word headers, default chart series */
   --logo-light: #67A4A4;      /* secondary brand teal — secondary chart series, lighter accents */
 
-  /* Extended Metafore teal stack — use only when --logo-dark/light aren't enough */
+  /* Extended Metafore teal stack — use only when --logo-dark/light aren't enough.
+     Accents/strokes/labels: --teal on light, --teal-on-dark on dark. */
   --teal-dark: #004D50;
   --teal: #006B6F;
-  --teal-accent: #00989E;
-  --teal-bright: #00C4CC;     /* tertiary chart series */
+  --teal-on-dark: #88DCE0;    /* accents/strokes/labels on dark; tertiary chart series */
   --teal-light: #E8F4F5;      /* tinted callout fills, light table headers */
+  --teal-accent: #00989E;     /* DEPRECATED — use --teal (light) / --teal-on-dark (dark) */
+  --teal-bright: #88DCE0;     /* DEPRECATED alias — repointed to --teal-on-dark (was retired #00C4CC) */
 
   /* Status — for state, not decoration */
   --success: #00896A;

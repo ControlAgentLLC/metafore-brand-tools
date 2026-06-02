@@ -128,7 +128,7 @@ A single-surface blog hero on solid dark teal.
 
 - **Metafore wordmark** — top-left, ~40px from edges. **Use the dark-bg logo SVG variant** (`fill="white" fill-opacity="0.5"` for the two curves, `fill="white"` for the three marks and the wordmark). See `references/logo-svgs.md`.
 - **Headline** — large white text (Geist/Inter, 48–56px, weight 400–500), left-aligned, in the left half of the frame.
-- **Subtitle box** (optional) — a secondary line of text inside a bracket-bordered container. Thin teal-bright (`#00C4CC`) L-shaped corner brackets at each corner; Plex Mono uppercase content inside, white at ~90% opacity. (This corner-bracket *box* is distinct from the retired headline bracket treatment in 1C — it's a small UI badge, not headline framing.)
+- **Subtitle box** (optional) — a secondary line of text inside a bracket-bordered container. Thin `--teal-on-dark` (`#88DCE0`) L-shaped corner brackets at each corner; Plex Mono uppercase content inside, white at ~90% opacity. (This corner-bracket *box* is distinct from the retired headline bracket treatment in 1C — it's a small UI badge, not headline framing.)
 - **Floating UI card** — positioned right of center. Glassmorphism: `backdrop-filter: blur(18px)`, `background: rgba(255,255,255,0.08)`, `border: 1px solid rgba(255,255,255,0.14)`, `border-radius: 16px`. Inside: a realistic product UI mockup — workflow stepper with Sense / Reason / Act steps, a 2-up KPI strip, dashboard fragment, etc. The glass card is the only visual interest — the dark surface stays clean.
 
 **File location:** `Blogs/BLOG GRAPHICS/` as PNG (HTML source alongside)
@@ -249,9 +249,9 @@ Larger editorial illustrations for platform-level concepts. More artistic; varie
 
 **Sub-styles:**
 
-**A. Dark isometric / knowledge graph** — dark background (`#0F1416`) with a **single** dot grid, isometric shapes (diamonds, layers) in white-to-gray gradient, connected by thin teal-bright lines. Step labels in small glass cards. Used for the knowledge fabric and similar architectural concepts.
+**A. Dark isometric / knowledge graph** — dark background (`#0F1416`) with a **single** dot grid, isometric shapes (diamonds, layers) in white-to-gray gradient, connected by thin `--teal-on-dark` (`#88DCE0`) lines. Step labels in small glass cards. Used for the knowledge fabric and similar architectural concepts.
 
-**B. Network topology** — dark background with central hub node + satellite nodes connected by thin teal-bright lines (some dashed for inferred relationships). Used for telecom / data fabric / connectivity concepts.
+**B. Network topology** — dark background with central hub node + satellite nodes connected by thin `--teal-on-dark` (`#88DCE0`) lines (some dashed for inferred relationships). Used for telecom / data fabric / connectivity concepts.
 
 **C. Teal abstract** — teal-tinted background with one dot pattern. Large Metafore icon centered in a glass circle. Used for brand-level concepts.
 
@@ -302,7 +302,7 @@ Three zones:
 **Layout:** White background, **solid** 8px `--teal-dark` bar on the left edge.
 
 - **Top** — eyebrow + section label (left), page/section number in IBM Plex Mono (right)
-- **Middle** — large quote text in Geist 72px (line-height ~1.18), accent on the key phrase in `--logo-dark`. Open-quote glyph in `--teal-accent` as ornament.
+- **Middle** — large quote text in Geist 72px (line-height ~1.18), accent on the key phrase in `--logo-dark`. Open-quote glyph in `--teal` (`#006B6F`) as ornament on light; `--teal-on-dark` on dark.
 - **Bottom** — attribution line (Geist who + Inter role) + Metafore wordmark SVG (light-bg variant)
 
 **File location:** `Whitepapers/pullquotes/pullquote-{nn}.html`
@@ -377,9 +377,9 @@ See `references/design-tokens.md` for the full token set. Key palette inline:
 ```
 --ink:#1A1A1A           --teal:#006B6F
 --ink-2:#404040         --teal-dark:#004D50
---ink-3:#666666         --teal-accent:#00989E
---ink-4:#999999         --teal-bright:#00C4CC
---logo-dark:#035657     --teal-light:#E8F4F5
+--ink-3:#666666         --teal-on-dark:#88DCE0  (accents/strokes/text on dark)
+--ink-4:#999999         --teal-accent:#00989E   (DEPRECATED — tile fills only, never text/strokes)
+--logo-dark:#035657     --teal-light:#E8F4F5     --teal-bright→retired #00C4CC, use --teal-on-dark
 --logo-light:#67A4A4    --line:rgba(0,0,0,0.08)
 --coral:#D94A30         --bg-solid:#F8FAFA
 --amber:#C48800         --success:#00896A

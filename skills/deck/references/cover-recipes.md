@@ -244,10 +244,10 @@ Single panel, solid `--teal-dark`. **No dot pattern, no halftone, no overlay** â
   margin: 0 0 40px;
   color: #fff;
 }
-/* Accent on dark backgrounds uses teal-bright, not logo-dark
-   (which would be invisible on --teal-dark). */
+/* Accent on dark backgrounds uses --teal-on-dark (#88DCE0); --logo-dark
+   would be invisible on --teal-dark. */
 .cover-1b .textwell h1 .accent-light {
-  color: var(--teal-bright);
+  color: var(--teal-on-dark);
 }
 /* Subtitle box â€” small bracket-bordered badge.
    This corner-bracket TREATMENT is allowed only on 1B's subtitle badge.
@@ -266,7 +266,7 @@ Single panel, solid `--teal-dark`. **No dot pattern, no halftone, no overlay** â
 .cover-1b .subtitle-box::after {
   content: ""; position: absolute;
   width: 14px; height: 14px;
-  border: 1.5px solid var(--teal-bright);
+  border: 1.5px solid var(--teal-on-dark);
 }
 .cover-1b .subtitle-box::before {
   top: 0; left: 0; border-right: none; border-bottom: none;
@@ -295,7 +295,7 @@ Single panel, solid `--teal-dark`. **No dot pattern, no halftone, no overlay** â
 | `data-pptx-text` | What it is | Notes |
 |---|---|---|
 | `eyebrow` | Vision / context label, white@70% | Plex Mono, no tracking in PPTX |
-| `headline` | Two-line hero with `accent-light` span (teal-bright) | Run-split: white + `#00C4CC` |
+| `headline` | Two-line hero with `accent-light` span (teal-on-dark) | Run-split: white + `#88DCE0` |
 | `subtitle` | Optional badge text | Plex Mono, no tracking |
 
 **Glass card content is NOT editable.** If the data inside the card has to change, regenerate the slide from updated HTML.
@@ -456,7 +456,7 @@ Two-column split, white left / **solid `--teal-dark`** right. Headline highlight
 These apply to **every** cover regardless of variant.
 
 - **Logo placement is consistent.** Top-left, `var(--logo-offset)` from both edges (~56px). Variant matches the panel (light on white / `--bg-solid`, dark on `--teal-dark`).
-- **Two-tone hero is the brand signature.** Cover 1A and 1C use `--logo-dark` (`#035657`) on a light panel. Cover 1B uses `--teal-bright` (`#00C4CC`) because `--logo-dark` would disappear on `--teal-dark`. This is the only place teal-bright appears as an accent color on text.
+- **Two-tone hero is the brand signature.** Cover 1A and 1C use `--logo-dark` (`#035657`) on a light panel. Cover 1B uses `--teal-on-dark` (`#88DCE0`) because `--logo-dark` would disappear on `--teal-dark`. `#88DCE0` is the canonical light-on-dark accent (replacing the retired `#00C4CC`/`#00989E`).
 - **No bracket-box around headline accent terms.** The `.bracket` class on 1C is a color wrapper *only*. No corner brackets, no monospace font, no tinted background. The corner-bracket box on 1B's `subtitle-box` is a separate, allowed pattern â€” applied to a small badge, never to a headline.
 - **No dot pattern on full-screen dark surfaces.** 1B's whole surface and 1C's right panel are solid `--teal-dark`. The dot grid only appears on 1A's teal-*light* right panel.
 - **No drop shadows.** Data cards (1A) and glass cards (1B/1C) get 1px borders instead.

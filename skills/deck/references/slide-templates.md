@@ -386,7 +386,7 @@ Use when the audience cares about *what* the platform integrates with — procur
   font-size: 64px; line-height: 1.06; letter-spacing: -1.6px;
   margin: 0 0 32px; color: #fff;
 }
-.integrate h2 .accent-light { color: var(--teal-bright); }
+.integrate h2 .accent-light { color: var(--teal-on-dark); }
 .integrate .body {
   font-family: var(--body); font-size: 20px; line-height: 1.55;
   color: rgba(255,255,255,0.84); margin: 0;
@@ -400,7 +400,7 @@ Use when the audience cares about *what* the platform integrates with — procur
 .integrate .cluster .cl-label {
   font-family: var(--mono); font-size: 12px;
   letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--teal-bright); margin: 0 0 16px;
+  color: var(--teal-on-dark); margin: 0 0 16px;
 }
 .integrate .cluster .cl-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .integrate .cluster .pill {
@@ -463,10 +463,10 @@ A full-bleed teal panel announcing a section. Left-aligned hero — keep my divi
   margin: 0;
   max-width: 1480px;
 }
-.divider h1 .accent-light { color: var(--teal-bright); }
+.divider h1 .accent-light { color: var(--teal-on-dark); }
 ```
 
-**Why `--teal-bright` for the accent on dark.** `--logo-dark` (`#035657`) is too close to `--teal-dark` (`#004D50`) to read on a teal background. Teal-bright (`#00C4CC`) is the dark-surface equivalent. The PPTX run-split uses `#FFFFFF` + `#00C4CC` (not the standard ink + logo-dark pair).
+**Why `--teal-on-dark` for the accent on dark.** `--logo-dark` (`#035657`) is too close to `--teal-dark` (`#004D50`) to read on a teal background. `--teal-on-dark` (`#88DCE0`) is the dark-surface equivalent (replacing the retired `#00C4CC`/`#00989E`). The PPTX run-split uses `#FFFFFF` + `#88DCE0` for these (the standard light-surface pair is ink + `--logo-dark`).
 
 ---
 
@@ -690,7 +690,7 @@ Never **three** KPI cells. Two or four.
   font-size: 14px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--teal-bright);
+  color: var(--teal-on-dark);
   max-width: 240px;
   line-height: 1.4;
 }
@@ -1285,7 +1285,7 @@ The slide's title and eyebrow may be `hybrid` (editable) if the grid below them 
   font-family: var(--header);
   font-size: 180px;
   line-height: 0.6;
-  color: var(--teal-accent);
+  color: var(--teal);
   margin-bottom: 24px;
 }
 .pull-quote .quote {

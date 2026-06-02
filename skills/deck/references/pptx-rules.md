@@ -56,7 +56,7 @@ r2.font.color.rgb = RGBColor(0x03, 0x56, 0x57)   # --logo-dark
 |---|---|---|
 | `.accent` | `#035657` (`--logo-dark`) | On light/white panels — cover 1A, 1C, content slides |
 | `.bracket` | `#035657` (`--logo-dark`) | Cover 1C's block-flow headline accent term |
-| `.accent-light` | `#00C4CC` (`--teal-bright`) | On dark `--teal-dark` panels — cover 1B, section dividers |
+| `.accent-light` | `#88DCE0` (`--teal-on-dark`) | On dark `--teal-dark` panels — cover 1B, section dividers |
 
 The line-break inside `.bracket` (cover 1C) is preserved as a paragraph break or a soft return inside the run.
 
@@ -136,7 +136,7 @@ The footer EMU coordinates are constant across the deck:
 - Comments, revision marks, or tracked changes
 - Hidden slides
 - Background music
-- `#00C4CC` (the retired "teal-bright" cyan). Use `--teal-accent #00989E` instead for any dark-surface accent or stroke color.
+- `#00C4CC` (retired "teal-bright" cyan) **and** `#00989E` (retired "teal-accent" — low contrast). For any accent/stroke/label: `--teal #006B6F` on light surfaces, `--teal-on-dark #88DCE0` on dark.
 - Coral / amber / red as decoration. Status colors are state-only — never use them for visual emphasis.
 
 Decks are static documents. The presenter advances them manually.
@@ -165,7 +165,7 @@ The PPTX builder's `ACCENT_COLORS` map only recognizes these class names when sp
 |---|---|---|
 | `.accent` | `--logo-dark` `#035657` | two-tone hero on light surfaces |
 | `.bracket` | `--logo-dark` `#035657` | cover headline second word |
-| `.accent-light` | `--teal-accent` `#00989E` | two-tone hero on `--teal-dark` surfaces |
+| `.accent-light` | `--teal-on-dark` `#88DCE0` | two-tone hero on `--teal-dark` surfaces |
 | `.t` | `--logo-dark` `#035657` | product-name accent (`<span class="m">MetaWorks</span> <span class="t">Focus</span>` on the 12-up module grid) |
 
 If you introduce a new accent class, add it to `ACCENT_COLORS` in `build_pptx.py` — or use one of the four above.

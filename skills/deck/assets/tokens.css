@@ -17,16 +17,21 @@
   --ink-4: #999999;
   --line: #ECECEC;
 
-  /* Teal stack — single accent family (palette-approved only)
-     #00C4CC ("teal-bright") is OUT — too saturated/cyan for the deck palette.
-     For backwards compatibility --teal-bright resolves to --teal-accent. */
+  /* Teal stack — single accent family (palette-approved only).
+     Legibility rule: accents/strokes/labels/two-tone-hero must hold contrast.
+       · light surfaces  → --teal (#006B6F), or --logo-dark (#035657) for hero text
+       · dark  surfaces  → --teal-on-dark (#88DCE0)
+     #00C4CC ("teal-bright") and #00989E ("teal-accent") are RETIRED for accents —
+     both are low-contrast (cyan / mid-teal). The two vars remain only as legacy
+     aliases so old decks still resolve; do not use them in new work. */
   --teal-dark: #004D50;
   --teal: #006B6F;
-  --teal-accent: #00989E;
-  --teal-bright: #00989E;       /* legacy alias — points at teal-accent */
+  --teal-on-dark: #88DCE0;      /* accents, strokes, labels, hero word on --teal-dark */
   --teal-light: #E8F4F5;
   --logo-dark: #035657;
   --logo-light: #67A4A4;
+  --teal-accent: #00989E;       /* DEPRECATED — use --teal (light) / --teal-on-dark (dark) */
+  --teal-bright: #88DCE0;       /* DEPRECATED alias — repointed to --teal-on-dark */
 
   /* Type stacks
      Header fallback = Geist (Brut Grotesque design intent).

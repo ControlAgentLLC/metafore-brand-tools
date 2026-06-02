@@ -17,14 +17,17 @@
   --ink-4: #999999;
   --line: #ECECEC;
 
-  /* Teal stack — single accent family */
+  /* Teal stack — single accent family.
+     Legibility: accents/strokes/labels/hero word → --teal (#006B6F) on light,
+     --teal-on-dark (#88DCE0) on dark. #00989E/#00C4CC are retired for accents. */
   --teal-dark: #004D50;
   --teal: #006B6F;
-  --teal-accent: #00989E;
-  --teal-bright: #00C4CC;
+  --teal-on-dark: #88DCE0;      /* accents, strokes, hero word on --teal-dark */
   --teal-light: #E8F4F5;
   --logo-dark: #035657;
   --logo-light: #67A4A4;
+  --teal-accent: #00989E;       /* DEPRECATED — use --teal (light) / --teal-on-dark (dark) */
+  --teal-bright: #88DCE0;       /* DEPRECATED alias — repointed to --teal-on-dark */
 
   /* Status (state only, never decoration) */
   --success: #00896A;

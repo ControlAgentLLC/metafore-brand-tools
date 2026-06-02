@@ -6,10 +6,11 @@
 | Token | Hex | Usage |
 |---|---|---|
 | `tealDark` | `#004D50` | Deep emphasis, KPI band bg, large quarter of product mark |
-| `teal` | `#006B6F` | Primary brand, eyebrow accents, links, active states |
-| `tealAccent` | `#00989E` | Gradient mid-stop, secondary mark, small quarter of product mark |
-| `tealBright` | `#00C4CC` | Highlights, thin accent bars inside dark bands |
+| `teal` | `#006B6F` | Primary brand, eyebrow accents, links, active states, **light-surface strokes** |
+| `tealOnDark` | `#88DCE0` | **Accents, strokes, labels & hero word on dark teal bands** |
 | `tealLight` | `#E8F4F5` | Right-panel fill, tinted callouts, card backgrounds in dark panels |
+| `tealAccent` | `#00989E` | **Legacy — not for text/strokes/accents** (low contrast). Use `teal` on light, `tealOnDark` on dark. Gradient mid-stop only. |
+| `tealBright` | `#00C4CC` | **Retired** — too cyan. Do not use. |
 
 ### Logo Teals
 | Token | Hex | Usage |

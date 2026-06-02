@@ -43,12 +43,15 @@ originSessionId: e6765f71-516d-4239-b31f-ac8cc956509f
 | Token | Hex | Use |
 |---|---|---|
 | tealDark | #004D50 | Deep emphasis, KPI band bg |
-| teal | #006B6F | Primary brand, active, links |
-| tealAccent | #00989E | Gradient mid-stop, secondary mark |
-| tealBright | #00C4CC | Highlights, thin accent bars |
+| teal | #006B6F | Primary brand, active, links, **light-surface accents, strokes & dots** |
+| tealOnDark | #88DCE0 | **Accents, strokes, labels & two-tone-hero second word on `tealDark` surfaces** |
 | tealLight | #E8F4F5 | Tinted callouts, table headers |
-| logoDark | #035657 | Hero second-word color, default chart series |
+| logoDark | #035657 | Hero second-word on light surfaces, default chart series |
 | logoLight | #67A4A4 | Secondary chart series |
+| tealAccent | #00989E | **Legacy — not for text, strokes, or accents.** Low contrast on both white and `tealDark`. Use `teal #006B6F` on light, `tealOnDark #88DCE0` on dark. Decorative/gradient mid-stop only. |
+| tealBright | #00C4CC | **Retired** — too cyan. Do not use. |
+
+**Contrast floor (legibility).** Essential elements — accent text, strokes, labels, KPI numbers, two-tone-hero second word — must read at a distance. On white use `teal #006B6F` (or `logoDark #035657` for hero text); on `tealDark` use `tealOnDark #88DCE0`. Never `#00989E`/`#00C4CC` for these. Light tints (`tealLight`, `textFaint #999999`) are for decoration and muted/inert elements only, never for text the reader must parse.
 
 ## Text
 - text/ink `#1A1A1A` (brochure) or `#0A0A0A` (dashboard); body color in docx `#111111`

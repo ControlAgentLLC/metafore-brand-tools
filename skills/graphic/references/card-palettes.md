@@ -8,11 +8,11 @@ Type 4 tile backgrounds stay inside the teal stack. The legacy rainbow palette (
 |---|---|---|---|
 | `.bg-dark` | `--teal-dark` | `#004D50` | Heaviest emphasis tiles |
 | `.bg-teal` | `--teal` | `#006B6F` | Primary brand tiles |
-| `.bg-acc` | `--teal-accent` | `#00989E` | Mid-stack accent tiles |
+| `.bg-acc` | `--teal-accent` | `#00989E` | Mid-stack accent tiles — **solid fill only** (white content on top). `#00989E` is retired as a text/stroke/accent color, but remains valid as a solid tile background here. |
 | `.bg-light` | `--teal-light` | `#E8F4F5` | Light accent tiles (pair with teal dots) |
 | `.bg-solid` | `--bg-solid` | `#F8FAFA` | Quiet / neutral tiles (pair with teal dots) |
 
-When arranging tiles in a row, order them so the fills read as a deliberate teal progression (e.g. `bg-dark → bg-teal → bg-acc → bg-light`) rather than a random mix.
+When arranging tiles in a row, order them so the fills read as a deliberate teal progression (e.g. `bg-dark → bg-teal → bg-acc → bg-light`) rather than a random mix. Never put `#00989E` on text or strokes — only as a tile fill.
 
 ## Dot-fade overlays
 

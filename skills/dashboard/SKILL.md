@@ -41,8 +41,8 @@ These are the things that make a screen read as "Metafore dashboard" at a glance
 9. **Charts use logo teals**, not multi-hue palettes:
    - Primary series → `var(--logo-dark)` `#035657`
    - Secondary series → `var(--logo-light)` `#67A4A4`
-   - Tertiary / accent series → `var(--teal-bright)` `#00C4CC`
-   - Sparkline up = `--logo-dark`, down = `--logo-light`, flat = `--teal-accent`
+   - Tertiary / accent series → `var(--teal-on-dark)` `#88DCE0` (was retired `#00C4CC`)
+   - Sparkline up = `--logo-dark`, down = `--logo-light`, flat = `--teal` `#006B6F`
 10. **Bottom of every dashboard** has an "I want to…" prompt block over a composer input. This is the dashboard's voice — it tells the user the surface is interrogable in plain English.
 
 ## File scaffolding

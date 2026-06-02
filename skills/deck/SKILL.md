@@ -44,6 +44,10 @@ Three optional templates round out a corporate intro deck. Include them when the
 
 Default to including all four for a full corporate intro deck. Pare back for shorter formats.
 
+## Vertical-anchor slides — fitting a vertical solution into the suite
+
+Vertical solutions (an airline IROP orchestrator, a bank customer-service agent) don't map cleanly onto the 12-block "digital C-suite" story. Use a **vertical-anchor slide** to bridge: it names the vertical solution, declares which MetaWorks module it *anchors into* via an `ANCHORS INTO → MetaWorks <Module>` badge, and shows three surface tiles for how the solution spans modules (primary surface + adjacent surfaces). It derives from the "in action" layout (header + scenario + three trace tiles + source chips), minus the UI card. One per vertical, placed right after the "in action" example slides. Full spec in `references/pattern-library.md` (vertical-anchor pattern).
+
 ## Chrome alignment — corner offset, not content padding
 
 All slide chrome — section label, icon, footer copyright, page number — aligns to the corner at `var(--chrome-offset)` (36px from each edge). The content well lives inside the wider `var(--slide-pad-x)` (120px) padding.
@@ -177,7 +181,7 @@ In the PPTX, every SVG is converted to PNG at 2x and placed as a native picture 
 | Body, lede, bullet text | `var(--body)` (Inter) | Weight 400–500. |
 | Eyebrows, KPI labels, page numbers, footer line, all-caps tracked labels | `var(--mono)` (IBM Plex Mono) | **Always uppercase, always tracked +1.0 to +1.6px in HTML.** Keep eyebrow casing consistent across the deck — all caps everywhere. Exception only for a deliberate special-case slide. **In PPTX: no letter-spacing, no bold.** |
 
-Cover hero typically 88–104px. Section-divider hero around 72–88px. Content-slide title around 44–56px. Body 22–26px on slides (larger than brochure body — slides are read from across a room).
+**Size for the back of the room.** Decks are presented in conference rooms at 6–25 ft — increasingly in person and abroad. Size for the back row, not the laptop. Floors: **body ≥ 28px, secondary text / labels / eyebrows ≥ 22px, nothing essential below 20px.** Cover hero typically 112–128px. Section-divider hero around 72–88px. Content-slide title around 48–64px. Body 28–32px on slides. When a larger size makes a line wrap or overflow, fix the layout (shorter copy, wider well) — don't shrink below the floor.
 
 **Negative letter-spacing on headers only above ~22px.** Below that, tracking stays at 0. The PPTX generator enforces this.
 
@@ -202,6 +206,8 @@ Full rule list in `references/pptx-rules.md`.
 - Underlines or accent-bar decorations under titles
 - Centered body copy (left-align everything except certain quote/KPI band layouts)
 - A second accent color outside the teal stack
+- The retired teal accents `#00989E` ("teal-accent") and `#00C4CC` ("teal-bright") — both are low-contrast. Accents/strokes/labels use `--teal #006B6F` on light surfaces, `#88DCE0` on dark; two-tone hero uses `--logo-dark #035657` on light, `#88DCE0` on dark.
+- Light teal or grey as **essential** text — `#00989E`, light greys, `--teal-light` are for decoration or deliberately-muted/inert elements only (e.g. the "dead dashboard" cards on the problem slide), never for accent text, labels, or KPI numbers the audience must read across a room.
 - "Dashboard" — always "Pulse"
 - **Trailing periods on slide titles** — h1/h2/hero never ends in `.` *except on the closing slide* (P-13), where the final headline takes a period as a deliberate full stop. Every other slide drops it. See pattern-library.md → universal invariants for the full rule.
 - Slide numbers in serif or with periods (use Plex Mono `01 / 12` format in the bottom-right footer)
@@ -396,7 +402,8 @@ Before delivering, verify:
 - [ ] **No trailing period on any slide title except the closing** (h1/h2/hero). Internal periods are OK. Closing headline (P-13) takes a period as a deliberate full stop.
 - [ ] Header line-height is tight (0.98–1.04 for hero sizes, 1.04–1.12 for smaller h2)
 - [ ] Status colors used only as state indicators, never decoration
-- [ ] `#00C4CC` ("teal-bright") does **not** appear — retired. Use `--teal-accent #00989E` on dark-surface accents and SVG strokes.
+- [ ] Retired accents absent — neither `#00C4CC` ("teal-bright") nor `#00989E` ("teal-accent") appears. Accents/strokes/labels use `--teal #006B6F` on light, `#88DCE0` on dark; two-tone hero `--logo-dark #035657` on light, `#88DCE0` on dark.
+- [ ] Inline SVG art (Pulse cards, diagrams, reasoning traces) uses palette tokens for fills/strokes — grep the finished file for retired hexes (`#00989E`, `#00C4CC`) and for light greys used as essential text. A CSS-variable swap does **not** reach hardcoded hex inside inline SVG.
 - [ ] Glassmorphism appears on the **cover only** (P-01). Every other product card is solid white with a 1px `--line` border.
 - [ ] Pulse UI cards across multiple slides use structurally different views (ranked feed / deal rows / metric bars / reasoning trace) — no two cards in the deck use the same internal layout
 - [ ] Line-art illustrations on company/team slides pulled from `Graphics/LineIcons/` library, not redrawn

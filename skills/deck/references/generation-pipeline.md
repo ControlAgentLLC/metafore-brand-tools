@@ -138,6 +138,7 @@ The two passes can be combined into one Playwright session with two style-tag to
 ```python
 # build_pptx.py — run after rendering + measuring
 import json, re
+from html import unescape          # inner_html re-encodes "&" as "&amp;" — must decode
 from pathlib import Path
 from pptx import Presentation
 from pptx.util import Emu, Pt
@@ -147,19 +148,28 @@ from pptx.enum.text import PP_ALIGN
 DECK_DIR = Path("Decks/<deck-name>")
 BUILD = DECK_DIR / "_build"
 
-PX_TO_EMU = 9525
-
+# ── SCALE (critical) ────────────────────────────────────────────────────────
+# The HTML canvas is 1920×1080; the slide is 13.333"×7.5".
+#   1920 px → 12192000 EMU  ⇒  6350 EMU/px   (do NOT use 9525 — that is the
+#                                             96-dpi value, correct only for a
+#                                             1280px canvas; at 1920px it makes
+#                                             every text frame 1.5× too big.)
+#   1080 px → 7.5in = 540pt ⇒  0.5  pt/px    (do NOT use 0.75.)
+# Derive from the canvas so this can never drift again.
+CANVAS_W, CANVAS_H = 1920, 1080
 # 13.333" × 7.5" widescreen
 prs = Presentation()
 prs.slide_width = Emu(12192000)
 prs.slide_height = Emu(6858000)
+PX_TO_EMU = prs.slide_width // CANVAS_W               # = 6350
+PT_PER_PX = 72 * (prs.slide_height / 914400) / CANVAS_H  # = 0.5
 BLANK = prs.slide_layouts[6]                          # truly blank layout
 
 # Two-tone hero color map by HTML class
 ACCENT_COLORS = {
-    "accent": RGBColor(0x03, 0x56, 0x57),             # --logo-dark
+    "accent": RGBColor(0x03, 0x56, 0x57),             # --logo-dark (light surfaces)
     "bracket": RGBColor(0x03, 0x56, 0x57),
-    "accent-light": RGBColor(0x00, 0xC4, 0xCC),       # --teal-bright
+    "accent-light": RGBColor(0x88, 0xDC, 0xE0),       # --teal-on-dark (#88DCE0). NOT #00C4CC/#00989E (retired, low-contrast)
 }
 DEFAULT_INK = RGBColor(0x1A, 0x1A, 0x1A)
 WHITE = RGBColor(0xFF, 0xFF, 0xFF)
@@ -188,30 +198,43 @@ def add_text_frame(slide, entry, on_dark=False):
     tf.margin_left = tf.margin_right = 0
     tf.margin_top = tf.margin_bottom = 0
 
+    # clean(): strip tags, DECODE ENTITIES (&amp;→&), collapse whitespace.
+    def clean(s):
+        return re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", " ", s)))
+
     # Run-split: parse <span class="accent|bracket|accent-light"> nodes
     runs = re.split(r'(<span[^>]*class="(?:accent|bracket|accent-light)"[^>]*>.*?</span>)', html, flags=re.S)
     p = tf.paragraphs[0]
-    # Default font from computed style
+    # EXACT line spacing = CSS line-height. A float multiple renders ~1.2× loose in PPT.
+    lh = parse_px(style["lineHeight"]) if style.get("lineHeight", "").endswith("px") else 0
+    if lh: p.line_spacing = Pt(lh * PT_PER_PX)
     font_family = style["fontFamily"].split(",")[0].strip().strip('"\'')
     font_size = parse_px(style["fontSize"])
     base_color = WHITE if on_dark else parse_color(style["color"])
 
+    parts = []                                         # collect (text, cls) in document order
     for chunk in runs:
         if not chunk: continue
         m = re.match(r'<span[^>]*class="(accent|bracket|accent-light)"[^>]*>(.*?)</span>', chunk, flags=re.S)
-        if m:
-            cls, txt = m.group(1), re.sub(r"<[^>]+>", "", m.group(2))
-            r = p.add_run(); r.text = txt
-            r.font.name = font_family
-            r.font.size = Pt(font_size * 0.75)         # px → pt
-            r.font.color.rgb = ACCENT_COLORS[cls]
+        if m: parts.append((clean(m.group(2)), m.group(1)))
         else:
-            txt = re.sub(r"<[^>]+>", "", chunk)
-            if not txt.strip(): continue
-            r = p.add_run(); r.text = txt
-            r.font.name = font_family
-            r.font.size = Pt(font_size * 0.75)
-            r.font.color.rgb = base_color
+            t = clean(chunk)
+            if t: parts.append((t, None))
+    # HTML trims a block's leading/trailing whitespace — do the same, or every
+    # paragraph picks up a leading space (a visible indent). Keep inter-run spaces.
+    if parts:
+        parts[0]  = (parts[0][0].lstrip(),  parts[0][1])
+        parts[-1] = (parts[-1][0].rstrip(), parts[-1][1])
+    for txt, cls in parts:
+        if not txt: continue
+        r = p.add_run(); r.text = txt
+        r.font.name = font_family
+        r.font.size = Pt(font_size * PT_PER_PX)        # px → pt (0.5 at 1920px canvas)
+        r.font.color.rgb = ACCENT_COLORS[cls] if cls else base_color
+
+    # Multi-line headlines use display:block <span class="line"> for forced breaks —
+    # split the html on those into separate paragraphs before run-splitting (omitted
+    # here for brevity; the cover "Introducing / MetaWorks" needs it).
 
     # PPTX brand rules — apply post-write
     is_mono = "Plex Mono" in font_family
@@ -227,8 +250,8 @@ def add_text_frame(slide, entry, on_dark=False):
             ls = style.get("letterSpacing", "0px")
             if ls and ls != "normal":
                 px = parse_px(ls)
-                # PPT spc unit: hundredths of a point
-                run.font._rPr.set("spc", str(int(px * 100)))
+                # PPT spc unit: hundredths of a point. Scale px→pt first (PT_PER_PX).
+                run.font._rPr.set("spc", str(int(px * PT_PER_PX * 100)))
 
 def add_picture_fullbleed(slide, png_path):
     slide.shapes.add_picture(str(png_path), 0, 0,
@@ -339,6 +362,10 @@ If any text frame is off by more than ~5px, the `getBoundingClientRect` measurem
 | Cover background shows the headline twice (PNG + native) | `HIDE_CSS` didn't apply during render | Verify `data-pptx-text` attributes are present on the editable nodes |
 | Logo missing from PPT | SVG not converted to PNG | Run the `rsvg-convert` / `cairosvg` step |
 | File opens but slide content is rasterized | Tier set to `image` when `semantic` was intended | Change `data-pptx="semantic"` in the HTML |
+| All text ~1.5× too big, overflows the slide | `PX_TO_EMU`/pt scale calibrated for a 1280px canvas (`9525`/`0.75`) on a 1920px deck | Use `6350` EMU/px and `0.5` pt/px — derive from `slide_width / CANVAS_W` |
+| Body line spacing looks loose / un-crisp vs the HTML | `line_spacing` set as a float multiple — PPT multiplies it by the font's ~1.2× line box | Set exact points: `p.line_spacing = Pt(lineHeight_px * PT_PER_PX)` |
+| Every paragraph has a leading-space indent | Source HTML has a newline+indent after the opening tag; whitespace collapsed but not trimmed | `lstrip()` the first run and `rstrip()` the last run of each block (keep inter-run spaces) |
+| Literal `&amp;` / `&mdash;` shows in the text | `inner_html` re-encodes entities; tags stripped but entities not decoded | `unescape()` the extracted text (strip tags first, then unescape) |
 
 ## What this pipeline does NOT do
 

@@ -32,9 +32,9 @@ The full token set lives in `assets/tokens.css`. Inline it into every brochure's
 --bg: #FFFFFF;          --bg-solid: #F8FAFA;
 --ink: #1A1A1A;         --ink-2: #404040;     --ink-3: #666666;     --ink-4: #999999;
 --line: #ECECEC;        --panel: #FFFFFF;     --panel-hi: #FAFBFB;
---teal-dark: #004D50;   --teal: #006B6F;      --teal-accent: #00989E;
---teal-bright: #00C4CC; --teal-light: #E8F4F5;
---logo-dark: #035657;   --logo-light: #67A4A4;
+--teal-dark: #004D50;   --teal: #006B6F;      --teal-on-dark: #88DCE0;
+--teal-accent: #00989E; /*DEPRECATED, use --teal/--teal-on-dark*/  --teal-bright: #88DCE0; /*was retired #00C4CC*/
+--teal-light: #E8F4F5;  --logo-dark: #035657;   --logo-light: #67A4A4;
 --success: #00896A;     --warn: #C48800;      --danger: #D94A30;
 --header: 'Geist', 'Inter', sans-serif;
 --body: 'Inter', sans-serif;

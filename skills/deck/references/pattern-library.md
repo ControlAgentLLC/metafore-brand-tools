@@ -27,15 +27,17 @@ These rules are non-negotiable. They apply across every pattern in this catalog.
 ### Palette — teal stack + grayscale only
 Approved fills:
 - `#004D50` `--teal-dark` · KPI bands, hero dark surfaces, deep emphasis
-- `#006B6F` `--teal` · primary brand · section labels · default chart series
-- `#00989E` `--teal-accent` · secondary accents · mid-stop · dark-surface highlights
-- `#035657` `--logo-dark` · two-tone hero accent · product-name color
+- `#006B6F` `--teal` · primary brand · section labels · default chart series · **light-surface accents, strokes & dots**
+- `#88DCE0` `--teal-on-dark` · **accents, strokes, labels & two-tone-hero word on dark teal surfaces**
+- `#035657` `--logo-dark` · two-tone hero accent on light surfaces · product-name color
 - `#67A4A4` `--logo-light` · secondary chart series · subtle accents
-- `#E8F4F5` `--teal-light` · tinted callouts · row fills
+- `#E8F4F5` `--teal-light` · tinted callouts · row fills (decoration only — never essential text)
 - Grayscale: `#FFFFFF`, `#F8FAFA`, `#FAFBFB`, `#F4F4F4`, `#ECECEC`, `#999999`, `#666666`, `#404040`, `#1A1A1A`, `#0A0A0A`
 
 Forbidden:
 - `#00C4CC` (was `--teal-bright`) — retired, too cyan
+- `#00989E` (was `--teal-accent`) — retired as an accent/stroke/label color: low contrast on both white (use `#006B6F`) and dark teal (use `#88DCE0`). A CSS-var swap won't reach hardcoded hex inside inline SVG — grep for it before delivery.
+- Light teal/grey as **essential** text (labels, KPI numbers, accents) — decoration and deliberately-muted/inert elements only
 - Status colors (success/warn/danger) as decoration — only allowed as actual state indicators
 - Any non-teal hue (indigo, sky, mint, violet, coral, etc.)
 - Gradients on cards, drop shadows on cards, accent line under titles
@@ -46,7 +48,7 @@ Forbidden:
 - **Eyebrows / labels / mono data:** IBM Plex Mono, weight 400–600, all-caps, `0.16em–0.22em` tracking. **In PPTX, Plex Mono never carries letter-spacing and is never bold.**
 
 ### Two-tone hero
-The signature Metafore type moment. First chunk renders in ink (`#1A1A1A`) or white on dark, last chunk wraps `<span class="accent">` in `#035657` (or `.accent-light` `#00989E` on dark surfaces). Same font, same size — only color changes. Never italic, never underlined, never bold.
+The signature Metafore type moment. First chunk renders in ink (`#1A1A1A`) or white on dark, last chunk wraps `<span class="accent">` in `#035657` (or `.accent-light` `#88DCE0` on dark surfaces). Same font, same size — only color changes. Never italic, never underlined, never bold.
 
 ### Header → body vertical rhythm
 Headline and body need breathing room. Tighter than this and the slide reads cramped; this is a recurring tuning issue, so codify it.
@@ -163,7 +165,7 @@ See `cover-recipes.md` for the full 1A/1B/1C HTML.
 
 **Type:**
 - Eyebrow: Plex Mono 18px, `rgba(255,255,255,0.7)`, `0.18em` tracking.
-- Headline: Geist 144px, white, two-tone with `.accent-light` in `#00989E` for the trailing word.
+- Headline: Geist 144px, white, two-tone with `.accent-light` in `#88DCE0` for the trailing word.
 - Subtitle (optional): Inter 22px, `rgba(255,255,255,0.7)`.
 
 **Locked vs editable:** Everything editable. No graphic.
@@ -253,13 +255,13 @@ Set `grid-template-rows: repeat(N, auto)` where N = items per column (`Math.ceil
 - On `--teal-dark` background: h1 84px white + accent-light on the trailing word + optional stat pair below.
 
 **Illustration on the right side:**
-- **Problem-style** — a single brand-style Pulse UI card on white. Shows one function's view (e.g. METAFORE PULSE · FINANCE), with header + title + KPI rows + recommendation box + CTA. Subtle hints in the sub-meta (`DETECTED · FINANCE · 1 SURFACE`) and recommendation copy (`cross-function routes unavailable`) carry the fragmentation message — the headline does the rest. White card, 1px `--line` border, 14px radius, no drop shadow. See MetaWorks deck slide 4 for the canonical implementation.
-- **Insight-style** — a single radial / knowledge-graph composition. See MetaWorks deck slide 11.
-- **Convergence-style** — many surfaces collapsing to one center mark. See MetaWorks deck slide 6.
+- **Problem-style — "dead-end dashboards."** A grid (2×2) of *disconnected* function dashboards (Finance / Sales / Operations / People), each showing one number with no drill-down, no cross-function context, and an inert `—` footer where an "explore / resolve" CTA would be. The grid layout — not a stack, **no connectors between cards** — is the visual argument: every function has its own view, none of them talk. Inert/dead elements use muted greys (`#999999`/`#BBBBBB`/`#CCCCCC`) *intentionally* — this is the rare case where low-contrast is correct because the point is that these surfaces are dead. White cards, 1px `--line` border, no drop shadow. See MetaWorks deck slide 4 for the canonical implementation.
+- **Insight-style** — a single radial / knowledge-graph composition. See MetaWorks deck slide 11 (Why-MetaWorks).
+- **Convergence-style** — many surfaces collapsing to one center mark. See MetaWorks deck four-graph slide.
 
-The illustration must follow brand graphic rules: teal stack only, no chart fragments (no donuts, gauges, multi-color bar charts), no decorative rotations, no scattered "playful" arrangements. Schematic and aligned, not whimsical.
+The illustration must follow brand graphic rules: teal stack only, no chart fragments as decoration (no donuts, gauges, multi-color bar charts), no decorative rotations, no scattered "playful" arrangements. Schematic and aligned, not whimsical.
 
-**Why a UI card and not a chart-shaped illustration:** the Pulse card *is* the product surface — showing one of them on this slide is brand-correct ("here is a Pulse") and the headline reframes it ("...and every function has its own"). A UI card on light always sits flat on the white slide; reserve glassmorphism for the cover (P-01) only.
+**Do NOT show a polished MetaWorks/Pulse surface on the Problem slide.** The Pulse card *is* the solution — putting it on the slide whose job is to describe the *absence* of MetaWorks reads as out of place. The problem slide argues the dead-end status quo (fragmented, no path to explore or resolve); save the real Pulse surface for the "in action" / solution slides (P-18, vertical-anchor). Reserve glassmorphism for the cover (P-01) only.
 
 **Locked vs editable:** h2, body, any stat pair labels/numbers → editable. Illustration → baked.
 
@@ -416,17 +418,18 @@ The illustration must follow brand graphic rules: teal stack only, no chart frag
 **Structure:** Two-column split, often on `--teal-dark`. Left: h1 two-tone + body + stat pair row. Right: a single radial SVG — center node, 8 satellite nodes at compass positions, solid spokes and dashed peripheral connections, Plex Mono labels around the perimeter.
 
 **Type:**
-- h1 on dark: Geist 84px, white with `.accent-light` in `#00989E`.
+- h1 on dark: Geist 84px, white with `.accent-light` in `#88DCE0`.
 - Body on dark: Inter 22px, white.
-- Stat number (`.s-num`): Geist 64px, `--teal-accent`.
+- Stat number (`.s-num`): Geist 64px, `#88DCE0` (`--teal-on-dark`).
 - Stat label (`.s-label`): Plex Mono 12px, `rgba(255,255,255,0.7)`.
 - Diagram labels: Plex Mono 13px, `rgba(255,255,255,0.85)`, `0.18em` tracking.
 
 **Locked vs editable:** h1, body, stat pair text → editable. Diagram → baked. Diagram labels are part of the SVG, intentionally not editable.
 
 **Common mistakes:**
-- Using `#00C4CC` for the spokes — that color is retired. Use `--teal-accent` `#00989E` for line work on dark surfaces.
-- Filling satellites with solid teal-bright. Use outlined circles with a small filled inner dot.
+- Line work and node strokes in `#00C4CC` or `#00989E` — both retired/low-contrast. On dark surfaces use `#88DCE0` (`--teal-on-dark`) for strokes, labels, and the center node's inner dot.
+- Hardcoding these hexes inside the inline SVG and assuming a CSS-var change will catch them — it won't. Grep the file for `#00989E`/`#00C4CC` before delivery.
+- Filling satellites with a solid bright fill. Use outlined circles with a small filled inner dot.
 
 ---
 
@@ -695,6 +698,39 @@ If the headline wraps anyway, reduce font-size — don't widen the slide canvas.
 
 ---
 
+## P-21 · Vertical anchor (fitting a vertical solution into the suite)
+
+**When:** Positioning a vertical solution that doesn't map cleanly onto the 12-block "digital C-suite" story — an airline IROP orchestrator, a bank customer-service agent, a telco care solution. The pattern bridges vertical → suite by declaring which MetaWorks module the solution *anchors into* and how it spans adjacent surfaces. One per vertical, placed right after the "in action" example slides (P-18).
+
+**Tier:** `hybrid`.
+
+**Structure:** Derives from the in-action layout (`.in-action`), minus the UI card. Header block = section label (`METAWORKS FOR <VERTICAL>`) + two-tone h2 + **anchor badge** + scenario paragraph. Below: three `.trace` tiles mapping the solution across surfaces (primary surface + two adjacent), then a `.sources` chip row of the vertical's systems.
+
+**The anchor badge** is the pattern's signature element — a pill that states the suite mapping:
+```html
+<div class="anchor-badge">
+  <span class="ab-lbl">Anchors into</span>
+  <span class="ab-arrow">&rarr;</span>
+  <span class="ab-mod">MetaWorks Operate</span>
+</div>
+```
+`.anchor-badge`: inline-flex pill, `--teal-light` fill, 1px `--line` border, `999px` radius. `.ab-lbl` Plex Mono 18px `--teal` uppercase tracked; `.ab-mod` Geist 26px `--logo-dark`.
+
+**Type:**
+- h2: Geist 60–64px, two-tone (accent on the value clause).
+- Scenario: Inter 28–30px, `--ink-2`.
+- Trace tiles: `.a-num` Plex Mono `01 / OPERATE` in `--teal`; `.a-mod` Geist 26px; `.a-role` Plex Mono uppercase (`PRIMARY SURFACE` / `ADJACENT SURFACE` / `AGENTS · POLICY-BOUND`); `.a-body` Inter.
+
+**Fill-in template:** swap the section label, headline, anchor module, scenario, the three surface tiles, and source chips per vertical. Practice heads own vertical content. Verticals → modules: Bank customer service → MetaWorks Success; Airline IROP → MetaWorks Operate; Telco care → MetaWorks Operate/Success.
+
+**Locked vs editable:** header, badge text, scenario, trace tiles → editable. None of it is a baked diagram, so this pattern stays almost entirely native in the PPTX.
+
+**Common mistakes:**
+- Listing surfaces as a flat bullet list instead of mapping a clear primary + adjacents — the point is *where it anchors*, not "it touches everything."
+- Triplet copy in the scenario (three parallel `every X` clauses) — use 2 or 4.
+
+---
+
 # Composing a deck — sequencing patterns
 
 The MetaWorks deck is the reference sequence. Use it as a template; deviate intentionally, not accidentally.
@@ -705,12 +741,16 @@ P-03  Agenda                             (skip in short decks)
 P-04  Company                            (one slide max)
 P-05  Statement / Problem
 P-06  Capability grid (4-up)             — the four pillars / four graphs
+                                          (four-graph canonical order: Meta → Knowledge → Context → Control —
+                                           ontology → reality → temporal overlay → governance)
 P-05  Statement / Suite Intro
 P-08  Module grid (12-up)                — the surfaces
 P-07  Capability grid (8-up)             — the shared platform
 P-10  Integration ecosystem
 P-09  KPI band
 P-05  Statement / Why
+P-18  Scenario / "in action"            — 1–3 example slides
+P-21  Vertical anchor                    — one per vertical, after the in-action set (optional)
 P-11  Deployment timeline
 P-13  Closing                            (always last)
 ```

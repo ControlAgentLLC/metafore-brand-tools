@@ -268,7 +268,7 @@ Inline SVG inside `.spark`, 80×28 abs-positioned top-right of the card. Three f
 ```css
 .spark .up   { stroke: var(--logo-dark); }
 .spark .down { stroke: var(--logo-light); }
-.spark .flat { stroke: var(--teal-accent); }
+.spark .flat { stroke: var(--teal); }
 ```
 
 ## Recommended-action callout

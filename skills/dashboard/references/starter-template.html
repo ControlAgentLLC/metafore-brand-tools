@@ -17,8 +17,9 @@
     --logo-light: #67A4A4;
     --teal-dark: #004D50;
     --teal: #006B6F;
-    --teal-accent: #00989E;
-    --teal-bright: #00C4CC;
+    --teal-on-dark: #88DCE0;   /* accents/strokes/labels on dark; tertiary chart series */
+    --teal-accent: #00989E;    /* DEPRECATED — use --teal (light) / --teal-on-dark (dark) */
+    --teal-bright: #88DCE0;    /* repointed; was retired #00C4CC */
     --teal-light: #E8F4F5;
     --accent: var(--teal);
 
@@ -122,7 +123,7 @@
   .card .spark svg { width: 100%; height: 100%; }
   .spark .up   { stroke: var(--logo-dark); }
   .spark .down { stroke: var(--logo-light); }
-  .spark .flat { stroke: var(--teal-accent); }
+  .spark .flat { stroke: var(--teal); }
 
   /* span helpers */
   .span-2 { grid-column: span 2; }

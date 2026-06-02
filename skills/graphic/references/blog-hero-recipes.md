@@ -18,8 +18,9 @@ All hero recipes obey the Brand-critical rules in `SKILL.md`:
 ```css
 :root{
   --ink:#1A1A1A; --ink-2:#404040; --ink-3:#666; --ink-4:#999;
-  --teal:#006B6F; --teal-dark:#004D50; --teal-accent:#00989E;
-  --teal-bright:#00C4CC; --teal-light:#E8F4F5;
+  --teal:#006B6F; --teal-dark:#004D50; --teal-on-dark:#88DCE0;
+  --teal-accent:#00989E; /* DEPRECATED — use --teal (light) / --teal-on-dark (dark) */
+  --teal-bright:#88DCE0; /* repointed; was retired #00C4CC */ --teal-light:#E8F4F5;
   --logo-dark:#035657; --logo-light:#67A4A4;
   --coral:#D94A30; --amber:#C48800; --success:#00896A;
   --line:rgba(0,0,0,0.08); --bg-solid:#F8FAFA;
