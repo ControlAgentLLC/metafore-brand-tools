@@ -126,7 +126,7 @@ A **status modifier** can be added (`.card.warn`, `.card.bad`, `.card.ok`) — c
   font-family: 'Inter', sans-serif; font-size: var(--body-size); color: var(--ink-3);
   line-height: var(--lh-body); margin-left: 6px; font-weight: 500;
 }
-.card .footnote { padding-left: 10px; color: var(--ink-3); font-size: 12px; margin-top: 6px; }
+.card .footnote { padding-left: 10px; color: var(--ink-3); font-size: 14px; margin-top: 6px; }
 .card .footnote.warn { color: #8a5a13; }
 .card .footnote.bad  { color: #8a2a1f; }
 
@@ -153,7 +153,7 @@ The colored dot at the start of the label is the **only** place status color is 
 
 ```css
 .list { padding-left: 10px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-.list .row { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+.list .row { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; font-size: 16px; }
 .list .dot { width: 7px; height: 7px; border-radius: 50%; background: #1f7a4d; }
 .list .dot.amber { background: #c89321; }
 .list .dot.red   { background: #a02b1d; }
@@ -191,7 +191,7 @@ Same skeleton as the status list, with two-line rows:
 .decisions .row:last-child { border-bottom: 0; }
 .decisions .name { font-weight: 500; }
 .decisions .desc { color: var(--ink-3); font-size: var(--body-size); line-height: var(--lh-body); letter-spacing: 0; margin-top: 2px; }
-.decisions .when { color: var(--ink-4); font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+.decisions .when { color: var(--ink-3); font-size: 14px; font-family: 'IBM Plex Mono', monospace; }
 ```
 
 ## Table card
@@ -250,7 +250,7 @@ Full CSS in starter template.
 ```css
 .chart .col .b.ip { background: var(--logo-dark); }
 .chart .col .b.td { background: var(--logo-light); }
-.chart .col .b.bk { background: var(--teal-bright); }
+.chart .col .b.bk { background: var(--teal-on-dark); }
 ```
 
 Series colors are **always** the logo teals. If the user asks for "more colors", push back: tell them we differentiate with order/weight, not a second hue.
@@ -300,7 +300,7 @@ For any agent-suggested action that needs a human approval. Inline copy on the l
 .btn {
   border: 1px solid var(--line); background: #fff;
   height: 32px; padding: 0 14px; border-radius: 8px;
-  font: 500 12px 'Inter', sans-serif; cursor: pointer; color: var(--ink-2);
+  font: 500 14px 'Inter', sans-serif; cursor: pointer; color: var(--ink-2);
 }
 .btn:hover { background: var(--hover); }
 .btn.primary { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
@@ -315,7 +315,7 @@ Resist the urge to add eyebrows, sparkle icons, confidence indicators, gradient 
 .iconbtn {
   border: 1px solid var(--line); background: #fff; height: 36px; padding: 0 12px; border-radius: 10px;
   display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); cursor: pointer;
-  font: 500 13px 'Inter', sans-serif;
+  font: 500 14px 'Inter', sans-serif;
 }
 .iconbtn:hover { background: var(--hover); }
 .iconbtn.icon-only { width: 36px; padding: 0; justify-content: center; }
@@ -325,7 +325,7 @@ Resist the urge to add eyebrows, sparkle icons, confidence indicators, gradient 
 .pill {
   display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px;
   border: 1px solid var(--line); border-radius: 10px; background: #fff;
-  font: 500 13px/1 'Inter', sans-serif; color: var(--ink-2); cursor: pointer;
+  font: 500 14px/1 'Inter', sans-serif; color: var(--ink-2); cursor: pointer;
 }
 .pill svg { width: 14px; height: 14px; color: var(--ink-3); }
 .pill .caret { width: 10px; height: 10px; }
@@ -334,7 +334,7 @@ Resist the urge to add eyebrows, sparkle icons, confidence indicators, gradient 
 .seg button {
   height: 36px; padding: 0 14px;
   background: #f4f4f4; border: 1px solid transparent;
-  font: 500 13px 'Inter', sans-serif; color: var(--ink-3);
+  font: 500 14px 'Inter', sans-serif; color: var(--ink-3);
   border-radius: 8px; cursor: pointer;
   transition: background .15s, border-color .15s, color .15s;
 }
@@ -346,7 +346,7 @@ Resist the urge to add eyebrows, sparkle icons, confidence indicators, gradient 
 .live {
   display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
   border: 1px solid var(--line); border-radius: 999px;
-  font: 500 12px 'Inter', sans-serif; color: var(--ink-2); background: #fff;
+  font: 500 14px 'Inter', sans-serif; color: var(--ink-2); background: #fff;
 }
 .live::before {
   content: ""; width: 7px; height: 7px; border-radius: 50%;
@@ -370,7 +370,7 @@ The toggle's **active state is a white pill, never a black fill.** This is non-n
 .chip {
   display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
   border: 1px solid var(--line); border-radius: 999px;
-  font: 500 13px 'Inter', sans-serif; color: var(--ink-2); background: #fff; cursor: pointer;
+  font: 500 14px 'Inter', sans-serif; color: var(--ink-2); background: #fff; cursor: pointer;
 }
 .chip:hover { background: var(--hover); }
 ```
@@ -403,7 +403,7 @@ The toggle's **active state is a white pill, never a black fill.** This is non-n
 ```css
 .prompt-wrap { padding: 12px 28px 0; max-width: 980px; margin: 0 auto; }
 .iwant { background: #f6f6f6; border-radius: 14px; padding: 6px 14px; }
-.iwant .row { padding: 10px 6px; border-bottom: 1px solid #ececec; color: var(--ink-3); font-size: 14px; }
+.iwant .row { padding: 10px 6px; border-bottom: 1px solid #ececec; color: var(--ink-3); font-size: 16px; }
 .iwant .row:last-child { border-bottom: 0; }
 .iwant .row b { color: var(--ink); font-weight: 500; }
 
@@ -448,7 +448,7 @@ When the project has more than one dashboard file, drop this in the top-right co
   display: inline-flex; border: 1px solid var(--line); border-radius: 10px;
   overflow: hidden; background: #fff;
 }
-.switcher a { padding: 8px 14px; font: 500 12px 'Inter', sans-serif; color: var(--ink-3); text-decoration: none; }
+.switcher a { padding: 8px 14px; font: 500 14px 'Inter', sans-serif; color: var(--ink-3); text-decoration: none; }
 .switcher a.on { background: #0a0a0a; color: #fff; }
 ```
 

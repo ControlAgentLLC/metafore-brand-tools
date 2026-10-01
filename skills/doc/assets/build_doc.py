@@ -15,11 +15,17 @@ Conventions encoded here (must match `references/styles-reference.html`):
   - Callouts as left-bordered teal-light blocks (no label)
   - Data tables with teal-light header rows and a trailing spacer
   - Two-tone H1 (ink base + logo-dark accent run)
+  - Legibility floor (brand pack §2): body 11pt / 17pt leading (12pt for
+    executive memos via create_doc(body_pt=12)); nothing readable under 11pt;
+    Plex Mono labels 9pt
+  - Visual helpers so every two facing pages carry a visual: add_icon,
+    add_icon_row, add_figure, add_kpi_band, add_pull_quote
 
 Fonts: Geist / Inter / IBM Plex Mono. Word falls back to Arial / Calibri /
 Consolas if the brand fonts aren't installed.
 """
 
+import datetime
 import os
 
 from docx import Document
@@ -58,6 +64,19 @@ PLUGIN_ROOT = os.path.abspath(os.path.join(ASSETS_DIR, '..', '..', '..'))
 LOGOS_DIR = os.path.join(PLUGIN_ROOT, 'assets', 'graphics', 'logos')
 LOGO_PNG = os.path.join(LOGOS_DIR, 'metafore-logo.png')
 ICON_PNG = os.path.join(LOGOS_DIR, 'metafore-icon.png')
+LINE_ICONS_DIR = os.path.join(PLUGIN_ROOT, 'assets', 'graphics', 'line-icons')
+
+LABEL_PT = 9          # Plex Mono labels / eyebrows (decorative-label exception)
+FOOTER_PT = 8         # running footer chrome
+
+
+def _body_pt(doc):
+    return getattr(doc, '_mf_config', {}).get('body_pt', 11)
+
+
+def _lead(pt):
+    """Leading that keeps the 11/17 ratio (11 → 17, 12 → 18.5)."""
+    return round(pt * 17 / 11 * 2) / 2
 
 
 # ====================================================================
@@ -154,7 +173,10 @@ def _set_cell_valign(cell, val='center'):
 def _build_fixed_table(parent, rows, cols, col_widths_in):
     """Borderless fixed-layout table with explicit tblGrid + tcW so widths stick."""
     total_in = sum(col_widths_in)
-    tbl = parent.add_table(rows=rows, cols=cols, width=Inches(total_in))
+    try:   # header/footer parts take a width; the document body doesn't
+        tbl = parent.add_table(rows=rows, cols=cols, width=Inches(total_in))
+    except TypeError:
+        tbl = parent.add_table(rows=rows, cols=cols)
     tbl.autofit = False
     tblPr = tbl._element.find(qn('w:tblPr'))
     for el in tblPr.findall(qn('w:tblLayout')): tblPr.remove(el)
@@ -214,13 +236,13 @@ def _configure_toc_styles(doc):
             s = styles.add_style(name, WD_STYLE_TYPE.PARAGRAPH)
             s.base_style = styles['Normal']
         s.font.name = BODY_FONT
-        s.font.size = Pt(11 if level == 1 else 10)
+        s.font.size = Pt(12 if level == 1 else 11)
         s.font.color.rgb = INK if level == 1 else INK_2
         s.font.bold = False
         s.paragraph_format.left_indent = Inches(0 if level == 1 else 0.32)
         s.paragraph_format.space_before = Pt(10 if level == 1 else 4)
         s.paragraph_format.space_after = Pt(2)
-        s.paragraph_format.line_spacing = Pt(16 if level == 1 else 14)
+        s.paragraph_format.line_spacing = Pt(18 if level == 1 else 16)
 
 
 def _enable_field_update_on_open(doc):
@@ -245,6 +267,7 @@ def create_doc(
     title_short: str = 'Metafore document',
     meta_labels=None,
     meta_values=None,
+    body_pt: float = 11,
 ):
     """Create a Metafore-styled Document with cover/TOC chrome configured.
 
@@ -262,7 +285,11 @@ def create_doc(
                        defaults to ['Prepared for', 'Version', 'Reading time']
         meta_values:   3 values for cover bottom strip
                        defaults to ['Client', 'v1.0', '— minutes']
+        body_pt:       body size — 11 (default) or 12 for executive memos.
+                       Never below 11 (brand floor for print).
     """
+    if body_pt < 11:
+        raise ValueError('body_pt below the 11pt print floor')
     meta_labels = meta_labels or ['Prepared for', 'Version', 'Reading time']
     meta_values = meta_values or ['Client', 'v1.0', '— minutes']
 
@@ -298,6 +325,7 @@ def create_doc(
     doc._mf_config = {
         'include_cover': include_cover,
         'include_toc': include_toc,
+        'body_pt': body_pt,
     }
     return doc
 
@@ -327,14 +355,14 @@ def _build_cover_header(section, doc_type_label, publish_date):
     right_cell = htbl.rows[0].cells[1]
     rp1 = right_cell.paragraphs[0]
     rp1.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    _set_paragraph_spacing(rp1, before_pt=0, after_pt=0, line_pt=11)
+    _set_paragraph_spacing(rp1, before_pt=0, after_pt=0, line_pt=12)
     r1 = rp1.add_run(doc_type_label)
-    _set_font(r1, MONO_FONT, MONO_FALLBACK, size_pt=8, color=INK_3, all_caps=True, tracking=32)
+    _set_font(r1, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=INK_3, all_caps=True, tracking=32)
     rp2 = right_cell.add_paragraph()
     rp2.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    _set_paragraph_spacing(rp2, before_pt=0, after_pt=0, line_pt=11)
+    _set_paragraph_spacing(rp2, before_pt=0, after_pt=0, line_pt=12)
     r2 = rp2.add_run(publish_date)
-    _set_font(r2, MONO_FONT, MONO_FALLBACK, size_pt=8, color=TEAL_DARK, all_caps=True, tracking=32)
+    _set_font(r2, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=TEAL_DARK, all_caps=True, tracking=32)
 
     default_first_p.getparent().remove(default_first_p)
 
@@ -351,13 +379,13 @@ def _build_cover_footer(section, meta_labels, meta_values):
         p = cell.paragraphs[0]
         _set_paragraph_spacing(p, before_pt=0, after_pt=6, line_pt=10)
         r = p.add_run(label)
-        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=7.5, color=TEAL, all_caps=True, tracking=28)
+        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=TEAL, all_caps=True, tracking=28)
     for ci, val in enumerate(meta_values):
         cell = mt.rows[1].cells[ci]
         p = cell.paragraphs[0]
         _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=14)
         r = p.add_run(val)
-        _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=10.5, color=INK)
+        _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=11, color=INK)
 
 
 def _build_content_footer(section, title_short):
@@ -365,11 +393,11 @@ def _build_content_footer(section, title_short):
     cf.text = ''
     _set_right_tab(cf, CONTENT_WIDTH_IN)
     _set_paragraph_spacing(cf, before_pt=24, after_pt=0, line_pt=11)
-    fr1 = cf.add_run(f'Metafore · {title_short} · 2026')
-    _set_font(fr1, MONO_FONT, MONO_FALLBACK, size_pt=7, color=INK_4, tracking=20)
+    fr1 = cf.add_run(f'Metafore · {title_short} · {datetime.date.today().year}')
+    _set_font(fr1, MONO_FONT, MONO_FALLBACK, size_pt=FOOTER_PT, color=INK_4, tracking=20)
     cf.add_run().add_tab()
     page_run = _add_field(cf, 'PAGE')
-    _set_font(page_run, MONO_FONT, MONO_FALLBACK, size_pt=7, color=INK_4, tracking=20)
+    _set_font(page_run, MONO_FONT, MONO_FALLBACK, size_pt=FOOTER_PT, color=INK_4, tracking=20)
 
 
 # ====================================================================
@@ -385,9 +413,9 @@ def page_break(doc):
 
 def add_cover_eyebrow(doc, text):
     p = doc.add_paragraph()
-    _set_paragraph_spacing(p, before_pt=180, after_pt=18, line_pt=12)
+    _set_paragraph_spacing(p, before_pt=180, after_pt=18, line_pt=13)
     r = p.add_run(text)
-    _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=8, color=TEAL, all_caps=True, tracking=32)
+    _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=TEAL, all_caps=True, tracking=32)
 
 
 def add_cover_h1(doc, text_before, accent_text):
@@ -409,9 +437,9 @@ def add_cover_subtitle(doc, text):
 
 def add_cover_lead(doc, text):
     p = doc.add_paragraph()
-    _set_paragraph_spacing(p, before_pt=0, after_pt=14, line_pt=18)
+    _set_paragraph_spacing(p, before_pt=0, after_pt=14, line_pt=19)
     r = p.add_run(text)
-    _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=11, color=INK)
+    _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=12, color=INK)
 
 
 # ---- TOC page (only when include_toc=True) ----------------------------
@@ -452,10 +480,10 @@ def add_section_eyebrow(doc, text, with_top_rule=True):
         _add_paragraph_border(rp, side='top', sz=4, color=LINE_HEX, space=1)
         _set_paragraph_spacing(rp, before_pt=24, after_pt=24, line_pt=2)
     p = doc.add_paragraph()
-    _set_paragraph_spacing(p, before_pt=0, after_pt=10, line_pt=12)
+    _set_paragraph_spacing(p, before_pt=0, after_pt=10, line_pt=13)
     _set_outline_level(p, 0)
     r = p.add_run(text)
-    _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=8, color=TEAL, all_caps=True, tracking=28)
+    _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=TEAL, all_caps=True, tracking=28)
 
 
 def add_h2(doc, text):
@@ -469,20 +497,25 @@ def add_h2(doc, text):
 def add_subhead(doc, number, text):
     """Numbered sub-heading 'N · Topic'. Outline level 1 → TOC level 2."""
     p = doc.add_paragraph()
-    _set_paragraph_spacing(p, before_pt=14, after_pt=8, line_pt=18)
+    _set_paragraph_spacing(p, before_pt=14, after_pt=8, line_pt=19)
     _set_outline_level(p, 1)
     r = p.add_run(f'{number} · {text}')
-    _set_font(r, HEADER_FONT, HEADER_FALLBACK, size_pt=13, color=INK, bold=True)
+    _set_font(r, HEADER_FONT, HEADER_FALLBACK, size_pt=14, color=INK, bold=True)
 
 
 def add_body(doc, text_or_parts, after_pt=10, color=INK):
-    """Body paragraph. Pass a string OR a list of (text, is_bold) tuples for inline bold."""
+    """Body paragraph. Pass a string OR a list of (text, is_bold) tuples for inline bold.
+
+    Keep each paragraph to ~3 lines (45–60 words); three or more parallel facts
+    belong in add_bullet() calls instead.
+    """
+    pt = _body_pt(doc)
     p = doc.add_paragraph()
-    _set_paragraph_spacing(p, before_pt=0, after_pt=after_pt, line_pt=15)
+    _set_paragraph_spacing(p, before_pt=0, after_pt=after_pt, line_pt=_lead(pt))
     parts = [(text_or_parts, False)] if isinstance(text_or_parts, str) else text_or_parts
     for text, bold in parts:
         r = p.add_run(text)
-        _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=10, color=color, bold=bold)
+        _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=pt, color=color, bold=bold)
 
 
 def add_takeaway(doc, text):
@@ -492,14 +525,15 @@ def add_takeaway(doc, text):
 
 def add_bullet(doc, parts):
     """One bullet item. Pass list of (text, is_bold) tuples; first usually bolded as the lead noun."""
+    pt = _body_pt(doc)
     p = doc.add_paragraph()
-    _set_paragraph_spacing(p, before_pt=0, after_pt=2, line_pt=14)
+    _set_paragraph_spacing(p, before_pt=0, after_pt=3, line_pt=_lead(pt) - 1)
     p.paragraph_format.left_indent = Inches(0.24)
     p.paragraph_format.first_line_indent = Inches(-0.24)
-    rb = p.add_run('•\t'); _set_font(rb, BODY_FONT, BODY_FALLBACK, size_pt=10.5, color=INK)
+    rb = p.add_run('•\t'); _set_font(rb, BODY_FONT, BODY_FALLBACK, size_pt=pt, color=INK)
     for text, bold in parts:
         r = p.add_run(text)
-        _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=10, color=INK, bold=bold)
+        _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=pt, color=INK, bold=bold)
 
 
 def add_callout(doc, text):
@@ -510,9 +544,10 @@ def add_callout(doc, text):
     _set_cell_borders(cell, {'left': {'sz': 24, 'color': TEAL_DARK_HEX}})
     _set_cell_margins(cell, top=240, bottom=240, left=320, right=280)
     p = cell.paragraphs[0]
-    _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=18)
+    pt = _body_pt(doc) + 1
+    _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=_lead(pt))
     r = p.add_run(text)
-    _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=11, color=INK)
+    _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=pt, color=INK)
     spacer = doc.add_paragraph()
     _set_paragraph_spacing(spacer, before_pt=0, after_pt=18, line_pt=4)
 
@@ -536,9 +571,9 @@ def add_data_table(doc, headers, rows, col_widths_in):
         _set_cell_borders(c, {'bottom': {'sz': 6, 'color': LINE_STRONG_HEX}})
         _set_cell_margins(c, top=110, bottom=110, left=140, right=140)
         p = c.paragraphs[0]
-        _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=10)
+        _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=12)
         r = p.add_run(h)
-        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=7, color=TEAL_DARK, all_caps=True, tracking=32)
+        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=TEAL_DARK, all_caps=True, tracking=32)
     for ri, row_data in enumerate(rows):
         is_last = (ri == len(rows) - 1)
         for ci, (text, kind) in enumerate(row_data):
@@ -546,16 +581,16 @@ def add_data_table(doc, headers, rows, col_widths_in):
             _set_cell_borders(c, {} if is_last else {'bottom': {'sz': 3, 'color': LINE_HEX}})
             _set_cell_margins(c, top=100, bottom=100, left=140, right=140)
             p = c.paragraphs[0]
-            _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=12)
+            _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=15)
             r = p.add_run(text)
             if kind == 'id':
-                _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=8.5, color=TEAL_DARK, tracking=8)
+                _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT + 1, color=TEAL_DARK, tracking=8)
             elif kind == 'layer':
-                _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=7.5, color=INK_2, all_caps=True, tracking=12)
+                _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=INK_2, all_caps=True, tracking=12)
             elif kind in ('states', 'parents'):
-                _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=8.5, color=INK_2, tracking=4)
+                _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=10, color=INK_2, tracking=4)
             else:
-                _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=9.5, color=INK)
+                _set_font(r, BODY_FONT, BODY_FALLBACK, size_pt=11, color=INK)
     # trailing spacer
     spacer = doc.add_paragraph()
     _set_paragraph_spacing(spacer, before_pt=0, after_pt=14, line_pt=4)
@@ -572,7 +607,7 @@ def add_signature_block(doc, left_label, left_who, right_label, right_who):
         p = sig.rows[0].cells[ci].paragraphs[0]
         _set_paragraph_spacing(p, before_pt=0, after_pt=24, line_pt=12)
         r = p.add_run(label)
-        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=7, color=TEAL_DARK,
+        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=TEAL_DARK,
                   all_caps=True, tracking=32)
     # row 1: signature lines
     for ci in range(2):
@@ -585,12 +620,121 @@ def add_signature_block(doc, left_label, left_who, right_label, right_who):
         p = sig.rows[2].cells[ci].paragraphs[0]
         _set_paragraph_spacing(p, before_pt=0, after_pt=0, line_pt=11)
         r = p.add_run(who)
-        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=7, color=INK_2,
+        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=INK_2,
                   all_caps=True, tracking=28)
     # row 3: Date
     for ci in range(2):
         p = sig.rows[3].cells[ci].paragraphs[0]
         _set_paragraph_spacing(p, before_pt=14, after_pt=0, line_pt=11)
         r = p.add_run('Date')
-        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=6.5, color=INK_3,
+        _set_font(r, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=INK_3,
                   all_caps=True, tracking=28)
+
+
+# ---- Visual helpers ---------------------------------------------------
+# Brand rule: every two facing pages carry at least one visual. Reach for the
+# bundled LineIcons library first (names: see skills/graphic/references/
+# line-icons-library.md), then KPI bands, pull quotes, and figures.
+
+def _icon_path(name):
+    path = os.path.join(LINE_ICONS_DIR, f'{name}.png')
+    if not os.path.exists(path):
+        import difflib
+        names = sorted(f[:-4] for f in os.listdir(LINE_ICONS_DIR) if f.endswith('.png'))
+        close = difflib.get_close_matches(name, names, n=3)
+        raise FileNotFoundError(f"unknown line icon '{name}'" + (f" — closest: {', '.join(close)}" if close else ''))
+    return path
+
+
+def add_icon(doc, name, width_in=1.4):
+    """A single library line icon, left-aligned, e.g. add_icon(doc, 'Nodes')."""
+    p = doc.add_paragraph()
+    _set_paragraph_spacing(p, before_pt=4, after_pt=10)
+    p.add_run().add_picture(_icon_path(name), width=Inches(width_in))
+
+
+def add_icon_row(doc, items, icon_width_in=1.1):
+    """2–4 columns, each a library icon + title + one-line body.
+
+    items: list of (icon_name, title, body) tuples.
+    """
+    n = len(items)
+    col_w = CONTENT_WIDTH_IN / n
+    tbl = _build_fixed_table(doc, rows=1, cols=n, col_widths_in=[col_w] * n)
+    pt = _body_pt(doc)
+    for ci, (icon, title, body) in enumerate(items):
+        cell = tbl.rows[0].cells[ci]
+        _set_cell_valign(cell, 'top')
+        _set_cell_margins(cell, top=0, bottom=0, left=0 if ci == 0 else 120, right=120)
+        p = cell.paragraphs[0]
+        _set_paragraph_spacing(p, before_pt=0, after_pt=8)
+        p.add_run().add_picture(_icon_path(icon), width=Inches(min(icon_width_in, col_w - 0.2)))
+        tp = cell.add_paragraph()
+        _set_paragraph_spacing(tp, before_pt=0, after_pt=4, line_pt=18)
+        tr = tp.add_run(title)
+        _set_font(tr, HEADER_FONT, HEADER_FALLBACK, size_pt=13, color=INK)
+        bp = cell.add_paragraph()
+        _set_paragraph_spacing(bp, before_pt=0, after_pt=0, line_pt=_lead(pt) - 1)
+        br = bp.add_run(body)
+        _set_font(br, BODY_FONT, BODY_FALLBACK, size_pt=pt, color=INK_2)
+    spacer = doc.add_paragraph()
+    _set_paragraph_spacing(spacer, before_pt=0, after_pt=16, line_pt=4)
+
+
+def add_figure(doc, image_path, caption=None, width_in=CONTENT_WIDTH_IN):
+    """A diagram, chart, or screenshot (PNG/JPG) with an optional caption."""
+    p = doc.add_paragraph()
+    _set_paragraph_spacing(p, before_pt=6, after_pt=6)
+    p.add_run().add_picture(image_path, width=Inches(width_in))
+    if caption:
+        cp = doc.add_paragraph()
+        _set_paragraph_spacing(cp, before_pt=0, after_pt=16, line_pt=15)
+        cr = cp.add_run(caption)
+        _set_font(cr, BODY_FONT, BODY_FALLBACK, size_pt=11, color=INK_3)
+
+
+def add_kpi_band(doc, kpis, source=None):
+    """A --teal-dark band of 2–4 metrics: kpis = [(value, label), ...]. Real numbers only."""
+    n = len(kpis)
+    tbl = _build_fixed_table(doc, rows=1, cols=n, col_widths_in=[CONTENT_WIDTH_IN / n] * n)
+    for ci, (value, label) in enumerate(kpis):
+        cell = tbl.rows[0].cells[ci]
+        _set_cell_shading(cell, TEAL_DARK_HEX)
+        _set_cell_margins(cell, top=260, bottom=260, left=240, right=200)
+        _set_cell_valign(cell, 'top')
+        vp = cell.paragraphs[0]
+        _set_paragraph_spacing(vp, before_pt=0, after_pt=6, line_pt=34)
+        vr = vp.add_run(value)
+        _set_font(vr, HEADER_FONT, HEADER_FALLBACK, size_pt=28, color=RGBColor(0xFF, 0xFF, 0xFF))
+        b = OxmlElement('w:b'); b.set(qn('w:val'), 'false'); vr._element.get_or_add_rPr().append(b)
+        lp = cell.add_paragraph()
+        _set_paragraph_spacing(lp, before_pt=0, after_pt=0, line_pt=15)
+        lr = lp.add_run(label)
+        _set_font(lr, BODY_FONT, BODY_FALLBACK, size_pt=11, color=RGBColor(0xCC, 0xDB, 0xDC))
+    if source:
+        sp = doc.add_paragraph()
+        _set_paragraph_spacing(sp, before_pt=6, after_pt=16, line_pt=12)
+        sr = sp.add_run(source)
+        _set_font(sr, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=INK_3, tracking=12)
+    else:
+        spacer = doc.add_paragraph()
+        _set_paragraph_spacing(spacer, before_pt=0, after_pt=16, line_pt=4)
+
+
+def add_pull_quote(doc, quote, attribution):
+    """A pull quote: Geist 18pt with a teal-dark left rule and a Plex Mono attribution."""
+    tbl = doc.add_table(rows=1, cols=1); tbl.autofit = False
+    cell = tbl.rows[0].cells[0]; cell.width = Inches(CONTENT_WIDTH_IN)
+    _set_cell_borders(cell, {'left': {'sz': 32, 'color': TEAL_DARK_HEX}})
+    _set_cell_margins(cell, top=120, bottom=120, left=360, right=200)
+    qp = cell.paragraphs[0]
+    _set_paragraph_spacing(qp, before_pt=0, after_pt=10, line_pt=25)
+    qr = qp.add_run(quote)
+    _set_font(qr, HEADER_FONT, HEADER_FALLBACK, size_pt=18, color=INK)
+    b = OxmlElement('w:b'); b.set(qn('w:val'), 'false'); qr._element.get_or_add_rPr().append(b)
+    ap = cell.add_paragraph()
+    _set_paragraph_spacing(ap, before_pt=0, after_pt=0, line_pt=13)
+    ar = ap.add_run(f'— {attribution}')
+    _set_font(ar, MONO_FONT, MONO_FALLBACK, size_pt=LABEL_PT, color=TEAL, all_caps=True, tracking=28)
+    spacer = doc.add_paragraph()
+    _set_paragraph_spacing(spacer, before_pt=0, after_pt=18, line_pt=4)

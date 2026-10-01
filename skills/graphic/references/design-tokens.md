@@ -98,7 +98,7 @@ box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 1px 3px rgba(0,0,0,0.08);
 .pill {
   display: inline-block;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 1.2px;
   padding: 3px 8px;

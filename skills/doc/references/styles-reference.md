@@ -1,5 +1,8 @@
 # Metafore Doc — Styles Reference
 
+> **Out of date — sizes.** This catalog predates the October 2026 legibility floors (body 11pt / 17pt leading, nothing readable under 11pt, Plex Mono labels 9pt, footer 8pt) and was already drifting from the code before that. **`assets/build_doc.py` is authoritative** for every size and spacing value; use this file for element names (A1–C9) and structure only.
+
+
 Source of truth for every element in `metafore-doc-adnoc-test.docx` and the eventual `metafore-doc` skill. Mark this up with edits and we'll apply them.
 
 ---

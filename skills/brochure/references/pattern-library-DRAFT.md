@@ -8,7 +8,8 @@
 >
 > - **Tracking is 0 everywhere.** Ignore any `letter-spacing` values in this file (negative on headers or positive on eyebrows/labels). Strip them.
 > - **Line-height is 1.125 on headers, 1.200 on body, lede, eyebrow.** Replace any `line-height: 72px / 28px / 22px / 26px / 1` style values with the unitless ratios.
-> - **Header sizes** follow the Perfect Fifth scale (H1 36 / H2 24 / H3 18, body 16) with auto-shrink to the Perfect Fourth floor (H1 28 / H2 21). Hero sizes above 50px from older snippets — use 36–40px and let `clamp()` handle the rest.
+> - **Header sizes** follow the Perfect Fifth scale on an 18px body (H1 40 / H2 27 / H3 21, lede 21) with auto-shrink to the floor (H1 32 / H2 24). Body, lede, eyebrow (13px) and captions (15px) never shrink. Nothing essential below 15px.
+> - **Every section carries a visual** (library line icon via `src="@icon:Name"`, diagram, UI card, KPI band, or pull quote), and no paragraph runs past three lines — see the brand pack §2.
 > - **Margins** between H1, H2, and body are proportional to each element's font-size (see `tokens.css`); do not hand-tune.
 
 ---
@@ -19,7 +20,7 @@
   - Hero A — Left text + right UI-card
   - Hero B — Full-width centered
   - Hero C — Text + 3-stat split
-- [Pillar cards](#pillar-cards) — 3-up with teal rotation
+- [Pillar cards](#pillar-cards) — 2–4 thematic cards, single teal bar
 - [Capability grids](#capability-grids) — 2×2, 3-up, 4-up, 3-up illustrated
 - [Comparison table](#comparison-table) — "with Metafore" vs status quo
 - [KPI band](#kpi-band) — tealDark fill, 3 or 4 cells
@@ -87,11 +88,11 @@ Notes: Even though body copy is never centered, a single hero block can be cente
 
 ## Pillar cards
 
-3-up cards introducing the major themes the brochure will cover. Each card carries an accent rotation: teal → tealAccent → tealDark, via a 3px top bar.
+Cards introducing the major themes the brochure will cover. Every card carries the same 3px `--teal` top bar and a library line icon — no color rotation across cards (it reads as inconsistency, and `--teal-accent` is retired).
 
 **When to use:** When the brochure has 3 thematic chapters worth previewing up front.
-**When to skip:** When the content really has 2 or 4 main themes — don't force a triplet for symmetry. (See AI-tell blocklist: triplet structural lists are flagged.)
-**Min/max:** Exactly 3 cards. ≤30 words of body copy each.
+**When to skip:** When the themes don't preview the rest of the brochure.
+**Min/max:** As many cards as there are themes (2–4); a factual three is fine. Body ≤ 3 lines each.
 
 ```html
 <div class="pillars">
@@ -101,7 +102,7 @@ Notes: Even though body copy is never centered, a single hero block can be cente
     <p class="p-body">Pillar body.</p>
     <div class="p-foot">Footer label</div>
   </div>
-  <!-- p2 with --teal-accent bar, p3 with --teal-dark bar -->
+  <!-- one card per theme; same --teal bar on every card -->
 </div>
 ```
 

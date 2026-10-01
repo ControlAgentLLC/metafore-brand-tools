@@ -1,14 +1,18 @@
 # Line Icons — Approved Library
 
-The library holds 29 approved line icons, **bundled with this plugin** at `../../../assets/graphics/line-icons/` (relative to this file). **Use these first** before generating anything new. Reference an icon by filename in the output HTML (or embed the PNG directly) rather than redrawing in SVG.
+The library holds 29 approved line icons, **bundled with this plugin** at `assets/graphics/line-icons/<Name>.png`. **Use these first** before generating anything new, in every format (decks, brochures, graphics, docs).
 
-**Runtime convention:** when generating HTML that uses these icons, copy them into a `Graphics/LineIcons/` folder next to the output file the first time (one-time bootstrap), then reference them as relative paths:
+**Reference an icon by name — no copying, no relative paths:**
 
+```html
+<img class="lineicon" src="@icon:Nodes" alt="">                                  <!-- HTML: build_html.py embeds it -->
+<div class="ic" style="background-image:url('@icon:Nodes')"></div>
 ```
-Graphics/LineIcons/{IconName}.png
+```python
+add_icon(doc, 'Nodes')                                                             # Word docs (build_doc.py)
 ```
 
-If no library icon matches the concept you need, generate a new one that follows the visual language documented at the bottom of this file, save it to `Graphics/LineIcons/generated/` in the working directory, and flag it for review. (Promoted icons get added back to the plugin's `assets/graphics/line-icons/` in a future version.)
+Pick from the index below by concept; you don't need to open the PNGs. If no library icon matches, generate a new one that follows the visual language at the bottom of this file, save it next to your output as `generated/<ConceptName>.svg`, and flag it for review (approved icons get promoted into the plugin's `assets/graphics/line-icons/`).
 
 ---
 
@@ -83,19 +87,9 @@ When a teammate asks for an icon for a concept, scan this guide first:
 
 ---
 
-## Using an approved icon in HTML
+## Using an approved icon
 
-The library icons are PNGs. Two ways to use them inline in a graphic:
-
-```html
-<!-- Direct img reference -->
-<img src="../Graphics/LineIcons/Amplify.png" alt="Amplify" width="120" height="80">
-
-<!-- Or as a background-image so size is fully controllable -->
-<div class="ic" style="background-image:url('../Graphics/LineIcons/Amplify.png');background-size:contain;background-repeat:no-repeat;background-position:center;width:120px;height:80px"></div>
-```
-
-Use the PNG at its native aspect ratio. Don't recolor it.
+Use `src="@icon:Name"` (above). Keep the PNG at its native aspect ratio (`object-fit: contain`), never recolor it, and don't reuse the same icon twice in one row or slide.
 
 ---
 
@@ -151,9 +145,7 @@ Use exactly ONE `.fg`/`.node-fg` element per icon. The rest of the composition i
 
 ### Save location
 
-New icons → `Graphics/LineIcons/generated/{ConceptName}.svg` (or `.png` after raster export).
-
-Flag for review. Approved icons are promoted by moving them to `Graphics/LineIcons/` directly.
+New icons → `generated/<ConceptName>.svg` next to the output file. Flag for review; approved icons are promoted into the plugin's `assets/graphics/line-icons/` as PNG masters.
 
 ---
 

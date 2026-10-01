@@ -5,7 +5,7 @@ A Claude Code skill that generates Metafore-branded Word documents (`.docx`) —
 ## What's in here
 
 ```
-metafore-doc/
+skills/doc/
 ├── SKILL.md                          # Instructions Claude reads to use this skill
 ├── assets/
 │   ├── build_doc.py                  # Reusable python-docx library
@@ -20,22 +20,16 @@ Logos (used by `build_doc.py` for cover embedding) live at the plugin root in `a
 - `metafore-icon.png` — icon-only mark
 - `logo-light.svg` / `logo-dark.svg` / `icon-light.svg` / `icon-dark.svg` — SVG variants for HTML-rendered surfaces
 
-## Install (for a teammate)
+## Install
 
-1. **Copy this whole folder** to `~/.claude/skills/metafore-doc/` on the recipient's machine.
-2. **Install python-docx** once:
-   ```
-   pip install python-docx
-   ```
-3. **Restart Claude Code** if it was already open, so it picks up the new skill.
-
-That's it. Next time the teammate asks Claude for a Word doc, white paper, proposal, SOW, etc., the skill auto-loads.
+This skill ships inside the Metafore brand-tools plugin (`metafore:doc`) — see the plugin README. It needs `pip install python-docx` once.
 
 ## Try it without Claude
 
 ```
-cd ~/.claude/skills/metafore-doc/assets
+cd <plugin>/skills/doc/assets
 python3 example.py
+python3 ../../../scripts/check.py metafore-doc-example.docx
 ```
 
 That outputs `metafore-doc-example.docx` in the same directory — open it in Word to see every pattern the skill supports.
@@ -57,6 +51,8 @@ from build_doc import (
     add_section_eyebrow, add_h2, add_subhead,
     add_body, add_takeaway, add_bullet,
     add_callout, add_data_table, add_signature_block,
+    # Visuals (every two facing pages carry one)
+    add_icon, add_icon_row, add_figure, add_kpi_band, add_pull_quote,
 )
 ```
 

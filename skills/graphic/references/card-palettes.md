@@ -76,12 +76,12 @@ Each tile holds a small floating UI mockup depicting the capability. Across a 4-
 }
 .tile .uic .h{
   font-family:'IBM Plex Mono',monospace;
-  font-size:9px;font-weight:600;letter-spacing:.16em;
+  font-size:13px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-3);
   margin-bottom:10px;display:flex;justify-content:space-between;
 }
 .tile .uic .h .p{
-  font-size:8px;padding:2px 6px;border-radius:999px;
+  font-size:13px;padding:2px 6px;border-radius:999px;
   background:var(--teal-light);color:var(--teal);
 }
 .tile .uic .h .p.warn{background:#FEF3C7;color:#92400E}
@@ -100,7 +100,7 @@ Each tile holds a small floating UI mockup depicting the capability. Across a 4-
   width:54px;height:54px;border-radius:50%;background:#fff;
   display:flex;align-items:center;justify-content:center;
   font-family:'IBM Plex Mono',monospace;
-  font-size:14px;font-weight:600;color:var(--teal-dark);
+  font-size:15px;font-weight:600;color:var(--teal-dark);
 }
 ```
 

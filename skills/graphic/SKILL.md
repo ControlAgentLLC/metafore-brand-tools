@@ -9,7 +9,9 @@ You are helping a Metafore teammate produce brand-compliant HTML graphics. These
 
 ## Brand reference (read before producing)
 
-Every Metafore artifact follows the same brand invariants. Before drafting, Read the shared brand pack at `../../assets/brand/metafore_brand.md` (voice rules, AI-tell blocklist, design tokens, type stack) and `../../assets/brand/feedback_oversized_pngs.md` (keep verification PNGs under ~2000px). These supersede anything older you may have seen.
+Read `../../assets/brand/metafore_brand.md` first — voice, AI tells, legibility floors, density, tokens, and the build/check toolchain. This file adds only graphic-specific rules. Paths are relative to this skill's directory.
+
+**Graphic-specific exceptions to the brand pack** (deliberate): small floating cards (Types 3, 6) may carry a subtle elevation shadow and sit on a soft radial teal wash; Type 4 tiles may use `--teal-accent #00989E` as a *solid tile fill* (never text or strokes); Type 5D may use a blue-purple trust tint. Everything else in the pack applies.
 
 ## When this triggers
 
@@ -43,14 +45,17 @@ These are non-negotiable design constraints. They apply to **every** graphic typ
 
 ### Palette
 
-- **Teal stack only for branded fills.** Forbidden: indigo, emerald, sky, slate, mint, violet, periwinkle, and any other non-teal gradient. Tile and panel fills draw from `--teal-dark` (#004D50), `--teal` (#006B6F), `--teal-accent` (#00989E), `--teal-light` (#E8F4F5), or `--bg-solid` (#F8FAFA). Status colors (coral / amber / success) appear only as semantic state indicators, never as decoration.
+- **Teal stack only for branded fills.** Forbidden: indigo, emerald, sky, slate, mint, violet, periwinkle, and any other non-teal gradient. Tile and panel fills draw from `--teal-dark` (#004D50), `--teal` (#006B6F), `--teal-accent` (#00989E, solid tile fill only), `--teal-light` (#E8F4F5), or `--bg-solid` (#F8FAFA). Status colors (coral / amber / success) appear only as semantic state indicators, never as decoration.
+
+### Type floor
+
+- Nothing essential below **15px**; Plex Mono labels, pills and eyebrows **13px**; card body **16px**; lede **18px**. Graphics are usually shown scaled down, so these are minimums at the authored size. When a card overflows, cut rows or words — don't shrink type.
+- Paragraphs ≤ 3 lines; three or more parallel facts become bullets or rows.
 
 ### Logo
 
 - **Always use the real Metafore SVG wordmark.** Never substitute CSS pseudo-element constructions (two-quarter-circle marks built with `border-top-left-radius:100%`).
-- Two variants live in `references/logo-svgs.md`:
-  - **Light-bg variant** — logoLight `#67A4A4` curves + logoDark `#035657` marks + `#0A0A0A` wordmark. Use on Type 7 OG, Type 8 pull-quote, and anywhere on white / `--bg-solid` surfaces.
-  - **Dark-bg variant** — `fill="white" fill-opacity="0.5"` for the two long curves + `fill="white"` for the three marks + `fill="white"` for the wordmark. Use on Type 1B, Type 1C glass-card header, and anywhere over `--teal-dark`. Do **not** use the teal-bright `#00C4CC` variant on dark backgrounds — that was retired.
+- Insert with `<!-- @logo:logo-light width="155" height="36" -->` on white / `--bg-solid` surfaces (Type 7 OG, Type 8 pull-quote) and `<!-- @logo:logo-dark … -->` over `--teal-dark` (Type 1B, 1C glass-card header). Never the retired `#00C4CC` variant. Sizes and don'ts: `references/logo-svgs.md`.
 
 ### Arrows
 
@@ -80,7 +85,7 @@ These are non-negotiable design constraints. They apply to **every** graphic typ
 ### Voice / agent naming
 
 - **"Mira" is the personal-agent product for telco subscribers only.** Use the "Mira · personal agent" identification only in telecom conversational cards. For airlines, banking, supply chain, health, HR, public sector, etc., use generic "Metafore" / "Metafore · cognitive agent" naming inside conversational UI.
-- Metafore voice rules apply throughout: cognitive agents (not chatbots), orchestration (not automation), knowledge fabric (not data layer), sense / reason / act (not detect / process / respond), amplify human intelligence (not replace humans). No "leverage", "synergy", "seamless", "end-to-end", "solutions".
+- Brand vocabulary and the AI-tell list from the brand pack apply to every word in a graphic.
 
 ---
 
@@ -101,7 +106,7 @@ Three sub-formats. All ~1422 × 800px.
 The primary blog hero format.
 
 **Layout:** Two-column CSS grid (`1fr 1fr`).
-- **Left panel** — white background. Vertically centered content: IBM Plex Mono eyebrow label (teal, uppercase, tracked), large Geist headline (weight 400, 56–60px, one word in `<span class="accent">` renders in `#035657`), Inter lede paragraph (16px, ink-2, max-width 460px).
+- **Left panel** — white background. Vertically centered content: IBM Plex Mono eyebrow label (teal, uppercase, tracked), large Geist headline (weight 400, 56–60px, one word in `<span class="accent">` renders in `#035657`), Inter lede paragraph (18px, ink-2, max-width 460px).
 - **Right panel** — `#E8F4F5` teal-light background with a **single full dot grid** (`radial-gradient` circles, 6px grid, `rgba(0,107,111,0.32)`). **Only this one pattern** — no duotone-fade overlay on top, no diagonal stripes. Contains a single white floating card.
 
 **The right-panel card** is the creative element — it carries the data that reinforces the blog's thesis. Vary the card type across blogs:
@@ -145,8 +150,8 @@ A split-panel variant. Left side highlights a key definitional term; right side 
   - Eyebrow (IBM Plex Mono, teal, uppercase, tracked) — e.g. "Definition · Metafore for Telecom"
   - Headline stack using **block-level lines** — `display:block` per line, single shared `line-height: 1.12`. Do **not** use `display:flex; flex-direction:column; gap`.
   - The accent term is wrapped in `<span class="bracket">…</span>` and renders in `--logo-dark` — same Geist font and size as the rest of the headline. **No corner brackets. No monospace. No tinted background.** The `.bracket` class is just a color wrapper.
-  - A subtitle paragraph below (Inter, 18px, `--ink-3`)
-  - A short lede paragraph (Inter, 16px, `--ink-2`)
+  - A subtitle paragraph below (Inter, 20px, `--ink-3`)
+  - A short lede paragraph (Inter, 18px, `--ink-2`)
 - **Right panel (solid `--teal-dark`):**
   - No dot pattern. Solid surface.
   - Contains a glassmorphism product UI card (same construction as 1B's glass card) showing a workflow or dashboard. The glass card's header uses the dark-bg Metafore SVG logo variant.
@@ -233,7 +238,7 @@ Sets of 4–7 cards in a responsive grid. Used for capability sections on vertic
   - Horizontal bar chart (hub or system labels with teal-stack bars)
   - Status timeline (dots connected by lines, current step amber-pulsed)
   - Process flow stepper (Sense / Reason / Act / Close)
-- **Below the illustration** — card title (15px bold) and card body (13px, 2 lines max)
+- **Below the illustration** — card title (18px, Inter 600) and card body (16px, 2 lines max)
 
 **Palette and texture recipes:** See `references/card-palettes.md`.
 
@@ -313,7 +318,7 @@ Three zones:
 
 Minimal geometric line-art on white backgrounds. Used as spot illustrations throughout the site.
 
-**Library-first approach.** A **library of 28 approved icons** lives in `Graphics/LineIcons/` (PNG masters). Before generating a new icon, search the library for one that fits the concept. Reference the existing icon by filename rather than redrawing. See `references/line-icons-library.md` for the full index with concept-to-filename mapping.
+**Library-first approach.** A **library of 29 approved icons** ships with the plugin. Before generating a new icon, pick from the concept index in `references/line-icons-library.md` and reference it as `src="@icon:Name"` rather than redrawing.
 
 **When to generate a new icon:**
 1. **The user explicitly asks for a new icon** (e.g. "design a new icon for X", "make a fresh icon", "generate a custom icon", "don't reuse — draw a new one"). Honor the request directly.
@@ -366,63 +371,13 @@ In both cases, new icons must match the library's visual language exactly so the
 
 Exactly **one** `.fg` element per icon. Build the rest of the composition out of `.bg` and `.mid`.
 
-**File location:** `Graphics/LineIcons/` (approved PNGs) and `Graphics/LineIcons/generated/` for new SVGs awaiting approval.
+**File location:** new SVGs awaiting approval go in `generated/` next to the output file.
 
 ---
 
-## Design Tokens
+## Tokens, fonts, logos, icons
 
-See `references/design-tokens.md` for the full token set. Key palette inline:
-
-```
---ink:#1A1A1A           --teal:#006B6F
---ink-2:#404040         --teal-dark:#004D50
---ink-3:#666666         --teal-on-dark:#88DCE0  (accents/strokes/text on dark)
---ink-4:#999999         --teal-accent:#00989E   (DEPRECATED — tile fills only, never text/strokes)
---logo-dark:#035657     --teal-light:#E8F4F5     --teal-bright→retired #00C4CC, use --teal-on-dark
---logo-light:#67A4A4    --line:rgba(0,0,0,0.08)
---coral:#D94A30         --bg-solid:#F8FAFA
---amber:#C48800         --success:#00896A
-```
-
-### Typography
-- **Headlines:** Geist (web) → Inter fallback. Weight 400, size 56–72px, tracking -0.025em, line-height 1.04–1.18
-- **Eyebrows:** IBM Plex Mono, 600 weight, 10–13px, letter-spacing 0.14–0.18em, uppercase, teal color
-- **Body/lede:** Inter, 400 weight, 16px, line-height 1.55, color ink-2
-- **Card data:** IBM Plex Mono, 500–600 weight, tabular-nums, various sizes
-
-## Fonts
-
-Always load from Google Fonts:
-
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-```
-
-## Background patterns
-
-The system uses ONLY dot-based textures. Two pattern families, never combined on a single surface:
-
-1. **Full dot grid** — small evenly-spaced dots (~6–8px) covering the surface (e.g. Type 1A's right panel signature)
-2. **Duotone-fade dot pattern** — dots that fade out via a radial mask, anchored to one corner (TL / TR / BL / BR)
-
-For full-screen dark hero panels (Type 1B, Type 1C right, Type 2), use a SOLID `--teal-dark` fill with no dot decoration. See `references/background-patterns.md` for exact recipes and the "when to use which" table.
-
-## Logo SVGs
-
-Two canonical SVG variants live in `references/logo-svgs.md`:
-- **Light-bg variant** — logoLight curves + logoDark marks + `#0A0A0A` wordmark. Use on white / `--bg-solid` surfaces (Type 7 OG, Type 8 pull-quote).
-- **Dark-bg variant** — white@50% opacity curves + full white marks + full white wordmark. Use on `--teal-dark` surfaces (Type 1B, Type 1C glass-card header).
-
-Never substitute CSS pseudo-element logo constructions.
-
-## Line icon library
-
-28 approved line icons live in `Graphics/LineIcons/` as PNG masters. **Use these first** for any Type 9 graphic — reference an existing PNG by filename rather than generating a new SVG. The full index (concept → filename) and the visual language for new icons live in `references/line-icons-library.md`.
-
-Only generate a new icon when no library icon fits the concept. New icons must match the library's visual rules (pure greyscale, three-tier value hierarchy, one black focal element, fine 1–1.5px strokes, generous whitespace, geometric primitives only).
+`assets/tokens.css` holds the palette, font stacks, label/caption/card/lede sizes and base resets — include it with `/* @tokens:graphic */`, fonts with `<!-- @fonts -->`, logos with `@logo:`, icons with `@icon:`. Full token reference: `references/design-tokens.md`. Background textures: `references/background-patterns.md` (dots only; one pattern per surface; full-screen dark panels solid). Headlines: Geist 400, 56–72px, tracking −0.025em, line-height 1.04–1.18.
 
 ## Workflow
 
@@ -451,13 +406,16 @@ Apply Metafore voice rules (cognitive agents, orchestration, knowledge fabric). 
 
 ### 3. Build the HTML
 
-Self-contained HTML, fonts from Google Fonts, all CSS inline. Explicit `width`/`height` on the outer frame. CSS Grid or Flexbox for layout. Anti-alias text.
+Author `<slug>.src.html`: explicit `width`/`height` on the outer frame, CSS grid/flex layout, placeholders for tokens, fonts, logo and icons. Follow the brand-critical rules above.
 
-Follow the Brand-critical rules section above — no stripes, no double-stacked patterns, no rainbow gradients, real SVG logo, correct agent naming, arrow apex at end of line.
+### 4. Assemble, check, render
 
-### 4. Save and present
-
-Save to the appropriate location per type. Open in a browser preview to verify rendering, then screenshot.
+```
+python3 ../../scripts/build_html.py <slug>.src.html
+python3 ../../scripts/check.py <slug>.html --kind graphic
+python3 ../../scripts/render.py <slug>.html --out <slug>.png --scale 2
+```
+Fix every ERROR in the src file and rebuild. `render.py` writes the 2× PNG for delivery plus `<slug>.preview.png` (≤1600px) — **Read only the preview**, once. Save to the location for the graphic type.
 
 ## Quality Checklist
 
@@ -483,7 +441,7 @@ Before delivering, verify:
 - [ ] First-person agent voice; no chatbot/automation/synergy/seamless/end-to-end/leverage language
 
 **Type 9 line icons**
-- [ ] Checked the library at `Graphics/LineIcons/` first; reused an existing PNG if a concept matches
+- [ ] Checked the library index first; reused an existing icon (`@icon:Name`) if a concept matches
 - [ ] Only generated a new icon if (a) the user explicitly asked for a new one or (b) no library icon fits
 - [ ] Pure greyscale only — no teal, no color
 - [ ] Three-tier value hierarchy: one black focal element, mid-grey secondary, light-grey tertiary
@@ -495,6 +453,7 @@ Before delivering, verify:
 - [ ] Any arrow has its apex AT the end of the line (CSS triangle on `::after` with `left:100%; top:-3px`)
 
 **Construction**
+- [ ] `check.py --kind graphic` reports zero ERRORs (labels ≥ 13px, everything else ≥ 15px, card body 16px, lede 18px)
 - [ ] Correct dimensions for the graphic type
 - [ ] Geist + Inter + IBM Plex Mono loaded from Google Fonts
 - [ ] Teal accent word in headlines uses `--logo-dark` (#035657)

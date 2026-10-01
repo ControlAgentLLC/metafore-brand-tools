@@ -9,7 +9,9 @@ You are helping a Metafore teammate produce a brand-compliant internal dashboard
 
 ## Brand reference (read before producing)
 
-Every Metafore artifact follows the same brand invariants. Before drafting, Read the shared brand pack at `../../assets/brand/metafore_brand.md` (voice rules, AI-tell blocklist, design tokens, type stack) and skim any relevant `../../assets/brand/feedback_*.md` files. These supersede anything older you may have seen.
+Read `../../assets/brand/metafore_brand.md` first — voice, AI tells, legibility floors, tokens, and the build/check toolchain. This file adds only dashboard-specific rules. Paths are relative to this skill's directory.
+
+**Dashboard type floor:** content text (card body, table cells, list rows, footnotes, prompts) **16px**; UI chrome (Plex Mono labels, pills, buttons, search, nav) **14px** minimum. The starter template is already set to these — don't go smaller.
 
 ## When this triggers
 
@@ -32,7 +34,7 @@ These are the things that make a screen read as "Metafore dashboard" at a glance
    - **Headers / decorative numbers / hero** — `var(--serif)` (Brut Grotesque → Geist fallback). Always weight 400. **Never italic.**
    - **Body / nav / chips / buttons** — Inter.
    - **Labels / KPI units / mono callouts** — IBM Plex Mono.
-3. **Logo, top-left.** The Metafore mark (inline SVG, see `../../assets/graphics/logos/dashboard-icon.svg` — the dashboard-specific 53×42 mark) sits in a 32×32 slot at the top of the 64px sidebar. Never a text wordmark. Never the legacy "Metaworks EGI" header.
+3. **Logo, top-left.** The Metafore mark (`<!-- @logo:dashboard-icon width="32" height="32" -->` — the dashboard-specific 53×42 mark) sits in a 32×32 slot at the top of the 64px sidebar. Never a text wordmark. Never the legacy "Metaworks EGI" header.
 4. **64px icon sidebar.** Vertical, icon-only nav. Active item is a black square (8px radius) with a white icon. Inactive items are gray, hover lightens. Workspace badge (2-letter) lives at the bottom.
 5. **Search lives in the left of the topbar**, where a wordmark would normally go. The right side holds an `Activity` button + avatar. No brand text in the topbar.
 6. **Card grid.** 4-column grid of rounded 14px cards with a 1px `--line` border and 18px gap. Wide cards span 2 or 4. No drop shadows on cards by default — borders only.
@@ -80,14 +82,14 @@ For each KPI card, decide on a status: default (teal bar / no bar), `.warn`, `.b
 
 ### 3. Verify before reporting done
 
-After writing the file, do all of:
-- `curl -sI http://localhost:8765/<slug>.html` returns `200`
-- The hero second word is rendering in `#035657` (not gray, not black)
-- All chart strokes/fills resolve to a teal token (no leftover `#1a1a1a`, `#c89321`, `#8aa1d6`)
-- No `'Instrument Serif'` or `'JetBrains Mono'` references slipped through
-- The Metafore SVG mark is in the sidebar (not a placeholder `<svg><path d="M3 20…"/></svg>`)
+If you authored a `.src.html` with placeholders (logo, icons), assemble it first with `python3 ../../scripts/build_html.py mockups/<slug>.src.html`. Then:
 
-If a UI affordance is observable (button hover, toggle, table row), confirm it via the browser preview before saying it works — don't just trust the markup.
+```
+python3 ../../scripts/check.py mockups/<slug>.html --kind dashboard --sheet mockups/<slug>.sheet.png
+```
+Fix every ERROR (type floor, clipped text, overlaps, retired colors, off-stack fonts such as `'Instrument Serif'` / `'JetBrains Mono'`), and confirm chart strokes/fills resolve to teal tokens (no leftover `#1a1a1a`, `#c89321`, `#8aa1d6`). Read the sheet once. `curl -sI http://localhost:8765/<slug>.html` should return `200`.
+
+If a UI affordance is observable (button hover, toggle, table row), confirm it in the browser preview before saying it works — don't just trust the markup. Use `read_page`/`get_page_text` for that rather than repeated screenshots.
 
 ## References
 
