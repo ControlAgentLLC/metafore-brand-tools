@@ -50,7 +50,10 @@ RE_TOKENS = re.compile(r"/\*\s*@tokens:([\w-]+)\s*\*/")
 RE_CSS = re.compile(r"/\*\s*@css:([\w-]+)/([\w.-]+?)(?:\.css)?\s*\*/")
 RE_FOOTER = re.compile(r"<!--\s*@footer(\s+on-dark)?\s*-->")
 RE_SLIDE = re.compile(r"<section\b[^>]*\bclass\s*=\s*[\"'][^\"']*\bslide\b[^\"']*[\"']", re.I)
-RE_LOGO = re.compile(r"<!--\s*@logo:([\w-]+)((?:\s+[\w:-]+(?:\s*=\s*(?:\"[^\"]*\"|'[^']*'|[^\s>]+))?)*)\s*/?\s*-->")
+# Attributes are captured as one run of text up to "-->" and parsed by RE_ATTR afterwards.
+# Each character matches exactly one way (no nested quantifiers), so a malformed
+# placeholder can't trigger catastrophic backtracking (CodeQL py/redos).
+RE_LOGO = re.compile(r"<!--\s*@logo:([\w-]+)((?:[^>-]|-(?!->))*)-->")
 RE_ICON = re.compile(r"@icon:([A-Za-z0-9_-]+)")
 RE_ASSET = re.compile(r"@asset:([A-Za-z0-9_./ -]+?\.(?:svg|png|jpe?g|webp|gif))", re.I)
 RE_ATTR = re.compile(r"([\w:-]+)(?:\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+))?")
