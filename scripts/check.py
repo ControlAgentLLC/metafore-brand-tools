@@ -349,7 +349,7 @@ CHECK_JS = r"""
     }
     for (const h of hits) add(u, 'ERROR', 'color', `${s()} ${h} (retired)`);
     { const x = retired(c.backgroundColor);
-      if (x) add(u, 'WARN', 'color', `${s()} background ${x} \u2014 retired teal as fill, allowed for graphic tiles only`); }
+      if (x) add(u, 'ERROR', 'color', `${s()} background ${x} \u2014 retired teal (never allowed, including fills)`); }
     if (el instanceof SVGElement) continue;
     const big = r.width > 2 && r.height > 2;
     if (big && /gradient\(/.test(c.backgroundImage)) add(u, 'WARN', 'gradient', `${s()} ${c.backgroundImage.match(/(repeating-)?(linear|radial|conic)-gradient/)[0]}`);
@@ -626,8 +626,9 @@ def source_scan(text):
         emb += len(re.findall(r"#(00989E|00C4CC)\b", s, re.I))
     out = []
     for (lvl, hexv), lines in hits.items():
+        lvl = "ERROR"   # marketing 2026: retired teals are never allowed, fills included
         ls = ", ".join(str(x) for x in lines[:6]) + ("…" if len(lines) > 6 else "")
-        tail = "" if lvl == "ERROR" else " as background — allowed for graphic tiles only"
+        tail = ""
         out.append({"u": -1, "lvl": lvl, "chk": "color", "key": f"retired {hexv} in source ×{len(lines)} (lines {ls}){tail}", "extra": ""})
     if emb:
         out.append({"u": -1, "lvl": "ERROR", "chk": "color", "key": f"retired hex inside embedded SVG data URI ×{emb}", "extra": ""})

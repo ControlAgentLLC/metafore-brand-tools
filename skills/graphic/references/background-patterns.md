@@ -15,10 +15,10 @@ The system uses ONLY dot-based textures. Two patterns:
 | Type 1B (1422×800 solid dark teal) | **Solid — no dots** |
 | Type 1C right panel (solid dark teal) | **Solid — no dots** |
 | Type 2 conversational card background (solid dark teal) | **Solid — no dots** |
-| Type 3 small data card | One duotone-fade dot pattern (over soft wash) |
+| Type 3 small data card | One duotone-fade dot pattern (over a solid base) |
 | Type 4 capability tiles | One duotone-fade dot pattern, varied corner per tile |
 | Type 5 dark concept illustrations | One full dot grid on the dark backdrop |
-| Type 6 horizontal feature | One duotone-fade dot pattern (over soft wash) |
+| Type 6 horizontal feature | One duotone-fade dot pattern (over a solid base) |
 
 **Rule of thumb:** the larger / more dominant the dark-teal surface, the cleaner it should be. Full-bleed dark-teal heroes are SOLID. Smaller surfaces or light-tinted surfaces can carry a single dot pattern.
 
@@ -74,20 +74,13 @@ Available mask origins:
 
 Use white-on-dark sparingly — full-screen dark heroes prefer SOLID (no dots at all).
 
-### 3. Soft atmospheric wash (color base for small cards)
+### 3. Solid base for small cards
 
-Type 3 small data cards and Type 6 horizontal features start with a very soft layered radial-gradient wash as their BASE color. This is permitted alongside ONE duotone-fade dot pattern — the wash is a color base, not a dot texture, so it doesn't violate the "one pattern" rule:
+Type 3 small data cards and Type 6 horizontal features sit on a **solid** base — `--bg-solid` (`#F8FAFA`) or `--teal-light` (`#E8F4F5`). The old soft radial "atmospheric wash" is retired (marketing 2026: solid fills only). One duotone-fade dot pattern can be layered on top via `::before`.
 
 ```css
-.frame{
-  background:#F0F5F5;
-  background-image:
-    radial-gradient(ellipse at 18% 80%,rgba(0,107,111,.10) 0%,transparent 55%),
-    radial-gradient(ellipse at 85% 18%,rgba(0,107,111,.07) 0%,transparent 60%);
-}
+.frame{ background:var(--bg-solid); }
 ```
-
-A single duotone-fade dot pattern can be layered on top via `::before` — still just one dot pattern total.
 
 ## Forbidden patterns
 
@@ -102,10 +95,10 @@ The general guidance for each vertical's small-card surface (Type 3 / Type 6):
 
 | Vertical / Theme | Atmospheric base | Dot pattern color |
 |---|---|---|
-| Travel / Airlines | Soft teal wash (`#F0F5F5`) | Teal duotone-fade |
-| Banking | Soft neutral wash | Teal duotone-fade (use sparingly) |
-| Telecom | Soft teal wash | Teal duotone-fade |
-| Supply Chain | Soft teal wash + per-tile teal-stack fills | Per-tile (see `card-palettes.md`) |
-| Health | Soft neutral wash | Teal duotone-fade |
-| Dev / Integration | Soft teal wash | Teal duotone-fade |
-| General / Horizontal | Soft teal wash | Teal duotone-fade |
+| Travel / Airlines | Solid `--bg-solid` | Teal duotone-fade |
+| Banking | Solid `--bg-solid` | Teal duotone-fade (use sparingly) |
+| Telecom | Solid `--bg-solid` | Teal duotone-fade |
+| Supply Chain | Solid `--bg-solid` + per-tile teal-stack fills | Per-tile (see `card-palettes.md`) |
+| Health | Solid `--bg-solid` | Teal duotone-fade |
+| Dev / Integration | Solid `--bg-solid` | Teal duotone-fade |
+| General / Horizontal | Solid `--bg-solid` | Teal duotone-fade |

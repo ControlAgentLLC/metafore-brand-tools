@@ -89,6 +89,8 @@ Deliverables, side by side in `Decks/<deck-name>/`:
 | P-21 | Vertical anchor | Fit a vertical solution into the suite | hybrid |
 | P-22 | Industries (grouped / per-vertical) | Verticals served | semantic / hybrid |
 
+A visual catalog of every pattern, rendered live from `assets/patterns.css`, is in `references/pattern-library.html` — for people; don't Read it (Claude works from the pattern files). Rebuild it after any CSS change with `python3 ../../scripts/build_html.py references/pattern-library.src.html`.
+
 **Reference sequence** (MetaWorks corporate deck; deviate on purpose): P-01 → P-03 → P-04 → P-05 problem → P-06 four graphs (Meta → Knowledge → Context → Control) → P-05 suite intro → P-08 modules → P-07 platform → P-10 → P-09 → P-05 why → P-18 ×1–3 → P-21 (optional) → P-11 → P-13. Short decks drop the agenda, company, integrations, and timeline; 20+ slide decks add P-02 dividers and may use P-15 once.
 
 ## Deck-specific rules

@@ -9,7 +9,7 @@
 | `teal` | `#006B6F` | Primary brand, eyebrow accents, links, active states, **light-surface strokes** |
 | `tealOnDark` | `#88DCE0` | **Accents, strokes, labels & hero word on dark teal bands** |
 | `tealLight` | `#E8F4F5` | Right-panel fill, tinted callouts, card backgrounds in dark panels |
-| `tealAccent` | `#00989E` | **Legacy — not for text/strokes/accents** (low contrast). Use `teal` on light, `tealOnDark` on dark. Gradient mid-stop only. |
+| `tealAccent` | `#00989E` | **Retired** — low contrast. Use `teal` on light, `tealOnDark` on dark, `logoDark` for mid-stack tile fills. |
 | `tealBright` | `#00C4CC` | **Retired** — too cyan. Do not use. |
 
 ### Logo Teals
@@ -82,15 +82,11 @@ html, body {
   background: #FFFFFF;
   border-radius: 8px;
   padding: 32px 36px;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  border: 1px solid var(--line);   /* no shadow anywhere — solid surfaces (marketing 2026) */
 }
 ```
 
-Elevated cards (inside illustration blocks):
-```css
-box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 1px 3px rgba(0,0,0,0.08);
-```
+Cards inside illustration blocks use the same 1px border — no elevation shadow.
 
 ## Status Pills
 

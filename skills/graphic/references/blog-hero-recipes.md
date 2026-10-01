@@ -48,8 +48,7 @@ h1 .accent{color:var(--logo-dark)}  /* #035657 — NOT --teal */
 .card{
   position:relative;background:#fff;border-radius:8px;
   padding:32px 36px;width:540px;
-  border:1px solid rgba(0,0,0,.05);
-  box-shadow:0 1px 2px rgba(0,0,0,.04);
+  border:1px solid var(--line);
 }
 .card-h{
   font-family:'IBM Plex Mono',monospace;
@@ -276,7 +275,6 @@ Use for trend stories or "before they call" narratives.
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,.14);
   border-radius:16px;padding:28px;
-  box-shadow:0 24px 60px rgba(0,0,0,.28);
   justify-self:end;width:520px;
 }
 ```
@@ -339,7 +337,6 @@ The "What is [term]?" definitional hero. Left side highlights a key term in `--l
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,.14);
   border-radius:14px;padding:24px;width:480px;color:#fff;
-  box-shadow:0 20px 50px rgba(0,0,0,.28);
 }
 ```
 

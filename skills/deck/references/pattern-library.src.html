@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metafore Deck — Slide Pattern Library</title>
+<!-- @fonts -->
+<style>
+/* @tokens:deck */
+/* @css:deck/patterns */
+/* ---- catalog page (not a deck) ---- */
+html, body { background: #fff; font-size: 18px; line-height: 1.5; }
+.page { max-width: 1440px; margin: 0 auto; padding: 80px 64px 120px; }
+.page h1 { font-family: var(--header); font-weight: 400; font-size: 64px; line-height: 1.04; letter-spacing: -1.6px; margin: 16px 0 24px; }
+.page h2 { font-family: var(--header); font-weight: 400; font-size: 40px; letter-spacing: -0.8px; margin: 0 0 24px; }
+.page .kicker { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); }
+.page .intro { font-size: 21px; color: var(--ink-2); max-width: 980px; }
+.page code { font-family: var(--mono); font-size: 15px; background: var(--bg-solid); padding: 1px 6px; border-radius: 4px; }
+.page section.block { margin-top: 88px; padding-top: 48px; border-top: 1px solid var(--line); }
+.inv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.inv .box { border: 1px solid var(--line); border-radius: 12px; padding: 24px 28px; }
+.inv h4 { font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); margin: 0 0 12px; }
+.inv ul { margin: 0; padding-left: 20px; color: var(--ink-2); font-size: 16px; }
+.inv li { margin-bottom: 6px; }
+.floors { width: 100%; border-collapse: collapse; font-size: 16px; }
+.floors td, .floors th { text-align: left; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.floors th { font-family: var(--mono); font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); }
+.sw { display: flex; flex-wrap: wrap; gap: 10px; }
+.sw span { display: flex; flex-direction: column; gap: 6px; font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
+.sw i { width: 64px; height: 40px; border-radius: 6px; border: 1px solid var(--line); }
+.pat { display: grid; grid-template-columns: 1fr 768px; gap: 48px; align-items: start; padding: 40px 0; border-bottom: 1px solid var(--line); }
+.pat .pid { font-family: var(--mono); font-size: 15px; letter-spacing: .1em; color: var(--teal); display: flex; gap: 12px; align-items: center; }
+.pat .tier { font-size: 13px; text-transform: uppercase; padding: 2px 10px; border-radius: 999px; border: 1px solid currentColor; color: var(--ink-3); }
+.pat .tier.t-hybrid { color: var(--teal); }
+.pat h3 { font-family: var(--header); font-weight: 400; font-size: 28px; line-height: 1.15; margin: 10px 0 12px; }
+.pat .when { font-size: 17px; color: var(--ink); margin: 0 0 10px; }
+.pat .rules { font-size: 16px; color: var(--ink-2); margin: 0 0 10px; }
+.pat .ref { font-size: 15px; color: var(--ink-3); margin: 0; }
+.frame { width: 768px; height: 432px; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; }
+.frame > .slide { margin: 0; transform: scale(0.4); transform-origin: 0 0; }
+.seq { font-family: var(--mono); font-size: 15px; line-height: 1.9; color: var(--ink-2); background: var(--bg-solid); border-radius: 12px; padding: 24px 28px; white-space: pre; overflow-x: auto; }
+</style></head>
+<body><div class="page">
+
+<header>
+  <!-- @logo:logo-light width="155" height="36" -->
+  <div class="kicker" style="margin-top:48px">Deck skill · visual catalog · rebuilt October 2026</div>
+  <h1>Slide pattern <span class="accent">library</span></h1>
+  <p class="intro">Every pattern rendered live from <code>assets/patterns.css</code> at the 2026 legibility floors, scaled to 40%. Specs and HTML skeletons live in <code>references/patterns/P-XX-*.md</code>; this page is for people, not for Claude. Rebuild after any CSS change: <code>python3 scripts/build_html.py skills/deck/references/pattern-library.src.html</code>.</p>
+</header>
+
+<section class="block">
+  <h2>Universal <span class="accent">invariants</span></h2>
+  <div class="inv">
+    <div class="box"><h4>Type floors (marketing 2026)</h4>
+      <table class="floors"><tr><th>Role</th><th>Size</th></tr>
+      <tr><td>Body</td><td>32px</td></tr><tr><td>Labels, eyebrows, section label</td><td>24px</td></tr>
+      <tr><td>Secondary card / tile text</td><td>22–24px</td></tr><tr><td>Footer</td><td>22px</td></tr>
+      <tr><td>Anything essential</td><td>≥ 22px</td></tr><tr><td>Content titles / cover / closing</td><td>56–64 / 112 / 88px</td></tr></table>
+      <p style="font-size:15px;color:var(--ink-3);margin:12px 0 0">Overflow? Widen the well or cut words. Shrinking type is never the fix.</p></div>
+    <div class="box"><h4>Palette — one accent family</h4>
+      <div class="sw"><span><i style="background:#004D50"></i>004D50</span><span><i style="background:#006B6F"></i>006B6F</span><span><i style="background:#035657"></i>035657</span><span><i style="background:#88DCE0"></i>88DCE0</span><span><i style="background:#67A4A4"></i>67A4A4</span><span><i style="background:#E8F4F5"></i>E8F4F5</span><span><i style="background:#F8FAFA"></i>F8FAFA</span><span><i style="background:#1A1A1A"></i>1A1A1A</span></div>
+      <ul style="margin-top:14px"><li>White-first canvas; solid fills; no gradients or shadows</li><li>Retired, never used: the old mid teal and the old cyan</li><li>Status colors for state only</li></ul></div>
+    <div class="box"><h4>Type roles</h4>
+      <ul><li><b style="font-weight:500">Geist 400</b> for headers only — never bold or italic; size carries weight</li><li><b style="font-weight:500">Inter</b> for body</li><li><b style="font-weight:500">IBM Plex Mono</b> uppercase for labels (never tracked or bold in PPTX)</li><li>Two-tone hero: ink + <span class="accent">logo-dark</span>; titles fit two lines</li></ul></div>
+    <div class="box"><h4>Density & visuals</h4>
+      <ul><li>No paragraph over three lines</li><li>3+ parallel facts become bullets</li><li>Every slide carries a visual — library icon first</li><li>A graphic must explain the headline; real numbers only</li></ul></div>
+    <div class="box"><h4>Layout</h4>
+      <ul><li>Flex / grid with gaps — never absolute offsets for text</li><li>≥ 48px between title and body</li><li>Chrome: section label TL, icon 72×60 TR, footer at 36px</li><li>Wordmark on the cover only; light on light, dark on dark</li></ul></div>
+    <div class="box"><h4>Rhythm & content</h4>
+      <ul><li>No pattern more than twice per deck</li><li>Never trim content to fit a pattern — re-pattern or split</li><li>Tile eyebrows all the same --teal</li><li>No negation pivots, rhetorical triplets, “leverage”, “disrupt”, comfort words</li></ul></div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>Pattern <span class="accent">catalog</span></h2>
+  
+<article class="pat" id="P-01-cover-1b-full-teal-glass-card">
+  <div class="pat-meta">
+    <div class="pid">P-01<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Cover · 1B full teal + glass card</h3>
+    <p class="when">Slide 1, always. 1A split + data card for a metric-led opening; 1C split + accent term for “What is X”.</p>
+    <p class="rules">Title + subtitle only. Hero ≤ 6 words, two lines max at 112px. Wordmark top-left (cover only). Glass appears on the cover and nowhere else.</p>
+    <p class="ref">Spec: <code>references/patterns/P-01-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-cover-1b" data-pptx="hybrid" data-demo-pattern="P-01">
+  <!-- @logo:logo-dark width="155" height="36" class="logo-tl" -->
+  <div>
+    <h1><span class="line">Introducing</span><span class="line"><span class="accent">MetaWorks</span></span></h1>
+    <p class="subtitle">The enterprise operating system that thinks, acts, and builds</p>
+  </div>
+  <div class="glasscard mini" data-pptx-lock data-decorative>
+    <div class="mini-head"><span class="mini-eyebrow">Pulse · Network ops</span><span class="mini-meta">09:42</span></div>
+    <div class="mini-title">Fibre cut, Metro East</div>
+    <div class="mini-row"><span class="k">Subscribers affected</span><span class="v">18,204</span></div>
+    <div class="mini-row"><span class="k">Crew ETA</span><span class="v">38 min</span></div>
+    <div class="mini-cta">Dispatch crew</div>
+  </div>
+  <!-- @footer on-dark -->
+</section></div>
+</article>
+<article class="pat" id="P-01-cover-1a">
+  <div class="pat-meta">
+    <div class="pid">P-01<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Cover · 1A split white / teal-light + data card</h3>
+    <p class="when">The opening argument is a hard metric or a before/after.</p>
+    <p class="rules">Dot grid only on the teal-light panel. Data card locked; ≤ 3 rows.</p>
+    <p class="ref">Spec: <code>references/patterns/P-01-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-cover-1a" data-pptx="hybrid" data-demo-pattern="P-01">
+  <!-- @logo:logo-light width="155" height="36" class="logo-tl" -->
+  <div class="left">
+    <h1><span class="line">47% less time</span><span class="line"><span class="accent">per ticket</span></span></h1>
+    <p class="subtitle">How a North-American carrier orchestrated outage triage in 90 days</p>
+  </div>
+  <div class="right">
+    <div class="ui-card datacard mini" data-pptx-lock data-decorative>
+      <div class="mini-head"><span class="mini-eyebrow">Handling time · per ticket</span><span class="mini-meta">90 days</span></div>
+      <div class="mini-kpis"><div><div class="n">38m</div><div class="l">Before</div></div><div><div class="n">20m</div><div class="l">After</div></div><div><div class="n">−47%</div><div class="l">Delta</div></div></div>
+      <div class="mini-bar"><span class="k">Before</span><span class="track"><span class="fill" style="width:100%;display:block"></span></span><span class="v">38m</span></div>
+      <div class="mini-bar"><span class="k">After</span><span class="track"><span class="fill" style="width:53%;display:block"></span></span><span class="v">20m</span></div>
+    </div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-01-cover-1c">
+  <div class="pat-meta">
+    <div class="pid">P-01<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Cover · 1C split white / solid teal + accent term</h3>
+    <p class="when">Naming or defining a thing — “What is Mira”, “Introducing Pulse”.</p>
+    <p class="rules">Block-flow headline lines; the accent term is color only — no brackets, no mono, no tint.</p>
+    <p class="ref">Spec: <code>references/patterns/P-01-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-cover-1c" data-pptx="hybrid" data-demo-pattern="P-01">
+  <!-- @logo:logo-light width="155" height="36" class="logo-tl" -->
+  <div class="left">
+    <h1><span class="line">What is</span><span class="line"><span class="bracket">Mira</span></span></h1>
+    <p class="subtitle">A cognitive agent for every subscriber, deployed in carrier IMS</p>
+  </div>
+  <div class="right"><div class="glasscard mini" data-pptx-lock data-decorative>
+    <div class="mini-head"><span class="mini-eyebrow">Mira · personal agent</span><span class="mini-meta">18:04</span></div>
+    <div class="mini-title">Roaming pass added before you land</div>
+    <div class="mini-trace"><div class="ph"><b>Sense</b><span>Flight booked</span></div><div class="ph"><b>Reason</b><span>No roaming plan</span></div><div class="ph"><b>Act</b><span>7-day pass</span></div></div>
+    <div class="mini-cta">View plan</div>
+  </div></div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-02-section-divider">
+  <div class="pat-meta">
+    <div class="pid">P-02<span class="tier t-semantic">semantic</span></div>
+    <h3>Section divider</h3>
+    <p class="when">A phase change; one or two per deck.</p>
+    <p class="rules">Progress rail is the visual and mirrors the agenda. One subtitle line at most.</p>
+    <p class="ref">Spec: <code>references/patterns/P-02-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-divider" data-pptx="semantic" data-demo-pattern="P-02">
+  <!-- @logo:icon-dark width="72" height="60" class="icon-tr" -->
+  <div class="eyebrow">Section 02</div>
+  <h1>The <span class="accent">platform</span></h1>
+  <div class="progress" data-visual><span>01 The problem</span><span class="on">02 The platform</span><span>03 Proof</span></div>
+  <!-- @footer on-dark -->
+</section></div>
+</article>
+<article class="pat" id="P-03-agenda">
+  <div class="pat-meta">
+    <div class="pid">P-03<span class="tier t-semantic">semantic</span></div>
+    <h3>Agenda</h3>
+    <p class="when">Slide 2 of decks longer than ~8 slides.</p>
+    <p class="rules">4–10 Title Case items, column-major. Number grid is the visual (data-visual). Keep in sync with the deck.</p>
+    <p class="ref">Spec: <code>references/patterns/P-03-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-agenda" data-pptx="semantic" data-demo-pattern="P-03">
+  <div class="section-label">Agenda</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>What we'll <span class="accent">cover</span></h2></div>
+  <div class="items" data-visual style="--rows: 4">
+    <div class="item"><span class="a-num">01</span><div class="a-title">The Company<span class="a-sub">Who Metafore is and how we got here.</span></div></div>
+    <div class="item"><span class="a-num">02</span><div class="a-title">The Problem<span class="a-sub">Why separate views can't see the enterprise.</span></div></div>
+    <div class="item"><span class="a-num">03</span><div class="a-title">The Platform<span class="a-sub">Four graphs and one operating view.</span></div></div>
+    <div class="item"><span class="a-num">04</span><div class="a-title">The Suite<span class="a-sub">Twelve surfaces for every function.</span></div></div>
+    <div class="item"><span class="a-num">05</span><div class="a-title">In Action<span class="a-sub">Three cross-function scenarios.</span></div></div>
+    <div class="item"><span class="a-num">06</span><div class="a-title">Integrations<span class="a-sub">The stack you already run.</span></div></div>
+    <div class="item"><span class="a-num">07</span><div class="a-title">Outcomes<span class="a-sub">Measured results in production.</span></div></div>
+    <div class="item"><span class="a-num">08</span><div class="a-title">Deployment<span class="a-sub">Pilot to production in a quarter.</span></div></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-04-company-about">
+  <div class="pat-meta">
+    <div class="pid">P-04<span class="tier t-semantic">semantic</span></div>
+    <h3>Company / About</h3>
+    <p class="when">One “about us” slide, usually slide 3.</p>
+    <p class="rules">Mission ≤ 3 lines. Label/value fact rows with a library icon each — not bullets.</p>
+    <p class="ref">Spec: <code>references/patterns/P-04-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-company" data-pptx="semantic" data-demo-pattern="P-04">
+  <div class="section-label">The company</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div>
+    <h2>The AI transformation <span class="accent">partner</span></h2>
+    <p class="body">Metafore builds cognitive systems that sense, reason, and act across the enterprise.</p>
+    <p class="signature">Amplify human intelligence</p>
+  </div>
+  <div class="facts">
+    <div class="fact"><img class="lineicon" src="@icon:Orbit" alt=""><div><div class="f-label">Headquarters</div><div class="f-value">San Francisco</div><div class="f-sub">Team across NA, EMEA, APAC</div></div></div>
+    <div class="fact"><img class="lineicon" src="@icon:Collaborate" alt=""><div><div class="f-label">Founded by</div><div class="f-value">Ori Sasson</div><div class="f-sub">Leaders from Amazon, Genesys, Vodafone</div></div></div>
+    <div class="fact"><img class="lineicon" src="@icon:Stack" alt=""><div><div class="f-label">Flagship platform</div><div class="f-value">Metafore One</div><div class="f-sub">MetaWorks operating system</div></div></div>
+    <div class="fact"><img class="lineicon" src="@icon:Connected" alt=""><div><div class="f-label">Industries</div><div class="f-value">Telecom · Banking · Wealth</div><div class="f-sub">Travel · Health · Finance</div></div></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-04-company-track-record-p-04b">
+  <div class="pat-meta">
+    <div class="pid">P-04<span class="tier t-semantic">semantic</span></div>
+    <h3>Company · Track record (P-04B)</h3>
+    <p class="when">Credibility before the pitch on outbound decks.</p>
+    <p class="rules">2×2 cards, one library icon each, card body 24px.</p>
+    <p class="ref">Spec: <code>references/patterns/P-04-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-track" data-pptx="semantic" data-demo-pattern="P-04">
+  <div class="section-label">Team</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div><h2>A proven <span class="accent">track record</span></h2>
+    <p class="body">C-level experience at Amazon, Genesys, Microsoft, VMware, and Vodafone.</p></div>
+  <div class="grid">
+    <div class="card alt"><img class="lineicon" src="@icon:Connected" alt=""><h3>Invented enterprise integration</h3><p class="small">Frameworks that let complex systems work together.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:Cycle" alt=""><h3>Defined the CRM category</h3><p class="small">Made customer relationships a core function.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:Process" alt=""><h3>Transformed call centers</h3><p class="small">Set the standard for global support operations.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:Scale" alt=""><h3>Led a global mobile group</h3><p class="small">Growth at scale across telecommunications.</p></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-05-statement-problem-why">
+  <div class="pat-meta">
+    <div class="pid">P-05<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Statement / Problem / Why</h3>
+    <p class="when">Land one message with supporting art.</p>
+    <p class="rules">Problem slides show dead-end views — never a polished Pulse. Locked art carries data-pptx-lock + data-decorative.</p>
+    <p class="ref">Spec: <code>references/patterns/P-05-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-statement" data-pptx="hybrid" data-demo-pattern="P-05">
+  <div class="section-label">The problem</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div>
+    <h2>Every function has its own view. The enterprise still can't <span class="accent">see itself</span></h2>
+    <p class="body">Finance, sales, operations, and people each read a different number from a different system.</p>
+  </div>
+  <div class="art"><div class="dead-grid" data-pptx-lock data-decorative>
+    <div class="dead"><span class="mini-eyebrow">Finance</span><span class="n">$4.2M</span><span class="foot">—</span></div>
+    <div class="dead"><span class="mini-eyebrow">Sales</span><span class="n">118</span><span class="foot">—</span></div>
+    <div class="dead"><span class="mini-eyebrow">Operations</span><span class="n">92%</span><span class="foot">—</span></div>
+    <div class="dead"><span class="mini-eyebrow">People</span><span class="n">1,204</span><span class="foot">—</span></div>
+  </div></div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-06-capability-grid-4-up">
+  <div class="pat-meta">
+    <div class="pid">P-06<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Capability grid · 4-up</h3>
+    <p class="when">Exactly 3–4 parallel items with illustrations.</p>
+    <p class="rules">Same --teal on every tile eyebrow. Tile body ≤ 3 lines. A distinct library icon per tile.</p>
+    <p class="ref">Spec: <code>references/patterns/P-06-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-grid4" data-pptx="hybrid" data-demo-pattern="P-06">
+  <div class="section-label">Platform</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>Four graphs, one operating <span class="accent">platform</span></h2></div>
+  <div class="tiles">
+    <div class="tile"><img class="lineicon" src="@icon:Stack" alt=""><div class="t-num">Meta · Ontology</div><h3>What things are</h3><p class="small">How entities relate across the enterprise.</p></div>
+    <div class="tile"><img class="lineicon" src="@icon:Nodes" alt=""><div class="t-num">Knowledge · Reality</div><h3>What is true now</h3><p class="small">Live state from every system of record.</p></div>
+    <div class="tile"><img class="lineicon" src="@icon:ThroughLine" alt=""><div class="t-num">Context · Time</div><h3>What changed</h3><p class="small">Every event, in order, with its cause.</p></div>
+    <div class="tile"><img class="lineicon" src="@icon:Axis" alt=""><div class="t-num">Control · Governance</div><h3>What is allowed</h3><p class="small">Policy that agents act inside.</p></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-07-capability-grid-8-up">
+  <div class="pat-meta">
+    <div class="pid">P-07<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Capability grid · 8-up</h3>
+    <p class="when">5–8 parallel items.</p>
+    <p class="rules">Cell body two lines. One icon style per grid.</p>
+    <p class="ref">Spec: <code>references/patterns/P-07-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-grid8" data-pptx="hybrid" data-demo-pattern="P-07">
+  <div class="section-label">Platform</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>The infrastructure that makes the suite <span class="accent">cohesive</span></h2>
+    <p class="body">Built once, inherited by every module you activate.</p></div>
+  <div class="grid">
+    <div class="cap"><div class="c-num">Capability 01</div><img class="lineicon" src="@icon:Nodes" alt=""><h3>Graph Navigator</h3><p class="small">Trace root causes across the graph.</p></div>
+    <div class="cap"><div class="c-num">Capability 02</div><img class="lineicon" src="@icon:Squares" alt=""><h3>Notebooks</h3><p class="small">Analysis that stays connected to data.</p></div>
+    <div class="cap"><div class="c-num">Capability 03</div><img class="lineicon" src="@icon:Collaborate" alt=""><h3>Cognitive Agents</h3><p class="small">Agents that act inside policy.</p></div>
+    <div class="cap"><div class="c-num">Capability 04</div><img class="lineicon" src="@icon:Icon2" alt=""><h3>AI Copilot</h3><p class="small">Ask anything about the business.</p></div>
+    <div class="cap"><div class="c-num">Capability 05</div><img class="lineicon" src="@icon:Process" alt=""><h3>Command Hub</h3><p class="small">One place to approve and act.</p></div>
+    <div class="cap"><div class="c-num">Capability 06</div><img class="lineicon" src="@icon:Transform" alt=""><h3>Plan Bridge</h3><p class="small">Plans that update with reality.</p></div>
+    <div class="cap"><div class="c-num">Capability 07</div><img class="lineicon" src="@icon:Integration" alt=""><h3>Integration layer</h3><p class="small">Connects the systems you run.</p></div>
+    <div class="cap"><div class="c-num">Capability 08</div><img class="lineicon" src="@icon:Ensemble" alt=""><h3>Industry Ontologies</h3><p class="small">Vertical models, ready to extend.</p></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-08-module-grid-12-up">
+  <div class="pat-meta">
+    <div class="pid">P-08<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Module grid · 12-up</h3>
+    <p class="when">9–12 product items.</p>
+    <p class="rules">Keep the dense h2 size; shorten bodies instead of shrinking type. Literal space before the accent span.</p>
+    <p class="ref">Spec: <code>references/patterns/P-08-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-modules" data-pptx="hybrid" data-demo-pattern="P-08">
+  <div class="section-label">The suite</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>Twelve surfaces, one <span class="accent">reality</span></h2></div>
+  <div class="grid" data-visual>
+    <div class="mod"><div class="m-top"><span class="m-num">01</span><span class="m-for">For the CEO</span></div><h3>MetaWorks <span class="accent">Focus</span></h3><p class="small">Strategy and execution in one view.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">02</span><span class="m-for">For the CFO</span></div><h3>MetaWorks <span class="accent">Ledger</span></h3><p class="small">Close and forecast, live.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">03</span><span class="m-for">For the COO</span></div><h3>MetaWorks <span class="accent">Operate</span></h3><p class="small">Operations that re-plan themselves.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">04</span><span class="m-for">For the CRO</span></div><h3>MetaWorks <span class="accent">Revenue</span></h3><p class="small">Pipeline with its reasons.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">05</span><span class="m-for">For the CHRO</span></div><h3>MetaWorks <span class="accent">People</span></h3><p class="small">Workforce plans that adapt.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">06</span><span class="m-for">For the CIO</span></div><h3>MetaWorks <span class="accent">Fabric</span></h3><p class="small">One governed knowledge graph.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">07</span><span class="m-for">For the CMO</span></div><h3>MetaWorks <span class="accent">Market</span></h3><p class="small">Campaigns tied to revenue.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">08</span><span class="m-for">For the CCO</span></div><h3>MetaWorks <span class="accent">Success</span></h3><p class="small">Every account, every signal.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">09</span><span class="m-for">For the CRO</span></div><h3>MetaWorks <span class="accent">Risk</span></h3><p class="small">Exposure seen early.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">10</span><span class="m-for">For the CPO</span></div><h3>MetaWorks <span class="accent">Supply</span></h3><p class="small">Exceptions resolved in hours.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">11</span><span class="m-for">For legal</span></div><h3>MetaWorks <span class="accent">Comply</span></h3><p class="small">Policy checked at the moment of action.</p></div>
+    <div class="mod"><div class="m-top"><span class="m-num">12</span><span class="m-for">For builders</span></div><h3>MetaWorks <span class="accent">Build</span></h3><p class="small">New surfaces in days.</p></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-09-kpi-band">
+  <div class="pat-meta">
+    <div class="pid">P-09<span class="tier t-hybrid">hybrid</span></div>
+    <h3>KPI band</h3>
+    <p class="when">2–4 hero metrics at the end of a section.</p>
+    <p class="rules">Real numbers with a source line, or clearly marked placeholders. Labels ≤ 2 lines, left-aligned.</p>
+    <p class="ref">Spec: <code>references/patterns/P-09-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-kpi" data-pptx="hybrid" data-demo-pattern="P-09">
+  <div class="section-label on-dark">Outcomes · 90 days</div>
+  <!-- @logo:icon-dark width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>Measured across the first three <span class="accent-light">deployments</span></h2></div>
+  <div class="kpis" data-visual style="--cols: 4">
+    <div class="kpi"><div class="num">−38<span class="suffix">%</span></div><p class="l">Mean time to resolution</p></div>
+    <div class="kpi"><div class="num">3<span class="suffix">×</span></div><p class="l">Faster onboarding</p></div>
+    <div class="kpi"><div class="num">91<span class="suffix">%</span></div><p class="l">First-contact resolution</p></div>
+    <div class="kpi"><div class="num">12<span class="suffix">wks</span></div><p class="l">Pilot to production</p></div>
+  </div>
+  <p class="source">Source: customer Pulse exports, Q1–Q2 2026. Illustrative placeholders.</p>
+  <!-- @footer on-dark -->
+</section></div>
+</article>
+<article class="pat" id="P-10-integration-ecosystem">
+  <div class="pat-meta">
+    <div class="pid">P-10<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Integration ecosystem</h3>
+    <p class="when">What the platform connects to.</p>
+    <p class="rules">Real system names in neutral pills. Never name confidential partners.</p>
+    <p class="ref">Spec: <code>references/patterns/P-10-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-integrations" data-pptx="hybrid" data-demo-pattern="P-10">
+  <div class="section-label">Integrations</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div><h2>Built on the stack you <span class="accent">already run</span></h2>
+    <p class="body">The knowledge graph ingests continuously from every connected source, with no migration.</p></div>
+  <div class="clusters" data-visual>
+    <div class="cluster"><div class="label">Enterprise systems</div><div class="pills"><span class="pill">Salesforce</span><span class="pill">SAP</span><span class="pill">ServiceNow</span><span class="pill">Workday</span><span class="pill">Oracle</span></div></div>
+    <div class="cluster"><div class="label">Supply chain</div><div class="pills"><span class="pill">Kinaxis</span><span class="pill">project44</span><span class="pill">FourKites</span></div></div>
+    <div class="cluster"><div class="label">LLM providers</div><div class="pills"><span class="pill">Claude</span><span class="pill">Custom models</span></div></div>
+    <div class="cluster"><div class="label">Sources</div><div class="pills"><span class="pill">File stores</span><span class="pill">REST · GraphQL · gRPC</span></div></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-11-timeline">
+  <div class="pat-meta">
+    <div class="pid">P-11<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Timeline</h3>
+    <p class="when">3–6 sequential phases (4–5 reads best).</p>
+    <p class="rules">Step body ≤ 3 lines; split into two slides rather than compressing.</p>
+    <p class="ref">Spec: <code>references/patterns/P-11-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-timeline" data-pptx="hybrid" data-demo-pattern="P-11">
+  <div class="section-label">Deployment</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>From pilot to production in one <span class="accent">quarter</span></h2></div>
+  <div class="steps" data-visual style="--steps: 4">
+    <div class="step"><div class="s-week">Weeks 1–2</div><div class="s-num">01</div><h3>Discover</h3><p class="small">Map systems, data flows, and decision points into a governed ontology.</p></div>
+    <div class="step"><div class="s-week">Weeks 3–6</div><div class="s-num">02</div><h3>Build</h3><p class="small">Populate the graph, configure agents on one workflow, stand up the Pulse.</p></div>
+    <div class="step"><div class="s-week">Weeks 7–10</div><div class="s-num">03</div><h3>Recommend</h3><p class="small">Agents propose and humans approve while trace history builds.</p></div>
+    <div class="step"><div class="s-week">Weeks 11–12</div><div class="s-num">04</div><h3>Run</h3><p class="small">Approved actions run inside policy, with a weekly outcome review.</p></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-12-radial-knowledge-graph">
+  <div class="pat-meta">
+    <div class="pid">P-12<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Radial / knowledge graph</h3>
+    <p class="when">Topology, “one connected reality”.</p>
+    <p class="rules">Diagram labels 22px. #88DCE0 strokes on dark, #006B6F on light — never retired teals.</p>
+    <p class="ref">Spec: <code>references/patterns/P-12-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-radial dark" data-pptx="hybrid" data-demo-pattern="P-12">
+  <div class="section-label on-dark">Why Metafore</div>
+  <!-- @logo:icon-dark width="72" height="60" class="icon-tr" -->
+  <div><h2>One connected <span class="accent">reality</span></h2>
+    <p class="body">Every system of record feeds one governed knowledge graph.</p>
+    <div class="stats"><div class="stat"><div class="n">12</div><div class="label l">Source systems</div></div><div class="stat"><div class="n">1</div><div class="label l">Governed graph</div></div></div></div>
+  <div class="diagram">
+    <svg viewBox="0 0 800 800" fill="none" aria-label="Knowledge graph">
+      <g stroke="#88DCE0" stroke-width="2"><line x1="400" y1="400" x2="400" y2="140"/><line x1="400" y1="400" x2="660" y2="400"/><line x1="400" y1="400" x2="400" y2="660"/><line x1="400" y1="400" x2="140" y2="400"/></g>
+      <circle cx="400" cy="400" r="70" stroke="#88DCE0" stroke-width="2"/><circle cx="400" cy="400" r="12" fill="#88DCE0"/>
+      <circle cx="400" cy="140" r="34" stroke="#88DCE0" stroke-width="2"/><circle cx="660" cy="400" r="34" stroke="#88DCE0" stroke-width="2"/><circle cx="400" cy="660" r="34" stroke="#88DCE0" stroke-width="2"/><circle cx="140" cy="400" r="34" stroke="#88DCE0" stroke-width="2"/>
+      <text x="400" y="84" text-anchor="middle" fill="rgba(255,255,255,0.88)">Billing</text><text x="660" y="470" text-anchor="middle" fill="rgba(255,255,255,0.88)">Network</text><text x="400" y="730" text-anchor="middle" fill="rgba(255,255,255,0.88)">Care</text><text x="140" y="470" text-anchor="middle" fill="rgba(255,255,255,0.88)">CRM</text>
+    </svg>
+  </div>
+  <!-- @footer on-dark -->
+</section></div>
+</article>
+<article class="pat" id="P-13-closing-cta">
+  <div class="pat-meta">
+    <div class="pid">P-13<span class="tier t-semantic">semantic</span></div>
+    <h3>Closing / CTA</h3>
+    <p class="when">The last slide, always.</p>
+    <p class="rules">The only title with a period. Large icon brandmark only; one CTA.</p>
+    <p class="ref">Spec: <code>references/patterns/P-13-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-closing" data-pptx="semantic" data-demo-pattern="P-13">
+  <!-- @logo:icon-light width="172" height="144" class="brandmark" -->
+  <h1>Let's design your first <span class="accent">cognitive workflow.</span></h1>
+  <p class="cta-line">hello@metafore.ai · metafore.ai</p>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-14-two-column-comparison">
+  <div class="pat-meta">
+    <div class="pid">P-14<span class="tier t-semantic">semantic</span></div>
+    <h3>Two-column comparison</h3>
+    <p class="when">One real before/after. Use sparingly.</p>
+    <p class="rules">Body ≤ 3 lines per column; numbers in --logo-dark.</p>
+    <p class="ref">Spec: <code>references/patterns/P-14-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-compare" data-pptx="semantic" data-demo-pattern="P-14">
+  <div class="section-label">Before and after</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>From signal triage to orchestrated <span class="accent">resolution</span></h2></div>
+  <div class="cols">
+    <div class="col"><div class="label">Today</div><img class="lineicon" src="@icon:Squares" alt=""><div class="stat"><div class="n">4 hrs</div><div class="label l">Median handling time</div></div><p class="body">Alerts, signals, and exceptions land in separate queues.</p></div>
+    <div class="col"><div class="label">With Metafore</div><img class="lineicon" src="@icon:Integration" alt=""><div class="stat"><div class="n">22 min</div><div class="label l">Median handling time</div></div><p class="body">One agent reasons across every stream and acts.</p></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-15-pull-quote">
+  <div class="pat-meta">
+    <div class="pid">P-15<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Pull quote</h3>
+    <p class="when">One per deck.</p>
+    <p class="rules">Geist 400, no italic. Real attributions only.</p>
+    <p class="ref">Spec: <code>references/patterns/P-15-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-quote" data-pptx="hybrid" data-demo-pattern="P-15">
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div data-visual>
+    <div class="quote-glyph">“</div>
+    <p class="quote">Metafore changed what tier-one <span class="accent">means</span> for our care team</p>
+    <div class="label attribution">— Placeholder name · VP Customer Operations · Carrier X</div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-16-architecture">
+  <div class="pat-meta">
+    <div class="pid">P-16<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Architecture</h3>
+    <p class="when">Platform layers.</p>
+    <p class="rules">Teal stack only; labels ≥ 22px.</p>
+    <p class="ref">Spec: <code>references/patterns/P-16-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-arch" data-pptx="hybrid" data-demo-pattern="P-16">
+  <div class="section-label">Architecture</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>How the platform is <span class="accent">built</span></h2></div>
+  <div class="layers" data-visual style="--cols: 5">
+    <div class="layer"><h3>Experience</h3><p class="small">Generative and branded interfaces</p><div class="chip">Generative UI</div><div class="chip">Pulse</div><div class="chip">Voice gateway</div></div>
+    <div class="layer"><h3>Orchestration</h3><p class="small">Agents and workflows</p><div class="chip">Agent runtime</div><div class="chip">Policy engine</div><div class="chip">Workflows</div></div>
+    <div class="layer"><h3>Intelligence</h3><p class="small">Reasoning over the graph</p><div class="chip">Graph reasoning</div><div class="chip">Model router</div></div>
+    <div class="layer"><h3>Integration</h3><p class="small">Every system of record</p><div class="chip">Connectors</div><div class="chip">Event streams</div></div>
+    <div class="layer"><h3>Platform</h3><p class="small">Governed and observable</p><div class="chip">Identity</div><div class="chip">Audit trail</div></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-17-content-hero-product-card">
+  <div class="pat-meta">
+    <div class="pid">P-17<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Content hero + product card</h3>
+    <p class="when">“Here’s what it looks like.”</p>
+    <p class="rules">Solid white card on a solid dark stage — no glass. Icon over the dark side uses the dark variant.</p>
+    <p class="ref">Spec: <code>references/patterns/P-17-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-hero-card" data-pptx="hybrid" data-demo-pattern="P-17">
+  <div class="section-label">Pulse in action</div>
+  <!-- @logo:icon-dark width="72" height="60" class="icon-tr" -->
+  <div class="left">
+    <div class="eyebrow">Pulse for network ops</div>
+    <h2>The incident, the reasoning, and the <span class="accent">next action</span></h2>
+    <p class="body">Engineers see live state and the trace behind every recommendation.</p>
+    <div class="meta"><div><div class="label">MTTR</div><div class="v">−38%</div></div><div><div class="label">Actions</div><div class="v">214</div></div></div>
+  </div>
+  <div class="stage">
+    <div class="ui-card mini" data-pptx-lock data-decorative>
+      <div class="mini-head"><span class="mini-eyebrow">Incident · P1</span><span class="mini-meta">09:42</span></div>
+      <div class="mini-title">Fibre cut, Metro East</div>
+      <div class="mini-bar"><span class="k">Care load</span><span class="track"><span class="fill" style="width:72%;display:block"></span></span><span class="v">72%</span></div>
+      <div class="mini-bar"><span class="k">Churn risk</span><span class="track"><span class="fill" style="width:34%;display:block"></span></span><span class="v">34%</span></div>
+      <div class="mini-cta">Dispatch crew</div>
+    </div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-18-scenario-in-action">
+  <div class="pat-meta">
+    <div class="pid">P-18<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Scenario (“in action”)</h3>
+    <p class="when">One situation traced across modules.</p>
+    <p class="rules">Vary the UI card form across consecutive scenarios; trace tiles stay identical.</p>
+    <p class="ref">Spec: <code>references/patterns/P-18-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-scenario" data-pptx="hybrid" data-demo-pattern="P-18">
+  <div class="section-label">MetaWorks in action</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="top">
+    <div><h2>A supplier slips; the plan <span class="accent">re-forms</span></h2>
+      <p class="body">One delay ripples through revenue, operations, and people within the hour.</p></div>
+    <div class="ui-card mini" data-pptx-lock data-decorative>
+      <div class="mini-head"><span class="mini-eyebrow">Exceptions · ranked</span><span class="mini-meta">Today</span></div>
+      <div class="mini-row"><span class="k">Supplier A — 6-day slip</span><span class="badge high">High</span></div>
+      <div class="mini-row"><span class="k">Line 3 — capacity</span><span class="badge watch">Watch</span></div>
+      <div class="mini-row"><span class="k">Port congestion</span><span class="badge ok">Normal</span></div>
+    </div>
+  </div>
+  <div class="traces">
+    <div class="trace"><div class="a-num">01 / Operate</div><h3>Re-sequence</h3><div class="a-role">Primary surface</div><p class="small">Agents re-plan the affected lines inside policy.</p></div>
+    <div class="trace"><div class="a-num">02 / Revenue</div><h3>Re-forecast</h3><div class="a-role">Adjacent surface</div><p class="small">Deals at risk are flagged with their reason.</p></div>
+    <div class="trace"><div class="a-num">03 / People</div><h3>Re-staff</h3><div class="a-role">Agents · policy-bound</div><p class="small">Shift plans update and managers approve.</p></div>
+  </div>
+  <div class="sources"><span class="label">Sources</span><span class="pill">SAP</span><span class="pill">Kinaxis</span><span class="pill">Workday</span></div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-19-team-photos">
+  <div class="pat-meta">
+    <div class="pid">P-19<span class="tier t-semantic">semantic</span></div>
+    <h3>Team photos</h3>
+    <p class="when">Meet the team.</p>
+    <p class="rules">Diagonal-slash placeholder until real headshots; never stock silhouettes.</p>
+    <p class="ref">Spec: <code>references/patterns/P-19-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-team-photos" data-pptx="semantic" data-demo-pattern="P-19">
+  <div class="section-label">Team</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>The people behind <span class="accent">Metafore</span></h2></div>
+  <div class="people" style="--cols: 4">
+    <div><div class="photo"><svg class="ph" viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="100" x2="100" y2="0"/></svg><span class="ph-label">Photo</span></div><div class="name">Name Surname</div><div class="role">Role · Company</div></div>
+    <div><div class="photo"><svg class="ph" viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="100" x2="100" y2="0"/></svg><span class="ph-label">Photo</span></div><div class="name">Name Surname</div><div class="role">Role · Company</div></div>
+    <div><div class="photo"><svg class="ph" viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="100" x2="100" y2="0"/></svg><span class="ph-label">Photo</span></div><div class="name">Name Surname</div><div class="role">Role · Company</div></div>
+    <div><div class="photo"><svg class="ph" viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="100" x2="100" y2="0"/></svg><span class="ph-label">Photo</span></div><div class="name">Name Surname</div><div class="role">Role · Company</div></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-20-wide-data-table">
+  <div class="pat-meta">
+    <div class="pid">P-20<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Wide data table</h3>
+    <p class="when">Capability → module mapping.</p>
+    <p class="rules">4–6 rows; description ≤ 2 lines; shorten a wrapping title, don&#x27;t shrink it.</p>
+    <p class="ref">Spec: <code>references/patterns/P-20-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-table" data-pptx="hybrid" data-demo-pattern="P-20">
+  <div class="section-label">What MetaWorks delivers</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>Every capability, mapped to its <span class="accent">module</span></h2></div>
+  <div class="table" data-visual style="--table-cols: 1fr 0.8fr 2fr">
+    <div class="th">Capability</div><div class="th">Module</div><div class="th">What it does</div>
+    <div class="cap">Live operating view</div><div class="mod">Focus</div><div class="desc">A role-scoped Pulse for every leader.</div>
+    <div class="cap">Continuous close</div><div class="mod">Ledger</div><div class="desc">Reconciliation that runs every day, not every month.</div>
+    <div class="cap">Self-healing operations</div><div class="mod">Operate</div><div class="desc">Exceptions resolved inside policy, with a trace.</div>
+    <div class="cap">Explained pipeline</div><div class="mod">Revenue</div><div class="desc">Every forecast change carries its reason.</div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-21-vertical-anchor">
+  <div class="pat-meta">
+    <div class="pid">P-21<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Vertical anchor</h3>
+    <p class="when">Fit a vertical solution into the suite.</p>
+    <p class="rules">State where it anchors (badge) + primary and adjacent surfaces.</p>
+    <p class="ref">Spec: <code>references/patterns/P-21-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-anchor" data-pptx="hybrid" data-demo-pattern="P-21">
+  <div class="section-label">MetaWorks for airlines</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <h2>Disruption recovery that <span class="accent">re-plans itself</span></h2>
+  <div class="anchor-badge"><span class="ab-lbl">Anchors into</span><span class="ab-arrow">→</span><span class="ab-mod">MetaWorks Operate</span></div>
+  <p class="body">When weather closes a hub, agents rebuild crew, aircraft, and passenger plans together.</p>
+  <div class="traces" data-visual>
+    <div class="trace"><div class="a-num">01 / Operate</div><h3>Recovery plan</h3><div class="a-role">Primary surface</div><p class="small">Crew and aircraft re-paired in minutes.</p></div>
+    <div class="trace"><div class="a-num">02 / Success</div><h3>Passenger care</h3><div class="a-role">Adjacent surface</div><p class="small">Rebooking offers sent before the queue forms.</p></div>
+    <div class="trace"><div class="a-num">03 / Ledger</div><h3>Cost control</h3><div class="a-role">Adjacent surface</div><p class="small">Compensation tracked against policy.</p></div>
+  </div>
+  <div class="sources"><span class="label">Systems</span><span class="pill">Sabre</span><span class="pill">Jeppesen</span></div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-22-industries-grouped">
+  <div class="pat-meta">
+    <div class="pid">P-22<span class="tier t-semantic">semantic</span></div>
+    <h3>Industries · grouped</h3>
+    <p class="when">Verticals served, one slide.</p>
+    <p class="rules">Holds any N via --cols — never drop a vertical to fit.</p>
+    <p class="ref">Spec: <code>references/patterns/P-22-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-industries" data-pptx="semantic" data-demo-pattern="P-22">
+  <div class="section-label">Industries</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div class="head"><h2>Six industries, one <span class="accent">platform</span></h2></div>
+  <div class="grid" style="--cols: 3">
+    <div class="card alt"><img class="lineicon" src="@icon:Connected" alt=""><h3>Telecom</h3><p class="small">Network operations, subscriber care, Mira.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:Measure" alt=""><h3>Banking</h3><p class="small">Onboarding, disputes, servicing.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:Scale2" alt=""><h3>Wealth</h3><p class="small">Advisor support, portfolio review.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:Fan" alt=""><h3>Travel</h3><p class="small">Disruption recovery, loyalty.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:Detection" alt=""><h3>Health</h3><p class="small">Care coordination, claims.</p></div>
+    <div class="card alt"><img class="lineicon" src="@icon:NestedSquares" alt=""><h3>Finance</h3><p class="small">Close, reconciliation, controls.</p></div>
+  </div>
+  <!-- @footer -->
+</section></div>
+</article>
+<article class="pat" id="P-22-industries-per-vertical">
+  <div class="pat-meta">
+    <div class="pid">P-22<span class="tier t-hybrid">hybrid</span></div>
+    <h3>Industries · per vertical</h3>
+    <p class="when">One slide per vertical.</p>
+    <p class="rules">3–4 one-line rows; Mira on telecom only.</p>
+    <p class="ref">Spec: <code>references/patterns/P-22-*.md</code></p>
+  </div>
+  <div class="frame"><section class="slide p-vertical" data-pptx="hybrid" data-demo-pattern="P-22">
+  <div class="section-label">Industries</div>
+  <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
+  <div>
+    <h1>Banking</h1>
+    <p class="lede">Self-evolving agents across service, compliance, and operations.</p>
+    <div class="rows card alt">
+      <div class="row"><strong>Built-in governance</strong><p class="small">Every action explainable and auditable.</p></div>
+      <div class="row"><strong>Faster time to value</strong><p class="small">Modular agents deploy in weeks.</p></div>
+      <div class="row"><strong>Decisioning hub</strong><p class="small">Reasoning embedded in lending and risk.</p></div>
+    </div>
+  </div>
+  <div class="media"><img class="lineicon lg" src="@icon:Axis" alt=""></div>
+  <!-- @footer -->
+</section></div>
+</article>
+</section>
+
+<section class="block">
+  <h2>Composing a <span class="accent">deck</span></h2>
+  <p class="intro" style="margin-bottom:24px">The MetaWorks corporate deck is the reference sequence — deviate on purpose, not by accident. Short decks drop the agenda, company, integrations, and timeline; 20+ slide decks add dividers and may use one pull quote.</p>
+  <div class="seq">P-01 Cover → P-03 Agenda → P-04 Company → P-05 Problem → P-06 Four graphs (Meta → Knowledge → Context → Control)
+→ P-05 Suite intro → P-08 Modules → P-07 Platform → P-10 Integrations → P-09 KPI band → P-05 Why
+→ P-18 In action ×1–3 → P-21 Vertical anchor (optional) → P-11 Deployment → P-13 Closing</div>
+</section>
+
+</div></body></html>

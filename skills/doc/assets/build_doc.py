@@ -245,6 +245,22 @@ def _configure_toc_styles(doc):
         s.paragraph_format.line_spacing = Pt(18 if level == 1 else 16)
 
 
+def _set_current_word_compat(doc):
+    """Mark the file as Word 2013+ so it doesn't open in Compatibility Mode."""
+    settings = doc.settings.element
+    compat = settings.find(qn('w:compat'))
+    if compat is None:
+        compat = OxmlElement('w:compat'); settings.append(compat)
+    for cs in compat.findall(qn('w:compatSetting')):
+        if cs.get(qn('w:name')) == 'compatibilityMode':
+            compat.remove(cs)
+    cs = OxmlElement('w:compatSetting')
+    cs.set(qn('w:name'), 'compatibilityMode')
+    cs.set(qn('w:uri'), 'http://schemas.microsoft.com/office/word')
+    cs.set(qn('w:val'), '15')
+    compat.append(cs)
+
+
 def _enable_field_update_on_open(doc):
     settings = doc.settings.element
     existing = settings.find(qn('w:updateFields'))
@@ -305,6 +321,7 @@ def create_doc(
     section.footer_distance = Inches(0.4)
     section.different_first_page_header_footer = include_cover
 
+    _set_current_word_compat(doc)
     if include_toc:
         _configure_toc_styles(doc)
         _enable_field_update_on_open(doc)
@@ -646,14 +663,14 @@ def _icon_path(name):
     return path
 
 
-def add_icon(doc, name, width_in=1.4):
+def add_icon(doc, name, height_in=0.9):
     """A single library line icon, left-aligned, e.g. add_icon(doc, 'Nodes')."""
     p = doc.add_paragraph()
     _set_paragraph_spacing(p, before_pt=4, after_pt=10)
-    p.add_run().add_picture(_icon_path(name), width=Inches(width_in))
+    p.add_run().add_picture(_icon_path(name), height=Inches(height_in))
 
 
-def add_icon_row(doc, items, icon_width_in=1.1):
+def add_icon_row(doc, items, icon_height_in=0.7):
     """2–4 columns, each a library icon + title + one-line body.
 
     items: list of (icon_name, title, body) tuples.
@@ -668,7 +685,8 @@ def add_icon_row(doc, items, icon_width_in=1.1):
         _set_cell_margins(cell, top=0, bottom=0, left=0 if ci == 0 else 120, right=120)
         p = cell.paragraphs[0]
         _set_paragraph_spacing(p, before_pt=0, after_pt=8)
-        p.add_run().add_picture(_icon_path(icon), width=Inches(min(icon_width_in, col_w - 0.2)))
+        # Fixed height so titles line up across columns (icons differ in aspect ratio)
+        p.add_run().add_picture(_icon_path(icon), height=Inches(icon_height_in))
         tp = cell.add_paragraph()
         _set_paragraph_spacing(tp, before_pt=0, after_pt=4, line_pt=18)
         tr = tp.add_run(title)

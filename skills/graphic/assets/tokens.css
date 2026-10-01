@@ -8,7 +8,6 @@
   --ink:#1A1A1A; --ink-2:#404040; --ink-3:#666666; --ink-4:#999999;
   --teal:#006B6F; --teal-dark:#004D50; --teal-on-dark:#88DCE0; --teal-light:#E8F4F5;
   --logo-dark:#035657; --logo-light:#67A4A4;
-  --teal-accent:#00989E;   /* legacy — solid Type 4 tile fill only, never text/strokes */
   --teal-bright:#88DCE0;   /* legacy alias, repointed to --teal-on-dark */
   --coral:#D94A30; --amber:#C48800; --success:#00896A;   /* state only */
   --line:rgba(0,0,0,0.08); --bg-solid:#F8FAFA;

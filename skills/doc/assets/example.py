@@ -133,7 +133,7 @@ add_callout(doc,
     "if delayed, that probability collapses below 15% in the current run of the network.")
 
 headers = ['Node', 'Layer', 'Name', 'Discrete states', 'Parents']
-col_widths = [0.6, 1.15, 1.6, 1.95, 1.7]  # sums to 7.0"
+col_widths = [0.55, 1.45, 1.45, 1.85, 1.7]  # sums to 7.0" — Layer column fits INFRASTRUCTURE at 9pt
 rows_data = [
     [('N1','id'),('Root Driver','layer'),('Global LNG Price','name'),
      ('High, Avg, Low','states'),('— (independent)','parents')],

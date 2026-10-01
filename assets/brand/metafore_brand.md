@@ -124,7 +124,7 @@ Redesigning or converting someone's material is brand application, not editorial
 | `--teal-light` | `#E8F4F5` | Tinted callouts, table headers (decoration, never essential text) |
 | `--logo-dark` | `#035657` | Hero second word on light surfaces; default chart series |
 | `--logo-light` | `#67A4A4` | Secondary chart series |
-| ~~`--teal-accent`~~ | `#00989E` | **Retired** for text, strokes, labels, accents (low contrast). Legacy alias only. |
+| ~~`--teal-accent`~~ | `#00989E` | **Retired** everywhere — text, strokes, labels, accents, and fills. Legacy alias only. |
 | ~~`--teal-bright`~~ | `#00C4CC` | **Retired.** Do not use. |
 
 **Contrast floor:** accent text, strokes, labels, KPI numbers, and the hero word must read at a distance — `--teal`/`--logo-dark` on white, `--teal-on-dark` on `--teal-dark`. Light tints and `#999999` are for decoration and deliberately inert elements only. A CSS-variable swap does not reach hex hardcoded inside inline SVG — `check.py` greps for it.

@@ -11,7 +11,7 @@ You are helping a Metafore teammate produce brand-compliant HTML graphics. These
 
 Read `../../assets/brand/metafore_brand.md` first — voice, AI tells, legibility floors, density, tokens, and the build/check toolchain. This file adds only graphic-specific rules. Paths are relative to this skill's directory.
 
-**Graphic-specific exceptions to the brand pack** (deliberate): small floating cards (Types 3, 6) may carry a subtle elevation shadow and sit on a soft radial teal wash; Type 4 tiles may use `--teal-accent #00989E` as a *solid tile fill* (never text or strokes); Type 5D may use a blue-purple trust tint. Everything else in the pack applies.
+**Marketing's 2026 surface rules apply to graphics without exception:** solid fills, no shadows, one accent family (teal stack), white-first. Cards separate from their background with a 1px border, not elevation. The only texture is the brand dot pattern (one per surface).
 
 ## When this triggers
 
@@ -45,7 +45,7 @@ These are non-negotiable design constraints. They apply to **every** graphic typ
 
 ### Palette
 
-- **Teal stack only for branded fills.** Forbidden: indigo, emerald, sky, slate, mint, violet, periwinkle, and any other non-teal gradient. Tile and panel fills draw from `--teal-dark` (#004D50), `--teal` (#006B6F), `--teal-accent` (#00989E, solid tile fill only), `--teal-light` (#E8F4F5), or `--bg-solid` (#F8FAFA). Status colors (coral / amber / success) appear only as semantic state indicators, never as decoration.
+- **Teal stack only for branded fills.** Forbidden: indigo, emerald, sky, slate, mint, violet, periwinkle, and any other non-teal gradient. Tile and panel fills draw from `--teal-dark` (#004D50), `--teal` (#006B6F), `--logo-dark` (#035657), `--teal-light` (#E8F4F5), or `--bg-solid` (#F8FAFA). Status colors (coral / amber / success) appear only as semantic state indicators, never as decoration.
 
 ### Type floor
 
@@ -204,9 +204,9 @@ Compact graphics used as feature tiles on website vertical pages.
 
 **Visual signature:**
 
-- **Background:** A soft atmospheric wash (layered radial color gradients, teal-tinted) PLUS one duotone-fade dot pattern. The wash is a color base, not a dot pattern — it doesn't violate the "one dot pattern" rule.
-- **No diagonal stripes.** **No full-dot grid stacked under the duotone fade.** Just wash + one fade.
-- **White floating card:** Centered, clean data display. Title, a few data rows or a route block, and a status pill. Subtle elevation shadow.
+- **Background:** A solid `--bg-solid` (`#F8FAFA`) or `--teal-light` base PLUS one duotone-fade dot pattern.
+- **No diagonal stripes.** **No full-dot grid stacked under the duotone fade.** Just a solid base + one fade.
+- **White floating card:** Centered, clean data display. Title, a few data rows or a route block, and a status pill. 1px `--line` border, no shadow.
 
 **Content types:**
 - Tracking cards — bag/order ID + route block + status pill
@@ -228,7 +228,7 @@ Sets of 4–7 cards in a responsive grid. Used for capability sections on vertic
 
 **Layout per card:**
 
-- **Illustration block** — rounded rectangle (14px radius). **Fill from the teal stack only** — `--teal-dark`, `--teal`, `--teal-accent`, `--teal-light`, or `--bg-solid`. Forbidden: indigo, emerald, sky, slate, mint, violet, periwinkle.
+- **Illustration block** — rounded rectangle (14px radius). **Fill from the teal stack only** — `--teal-dark`, `--teal`, `--logo-dark`, `--teal-light`, or `--bg-solid`. Forbidden: indigo, emerald, sky, slate, mint, violet, periwinkle.
 - **One duotone-fade dot texture** per card. Vary the mask corner-origin across the row (TL / TR / BL / BR) so the set reads as visual variety without leaving the brand. Use white dots on dark fills (`bg-dark` / `bg-teal` / `bg-acc`); use teal dots on light fills (`bg-light` / `bg-solid`).
 - **Floating white UI card** inside — depicts a realistic micro-UI. **Vary the UI form across tiles** — never four identical KV-row cards in a row. Mix at least three of:
   - KV rows (key/value pairs with status colors)
@@ -260,7 +260,7 @@ Larger editorial illustrations for platform-level concepts. More artistic; varie
 
 **C. Teal abstract** — teal-tinted background with one dot pattern. Large Metafore icon centered in a glass circle. Used for brand-level concepts.
 
-**D. Security / trust** — dark background with hexagonal glass containers holding icons (lock, shield + checkmark, Metafore mark). Blue-purple tint rather than teal is permitted here as a deliberate trust-vertical exception.
+**D. Security / trust** — dark background with hexagonal glass containers holding icons (lock, shield + checkmark, Metafore mark). Teal stack only, like every other type (the old blue-purple trust tint is retired — one accent family).
 
 **File location:** `Graphics/General Illustrations/`
 
@@ -274,10 +274,10 @@ Feature graphics used across the website for cross-vertical capability sections.
 
 **Visual signature:**
 
-- **Background:** Abstract textured — atmospheric teal wash + **one** duotone-fade dot pattern. No stripes. No double-stacked dot grids.
+- **Background:** Solid `--bg-solid` or `--teal-light` base + **one** duotone-fade dot pattern. No stripes. No double-stacked dot grids.
 - **Content:** Floating white card(s) showing the capability. Can include: notification cards with status pills, chat interfaces with the Metafore icon responding, data cards with inline charts (bar, donut, sparkline), patient/subscriber profiles, third-party integration cards.
 
-**Notification card construction:** Plain white card, rounded corners, subtle shadow. **No colored left border** (no red stripe, no coral stripe, no teal stripe). Priority is communicated via a status pill **inline with the title**, never via a border.
+**Notification card construction:** Plain white card, rounded corners, 1px `--line` border, no shadow. **No colored left border** (no red stripe, no coral stripe, no teal stripe). Priority is communicated via a status pill **inline with the title**, never via a border.
 
 **File location:** `Graphics/Horizontals/`
 
