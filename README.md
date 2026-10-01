@@ -12,7 +12,33 @@ A Claude Code plugin that bundles Metafore's branded-content skills so any teamm
 | Doc | `metafore:doc` | Branded `.docx` (white paper, proposal, SOW, memo) |
 | Graphic | `metafore:graphic` | Brand-compliant HTML graphics rendered to PNG |
 
-All skills read shared brand rules from `assets/brand/metafore_brand.md` and the deck-specific calibrations in `assets/brand/feedback_*.md`. Update those files once and every skill picks up the new rules.
+All skills read one shared brand pack, `assets/brand/metafore_brand.md` (voice, legibility floors, density, visual coverage, tokens, content preservation). Update it once and every skill picks up the change. Skill files only hold format-specific rules.
+
+## Requirements
+
+Once per machine:
+
+```
+pip install playwright pillow python-pptx python-docx pymupdf
+python3 -m playwright install chromium
+```
+
+LibreOffice is optional (only for thumbnails when redesigning an existing `.pptx`).
+
+## How the skills work
+
+Claude authors a small `name.src.html` with placeholders (`<!-- @fonts -->`, `/* @tokens:deck */`, `<!-- @logo:logo-light -->`, `src="@icon:Nodes"`, `<!-- @footer -->`) and the bundled scripts do the heavy lifting:
+
+| Script | Does |
+|---|---|
+| `scripts/build_html.py` | Assembles the self-contained HTML (tokens, pattern CSS, logos, icons, footers) |
+| `scripts/check.py` | Brand + layout lint as text (type floors, 3-line paragraphs, overflow, overlap, missing visuals, retired colors, voice flags) plus one ≤1600px contact sheet; also checks `.docx` |
+| `scripts/render.py` | Final PNG (2×) or PDF export, plus a small preview |
+| `skills/deck/scripts/build_pptx.py` | HTML deck → editable PPTX (renders only image/hybrid slides, caches unchanged ones) |
+| `skills/deck/redesign/extract.py` | Existing deck (PPTX/PDF/MD) → text manifest + one contact sheet |
+| `skills/doc/assets/build_doc.py` | python-docx library for branded Word docs |
+
+This replaces re-typing build code, CSS, and SVG on every run, and replaces screenshot-based checking with a text report.
 
 ## Slash command
 
@@ -63,11 +89,13 @@ metafore-plugin/
 ├── skills/
 │   ├── brochure/   (SKILL.md + assets + references)
 │   ├── dashboard/  (SKILL.md + references)
-│   ├── deck/       (SKILL.md + assets + redesign + references)
+│   ├── deck/       (SKILL.md + assets/patterns.css + references/patterns/ + scripts + redesign)
 │   ├── doc/        (SKILL.md + assets + references)
-│   └── graphic/    (SKILL.md + references)
+│   └── graphic/    (SKILL.md + assets + references)
+├── scripts/        (build_html.py, check.py, render.py — shared toolchain)
 ├── assets/
-│   └── brand/      (shared brand pack — voice, tokens, calibrations)
+│   ├── brand/      (metafore_brand.md — the shared brand pack)
+│   └── graphics/   (logos, 29 line icons)
 └── README.md
 ```
 

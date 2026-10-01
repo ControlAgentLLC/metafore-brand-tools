@@ -6,7 +6,8 @@ All hero recipes obey the Brand-critical rules in `SKILL.md`:
 - No diagonal stripes
 - No double-stacked dot patterns (full grid OR duotone-fade — never both)
 - Full-screen dark surfaces are SOLID (no dots on Type 1B background, Type 1C right panel)
-- Real Metafore SVG wordmark only (see `logo-svgs.md`)
+- Real Metafore SVG wordmark only, via `<!-- @logo:logo-light -->` / `logo-dark` (see `logo-svgs.md`)
+- Card text at the floors: labels 13px, values/captions ≥ 15px, card body 16px, lede 18px
 - Arrow apex sits at the end of the line
 
 ---
@@ -16,24 +17,14 @@ All hero recipes obey the Brand-critical rules in `SKILL.md`:
 ### Base Frame + Left Panel
 
 ```css
-:root{
-  --ink:#1A1A1A; --ink-2:#404040; --ink-3:#666; --ink-4:#999;
-  --teal:#006B6F; --teal-dark:#004D50; --teal-on-dark:#88DCE0;
-  --teal-accent:#00989E; /* DEPRECATED — use --teal (light) / --teal-on-dark (dark) */
-  --teal-bright:#88DCE0; /* repointed; was retired #00C4CC */ --teal-light:#E8F4F5;
-  --logo-dark:#035657; --logo-light:#67A4A4;
-  --coral:#D94A30; --amber:#C48800; --success:#00896A;
-  --line:rgba(0,0,0,0.08); --bg-solid:#F8FAFA;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#fff;color:var(--ink);font-family:'Geist','Inter',sans-serif;-webkit-font-smoothing:antialiased}
+/* @tokens:graphic */   /* palette, fonts, base resets, .eyebrow/.lede/.accent */
 
 .frame{width:1422px;height:800px;display:grid;grid-template-columns:1fr 1fr;background:#fff}
 .left{padding:96px 72px 96px 96px;display:flex;flex-direction:column;justify-content:center}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:32px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:32px}
 h1{font-family:'Geist','Inter',sans-serif;font-weight:400;font-size:58px;line-height:1.05;letter-spacing:-.025em;margin-bottom:32px}
 h1 .accent{color:var(--logo-dark)}  /* #035657 — NOT --teal */
-.lede{font-family:'Inter',sans-serif;font-size:16px;line-height:1.55;color:var(--ink-2);max-width:460px}
+.lede{font-family:'Inter',sans-serif;font-size:18px;line-height:1.55;color:var(--ink-2);max-width:460px}
 ```
 
 ### Right Panel (single full dot grid)
@@ -57,12 +48,11 @@ h1 .accent{color:var(--logo-dark)}  /* #035657 — NOT --teal */
 .card{
   position:relative;background:#fff;border-radius:8px;
   padding:32px 36px;width:540px;
-  border:1px solid rgba(0,0,0,.05);
-  box-shadow:0 1px 2px rgba(0,0,0,.04);
+  border:1px solid var(--line);
 }
 .card-h{
   font-family:'IBM Plex Mono',monospace;
-  font-size:10px;font-weight:600;letter-spacing:.16em;
+  font-size:13px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-3);
   padding-bottom:18px;margin-bottom:24px;
   border-bottom:1px solid var(--line);
@@ -102,7 +92,7 @@ Use when the blog compares a fragmented vs orchestrated cycle time.
 ```css
 .tl{margin-bottom:28px} .tl:last-of-type{margin-bottom:0}
 .rh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
-.rh .name{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.rh .name{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
 .rh .name.muted{color:var(--ink-4)}
 .rh .time{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .rh .time.bad{color:var(--coral)} .rh .time.good{color:var(--teal)}
@@ -115,12 +105,12 @@ Use when the blog compares a fragmented vs orchestrated cycle time.
 .bar.good .seg{background:var(--teal-dark);border-right:1px solid rgba(0,196,204,.35)}
 .bar.good .seg:nth-child(2n){background:var(--teal)}
 
-.sys{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.sys{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
 .sys span{flex:1;text-align:center}
 .sys span:first-child{text-align:left} .sys span:last-child{text-align:right}
 
-.fstrip{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
-.fstrip .delta{color:var(--teal);font-size:14px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.fstrip{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.fstrip .delta{color:var(--teal);font-size:15px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 ```
 
 **Note:** the `repeating-linear-gradient` *inside* the segmented timeline bar is a small hatched-segment pattern (handoff waste). That's NOT a surface-level diagonal stripe — it lives inside a tiny 28px-tall data element, and is permitted. The rule "no diagonal stripes" applies to backgrounds and decorative overlays, not to micro UI elements like hatched bar segments.
@@ -154,17 +144,17 @@ Use when the headline rests on a comparative metric (e.g. on-time performance ac
 ```css
 .kpig{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-bottom:22px;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .kpig .kpi{padding:16px 18px;border-right:1px solid var(--line)} .kpig .kpi:last-child{border-right:0}
-.kpig .kpi .l{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.kpig .kpi .l{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
 .kpig .kpi .v{font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--logo-dark)}
 .kpig .kpi .v.bad{color:var(--coral)}
-.kpig .kpi .d{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);font-weight:600;letter-spacing:.04em;margin-top:4px}
+.kpig .kpi .d{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--teal);font-weight:600;letter-spacing:.04em;margin-top:4px}
 .kpig .kpi .d.bad{color:var(--coral)}
 
-.bcharth{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;justify-content:space-between}
+.bcharth{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px;display:flex;justify-content:space-between}
 .bcharth .scale{color:var(--ink-4);font-weight:500}
 .bchart{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:6px}
-.brow{display:grid;grid-template-columns:54px 1fr 56px;align-items:center;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:11px}
-.brow .k{font-weight:500;color:var(--ink-2);letter-spacing:.04em;text-transform:uppercase;font-size:9.5px}
+.brow{display:grid;grid-template-columns:54px 1fr 56px;align-items:center;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:13px}
+.brow .k{font-weight:500;color:var(--ink-2);letter-spacing:.04em;text-transform:uppercase;font-size:13px}
 .brow .v{font-weight:600;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
 .brow .v.bad{color:var(--coral)}
 .brow .t{height:14px;background:#F3F6F6;border-radius:3px;overflow:hidden}
@@ -252,9 +242,9 @@ Use for trend stories or "before they call" narratives.
   display:grid;grid-template-columns:1fr 1fr;align-items:center;
   padding:64px 96px;z-index:2;
 }
-.hero1B .eb{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:28px}
+.hero1B .eb{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-on-dark);margin-bottom:28px}
 .hero1B h1{font-weight:400;font-size:54px;line-height:1.08;letter-spacing:-.025em;margin-bottom:28px}
-.hero1B .lede{font-family:'Inter',sans-serif;font-size:16px;line-height:1.55;color:rgba(255,255,255,.78);max-width:480px;margin-bottom:24px}
+.hero1B .lede{font-family:'Inter',sans-serif;font-size:18px;line-height:1.55;color:rgba(255,255,255,.78);max-width:480px;margin-bottom:24px}
 
 /* Wordmark — top-left. USE THE DARK-BG SVG VARIANT from logo-svgs.md */
 .hero1B .wordmark{position:absolute;top:40px;left:48px;z-index:3}
@@ -265,14 +255,14 @@ Use for trend stories or "before they call" narratives.
   padding:10px 22px;
   background:rgba(255,255,255,.03);
   border:1px solid rgba(255,255,255,.16);
-  font-family:'IBM Plex Mono',monospace;font-size:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;
   font-weight:600;letter-spacing:.16em;text-transform:uppercase;
   color:rgba(255,255,255,.9);
 }
 .hero1B .subbox::before,.hero1B .subbox::after,
 .hero1B .subbox .br1,.hero1B .subbox .br2{
   content:"";position:absolute;width:10px;height:10px;
-  border:1.5px solid var(--teal-bright);
+  border:1.5px solid var(--teal-on-dark);
 }
 .hero1B .subbox::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
 .hero1B .subbox::after{top:-1px;right:-1px;border-left:0;border-bottom:0}
@@ -285,7 +275,6 @@ Use for trend stories or "before they call" narratives.
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,.14);
   border-radius:16px;padding:28px;
-  box-shadow:0 24px 60px rgba(0,0,0,.28);
   justify-self:end;width:520px;
 }
 ```
@@ -311,7 +300,7 @@ The "What is [term]?" definitional hero. Left side highlights a key term in `--l
   display:flex;flex-direction:column;justify-content:center;gap:24px;
 }
 .hero1C .eb{
-  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
   letter-spacing:.18em;text-transform:uppercase;color:var(--teal);
 }
 
@@ -348,7 +337,6 @@ The "What is [term]?" definitional hero. Left side highlights a key term in `--l
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,.14);
   border-radius:14px;padding:24px;width:480px;color:#fff;
-  box-shadow:0 20px 50px rgba(0,0,0,.28);
 }
 ```
 

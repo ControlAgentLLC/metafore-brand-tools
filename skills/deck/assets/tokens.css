@@ -43,7 +43,7 @@
 
   /* Slide canvas — 16:9 at 1920×1080.
      Maps to a 13.333" × 7.5" PPTX widescreen canvas
-     (EMU conversion: 1 px = 9525 EMU). */
+     (1 px = 6350 EMU, 0.5 pt — build_pptx.py derives this). */
   --slide-w: 1920px;
   --slide-h: 1080px;
 
@@ -63,31 +63,27 @@
   --card-grey: #F4F4F4;
 
   /* ---------------------------------------------------------------- */
-  /* CANONICAL TYPE SCALE — Perfect Fifth default, Perfect Fourth floor */
-  /*                                                                    */
-  /*  Same rule set as every other Metafore skill. On the 1920×1080     */
-  /*  slide canvas the sizes are scaled up by ~3× so the relationships  */
-  /*  hold visually at projection scale.                                */
-  /*                                                                    */
-  /*  • Headers shrink within their ladder to fit max 2 lines           */
-  /*  • Body / lede / eyebrow / footer NEVER shrink                     */
-  /*  • Line-height: headers 1.125, body+eyebrow 1.200                  */
-  /*  • Letter-spacing: 0 everywhere (HTML and PPTX)                    */
+  /* SLIDE TYPE SCALE — sized for the back of the room (6–25 ft).        */
+  /*  Floors (brand pack §2): body 32px, labels/eyebrows 24px, nothing   */
+  /*  essential below 22px. Text inside a locked UI-card mockup          */
+  /*  ([data-decorative]) may go to 16px. When copy overflows, widen the */
+  /*  well or cut words — never shrink below these values.               */
   /* ---------------------------------------------------------------- */
-  /* Slide-scale type (≈3× the standard 16px-base scale) */
-  --h1-size: 108px;        /* default cover/hero — 36 × 3 */
-  --h1-floor: 84px;        /* floor — 28 × 3 */
-  --h2-size: 72px;         /* default section/big body — 24 × 3 */
-  --h2-floor: 63px;        /* floor — 21 × 3 */
-  --h3-size: 54px;         /* fixed — 18 × 3 */
-  --body-size: 28px;       /* slide body — FIXED, never shrinks */
-  --lede-size: 36px;       /* slide lede — FIXED */
-  --eyebrow-size: 18px;    /* Plex Mono eyebrow on slides */
-  --footer-size: 16px;     /* footer Plex Mono */
+  --cover-size: 112px;     /* cover hero */
+  --display-size: 120px;   /* divider single word / short phrase */
+  --h1-size: 88px;         /* closing, dark statement */
+  --h2-size: 64px;         /* content-slide title */
+  --h2-dense: 56px;        /* title above a grid / table */
+  --h3-size: 36px;         /* card / tile title */
+  --lede-size: 36px;
+  --body-size: 32px;       /* primary body — FIXED */
+  --small-size: 24px;      /* secondary text in tiles, cards, tables, pills (floor 22) */
+  --label-size: 24px;      /* Plex Mono eyebrows, labels, section label */
+  --footer-size: 22px;     /* footer chrome — at the floor */
 
-  --lh-header: 1.125;
-  --lh-body:   1.200;
-  --tracking:  0;          /* zero letter-spacing — HTML and PPTX */
+  --lh-header: 1.04;
+  --lh-body:   1.32;
+  --tracking:  0;
 
   --h1-max-width: 24em;
 }
@@ -133,9 +129,10 @@ html, body {
    any Plex Mono text frame (PPTX brand rule). */
 .eyebrow {
   font-family: var(--mono);
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.16em;
+  font-weight: 500;
+  font-size: var(--label-size);
+  line-height: 1.2;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--teal);
 }
@@ -146,9 +143,10 @@ html, body {
   top: var(--chrome-offset);
   left: var(--chrome-offset);
   font-family: var(--mono);
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: 0.18em;
+  font-weight: 500;
+  font-size: var(--label-size);
+  line-height: 1.2;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--teal);
 }
@@ -178,9 +176,10 @@ html, body {
   justify-content: space-between;
   align-items: center;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--footer-size);
+  line-height: 1.2;
   font-weight: 400;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-3);
   pointer-events: none;

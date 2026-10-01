@@ -9,7 +9,7 @@ You are helping a Metafore teammate produce a brand-compliant Word document. The
 
 ## Brand reference (read before producing)
 
-Every Metafore artifact follows the same brand invariants. Before drafting, Read the shared brand pack at `../../assets/brand/metafore_brand.md` (voice rules, AI-tell blocklist, design tokens, type stack) and skim any relevant `../../assets/brand/feedback_*.md` files. These supersede anything older you may have seen.
+Read `../../assets/brand/metafore_brand.md` first — voice, AI tells, legibility floors, density, visual coverage, tokens, content preservation, and the check tool. This file adds only Word-specific rules. Paths are relative to this skill's directory.
 
 ## The two invariants
 
@@ -74,7 +74,7 @@ Single accent family — the teal stack only. Status colors only as state indica
 | Body (paragraphs, bullets, lead, callout, takeaway) | **Inter** → Calibri |
 | Mono (eyebrows, footer, table headers, table IDs, signatures) | **IBM Plex Mono** → Consolas |
 
-Cover H1 is 46pt, weight 400, two-tone (ink base + last word in `logo-dark`). H2 section titles are 26pt single-tone ink. Body is 10pt with 15pt line spacing. Eyebrows are tracked +28 to +32 (twentieths-of-pt). **Plex Mono is never bold and never italic.**
+Cover H1 is 46pt, weight 400, two-tone (ink base + last word in `logo-dark`). H2 section titles are 26pt single-tone ink. **Body is 11pt with 17pt leading** (12pt / 18.5pt for executive memos: `create_doc(body_pt=12)`); callouts body + 1pt; table cells 11pt. Nothing readable goes below 11pt — only Plex Mono labels (eyebrows, table headers, IDs, cover meta) sit at 9pt and the running footer at 8pt. Eyebrows are tracked +28 to +32 (twentieths-of-pt). **Plex Mono is never bold and never italic.**
 
 ## The element catalog
 
@@ -91,46 +91,27 @@ The canonical visual reference is `references/styles-reference.html`. Open it in
 **Body elements**
 - **C1 Section eyebrow** — `NN · Section title`. Outline level 0.
 - **C2 H2** — section's headline phrase. 26pt Geist, single-tone ink.
-- **C3 Subhead** — numbered sub-heading `N · Topic`. Outline level 1.
-- **C4 Body** — Inter 10pt, line 15pt. Inline bold for proper nouns.
+- **C3 Subhead** — numbered sub-heading `N · Topic`, Geist 14pt. Outline level 1.
+- **C4 Body** — Inter 11pt, line 17pt. Inline bold for proper nouns. Three lines max (~45–60 words); three or more parallel facts become C6 bullets.
 - **C5 Takeaway** — body in `ink-2`. Used after tables/callouts as a finishing beat.
 - **C6 Bullet** — solid `•`, hanging indent, tight spacing. Optional bold lead.
 - **C7 Callout** — `teal-light` fill + 3pt `teal-dark` left border. **No label.**
 - **C8 Data table** — teal-light header, hairline rows, 14pt trailing spacer.
 - **C9 Signature block** — proposals only.
 
-## Voice — preferred vocabulary
+**Visuals** — every two facing pages carry at least one (library icon first):
+- **D1 Icon row** — `add_icon_row(doc, [(icon, title, body), …])`, 2–4 columns of library line icons with a Geist title and one-line body.
+- **D2 Icon** — `add_icon(doc, 'Nodes')`, a single library icon (names: `../graphic/references/line-icons-library.md`).
+- **D3 KPI band** — `add_kpi_band(doc, [(value, label), …], source=…)`, 2–4 metrics on `teal-dark`. Real numbers only.
+- **D4 Pull quote** — `add_pull_quote(doc, quote, attribution)`, Geist 18pt with a teal-dark rule.
+- **D5 Figure** — `add_figure(doc, path, caption=…)` for a diagram, chart, or screenshot (render HTML diagrams with `../../scripts/render.py`).
+Callouts and data tables also count, but don't let a doc run on callouts alone.
 
-These are positioning, not stylistic preference.
+`references/styles-reference.html` predates the 2026 size change; where its numbers differ, `assets/build_doc.py` is authoritative.
 
-| Use | Not |
-|---|---|
-| **Pulse** (define on first use as "a live, role-scoped operating view assembled from widgets") | dashboard |
-| Cognitive agents | AI bots, chatbots, virtual assistants |
-| Orchestration | automation |
-| Knowledge fabric, enterprise knowledge graph | data layer, data warehouse |
-| Sense, reason, and act | detect, process, respond |
-| Self-evolving | self-learning |
-| Amplify human intelligence | replace humans |
-| AI transformation partner | vendor, provider, supplier |
-| Enterprise General Intelligence (EGI), Enterprise Operating Platform (EOP) | generic AI platform |
+## Voice
 
-**Confidentiality.** Never name Kloudspot, mimik, or Airlinq as partners. Use generic vertical framing.
-
-## AI-tell blocklist — zero tolerance
-
-Marketing copy that follows these patterns reads as machine-written. Avoid them in every doc.
-
-- **No "X isn't Y. It's Z." negation pivots.** Most-flagged pattern. Includes softer variants ("aren't waiting…", "The gap isn't X — it's Y"). Rewrite as a positive assertion.
-- **No "X, not Y" inline contrasts.** Same family. State the thing directly.
-- **No "[Subject] doesn't need X — it needs Y" pivots.** Same family.
-- **No staccato fragment sentences.** Two-word sentences strung together are an AI tic. Join with commas, em dashes, or conjunctions.
-- **No triplet structural lists used as a recurring device.** Three items are fine when there genuinely are three; don't default to triplets as rhetoric.
-- **No department roll calls.** "Customer service runs X. Network ops has Y. Billing has Z."
-- **No comfort words.** Compounding, fundamentally different, impactful, collectively unintelligent, leverage, synergy, disrupt, seamless (overuse), end-to-end, solutions (when vague).
-- **No neat parallel opposition.** "Scaling costs without scaling returns."
-
-Long-form docs amplify these tells because the reader has time to notice. Catch them on the editing pass.
+Brand vocabulary and the AI-tell list live in the brand pack (§3) — apply them to your own copy, and flag-then-propose on source copy. Long-form docs amplify tells because the reader has time to notice; catch them on the editing pass.
 
 ## Doc-specific writing rules
 
@@ -179,6 +160,8 @@ from build_doc import (
     add_section_eyebrow, add_h2, add_subhead,
     add_body, add_takeaway, add_bullet,
     add_callout, add_data_table, add_signature_block,
+    # Visuals
+    add_icon, add_icon_row, add_figure, add_kpi_band, add_pull_quote,
 )
 ```
 
@@ -200,20 +183,24 @@ Determine: doc type, audience, intended length, source content (markdown, brochu
 ### 2. Plan the structure
 Before writing any code, outline the sections as a flat list:
 ```
-01 · Executive summary
+01 · Summary
 02 · The problem
 03 · What we propose
 04 · Scope and timeline
 05 · Investment
 06 · Next steps
 ```
-This catches structural issues (too many sections, weak progression, missing transition) before they're baked into the doc.
+This catches structural issues (too many sections, weak progression, missing transition) before they're baked into the doc. Note the visual each section (or each two pages) will carry next to it.
 
 ### 3. Draft body content
 Apply voice rules ruthlessly. Headlines in sentence case. Inline bold on proper nouns. Watch for the AI tells. Use **callouts** to lift the executive summary or key insight; use **takeaways** for finishing beats; use **subheads** for sub-section navigation.
 
-### 4. Build the doc
-Copy `example.py`, modify it, run it. Output a `.docx` next to your script.
+### 4. Build and check the doc
+Copy `example.py`, modify it, run it. Output a `.docx` next to your script. Then:
+```
+python3 ../../scripts/check.py metafore-<topic>-<type>.docx
+```
+It warns on runs under the floor (11pt, labels 9pt), paragraphs over 60 words, sections with no visual, and errors on retired teal. Fix and re-run before opening Word.
 
 ### 5. Verify in Word
 Open the file. Word prompts to update fields the first time — accept (this populates the TOC). Check:
@@ -251,14 +238,17 @@ Before delivering, verify:
 
 **Headers / hierarchy**
 - [ ] Section eyebrows in format `NN · Title`, Plex Mono uppercase teal
-- [ ] Sub-headings in format `N · Topic`, Geist 13pt bold
+- [ ] Sub-headings in format `N · Topic`, Geist 14pt bold
 - [ ] Eyebrows carry outline level 0; subheads carry outline level 1 (so TOC populates)
 - [ ] Top hairline above every section eyebrow except the first
 
 **Body**
-- [ ] Body is 10pt Inter, line spacing 15pt
+- [ ] Body is 11pt Inter, line spacing 17pt (12pt / 18.5pt for executive memos)
+- [ ] No paragraph over three lines; parallel facts of three or more are bullets
+- [ ] Every two facing pages carry a visual (icon row, KPI band, pull quote, figure)
+- [ ] `check.py` reports zero errors and no type-floor warnings
 - [ ] Inline bold on proper nouns and key terms
-- [ ] Bullets are solid `•`, tight (2pt after, 14pt line)
+- [ ] Bullets are solid `•`, tight (3pt after, 16pt line at 11pt body)
 - [ ] Takeaway after a table or callout is `ink-2` (lighter)
 
 **Tables**

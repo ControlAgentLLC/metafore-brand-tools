@@ -37,7 +37,7 @@
     --h3-size: 18px;
     --body-size: 16px;       /* never shrinks */
     --lede-size: 18px;       /* never shrinks */
-    --eyebrow-size: 11px;    /* Plex Mono */
+    --eyebrow-size: 14px;    /* Plex Mono */
     --lh-header: 1.125;
     --lh-body:   1.200;
     --tracking:  0;
@@ -66,12 +66,12 @@
   /* topbar */
   .main { padding: 0 0 56px; }
   .topbar { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 14px 28px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); z-index: 5; }
-  .search { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; min-width: 280px; max-width: 520px; color: var(--ink-3); font-size: 13px; }
+  .search { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; min-width: 280px; max-width: 520px; color: var(--ink-3); font-size: 14px; }
   .search svg { width: 14px; height: 14px; }
   .search input { border: 0; outline: 0; background: transparent; color: var(--ink); width: 100%; font: inherit; }
-  .kbd { font: 500 10px 'IBM Plex Mono', monospace; color: var(--ink-3); border: 1px solid var(--line); padding: 2px 6px; border-radius: 4px; }
+  .kbd { font: 500 14px 'IBM Plex Mono', monospace; color: var(--ink-3); border: 1px solid var(--line); padding: 2px 6px; border-radius: 4px; }
   .topbar .right { display: flex; align-items: center; gap: 10px; }
-  .iconbtn { border: 1px solid var(--line); background: #fff; height: 36px; padding: 0 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); cursor: pointer; font: 500 13px 'Inter', sans-serif; }
+  .iconbtn { border: 1px solid var(--line); background: #fff; height: 36px; padding: 0 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); cursor: pointer; font: 500 14px 'Inter', sans-serif; }
   .iconbtn:hover { background: var(--hover); }
   .iconbtn svg { width: 14px; height: 14px; }
   .iconbtn.icon-only { width: 36px; padding: 0; justify-content: center; }
@@ -90,15 +90,15 @@
   .hero p { margin: calc(var(--lede-size) * 0.4) 0 0; color: var(--ink-3); font-size: var(--lede-size); line-height: var(--lh-body); }
   .hero .controls { display: flex; align-items: center; gap: 10px; }
 
-  .live { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; font: 500 12px 'Inter', sans-serif; color: var(--ink-2); background: #fff; }
+  .live { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; font: 500 14px 'Inter', sans-serif; color: var(--ink-2); background: #fff; }
   .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #1f7a4d; box-shadow: 0 0 0 4px rgba(31,122,77,.12); }
 
-  .pill { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; font: 500 13px/1 'Inter', sans-serif; color: var(--ink-2); cursor: pointer; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; font: 500 14px/1 'Inter', sans-serif; color: var(--ink-2); cursor: pointer; }
   .pill svg { width: 14px; height: 14px; color: var(--ink-3); }
   .pill .caret { width: 10px; height: 10px; }
 
   .seg { display: inline-flex; gap: 6px; height: 36px; align-items: center; }
-  .seg button { height: 36px; padding: 0 14px; background: #f4f4f4; border: 1px solid transparent; font: 500 13px 'Inter', sans-serif; color: var(--ink-3); border-radius: 8px; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .seg button { height: 36px; padding: 0 14px; background: #f4f4f4; border: 1px solid transparent; font: 500 14px 'Inter', sans-serif; color: var(--ink-3); border-radius: 8px; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
   .seg button:hover { background: #ececec; color: var(--ink-2); }
   .seg button.on { background: #fff; border-color: var(--line); color: var(--ink); }
 
@@ -131,7 +131,7 @@
 
   /* status list */
   .list { padding-left: 10px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-  .list .row { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+  .list .row { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; font-size: 16px; }
   .list .dot { width: 7px; height: 7px; border-radius: 50%; background: #1f7a4d; }
   .list .dot.amber { background: #c89321; }
   .list .dot.red   { background: #a02b1d; }
@@ -146,7 +146,7 @@
 
   /* chips */
   .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 22px 28px 6px; justify-content: center; }
-  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font: 500 13px 'Inter', sans-serif; color: var(--ink-2); background: #fff; cursor: pointer; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font: 500 14px 'Inter', sans-serif; color: var(--ink-2); background: #fff; cursor: pointer; }
   .chip:hover { background: var(--hover); }
   .chip svg { width: 14px; height: 14px; }
 
@@ -167,7 +167,7 @@
 
   /* tab switcher (only when more than one dashboard exists in the folder) */
   .switcher { position: fixed; top: 14px; right: 28px; z-index: 10; display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
-  .switcher a { padding: 8px 14px; font: 500 12px 'Inter', sans-serif; color: var(--ink-3); text-decoration: none; }
+  .switcher a { padding: 8px 14px; font: 500 14px 'Inter', sans-serif; color: var(--ink-3); text-decoration: none; }
   .switcher a.on { background: #0a0a0a; color: #fff; }
 
   @media (max-width: 1180px) {

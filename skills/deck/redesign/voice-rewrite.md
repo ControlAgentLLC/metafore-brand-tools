@@ -1,95 +1,60 @@
-# Voice rewrite — extracted copy → Metafore voice
+# Voice pass — extracted copy → Metafore voice
 
-Run **every** title, body paragraph, and bullet in `slide-manifest.json` through this checklist **before** drafting HTML. Source decks carry their own voice; if you ignore this step, the redesign will look Metafore but read like the customer's vendor.
+The customer's deck is the customer's words. Run this pass over every title, body, and bullet in `slide-manifest.json` **before** drafting HTML, in two parts. The canonical rules live in `../../../assets/brand/metafore_brand.md` §3.
 
-This file does **not** redefine the rules — it lists the transformations to apply. The canonical rules live in `../SKILL.md` under "Voice — preferred vocabulary" and "AI writing tells — zero tolerance". Read those first if you haven't.
+## Part 1 — automatic: brand vocabulary
 
----
+Terminology, not editorial judgment. Apply silently, but list what changed in the summary you show the user.
 
-## Lexical replacements (find/replace pass)
+| Source term | Metafore term |
+|---|---|
+| dashboard | Pulse (define on first use) |
+| AI bot, chatbot, virtual assistant | cognitive agent |
+| automation | orchestration |
+| data warehouse, data layer, data lake | knowledge fabric / enterprise knowledge graph |
+| detect / process / respond | sense / reason / act |
+| self-learning | self-evolving |
+| replace (humans / staff) | amplify (human intelligence) |
+| vendor / provider / supplier (describing Metafore) | AI transformation partner |
+| AI platform (generic) | Enterprise Operating Platform (EOP) |
+| Echo (legacy product name) | Mira — telecom decks only |
 
-| Source word                              | Metafore replacement                                     |
-|------------------------------------------|----------------------------------------------------------|
-| dashboard                                | Pulse (define on first use)                              |
-| AI bot, chatbot, virtual assistant       | cognitive agent                                          |
-| automation                               | orchestration                                            |
-| data warehouse, data layer, data lake    | knowledge fabric / enterprise knowledge graph            |
-| detect / process / respond               | sense / reason / act                                     |
-| self-learning                            | self-evolving                                            |
-| replace (humans / staff / agents)        | amplify (human intelligence)                             |
-| vendor / provider / supplier             | AI transformation partner                                |
-| AI platform (generic)                    | Enterprise Operating Platform (EOP)                      |
-| Echo (legacy product name)               | Mira — and only on telecom decks                         |
+Also automatic: Mira references removed from non-telecom decks; MWC Barcelona March 2026 written as past; confidential partner names (Kloudspot, mimik, Airlinq) replaced with generic vertical framing.
 
-If the source mentions MWC Barcelona March 2026 as a future event, rewrite as past tense. The event has happened.
+## Part 2 — proposed, then approved: everything editorial
 
----
+**Default: keep the source wording.** Flag candidates and show one numbered list before drafting:
 
-## Structural transformations (rewrite pass)
+```
+Voice pass · 6 items · 2 applied · 4 awaiting you
+✓ Applied  S03  dashboard → Pulse (first use defined)
+✓ Applied  S07  chatbot → cognitive agent
+? S02  "It isn't another dashboard. It's a true operating view." — negation pivot.
+       Suggest: "Pulse is the operating view your team works from."
+? S05  "Fast. Reliable. Scalable." — rhetorical triplet of fragments. Suggest: "Fast and reliable at enterprise scale."
+? S09  Department roll call across three sentences. Suggest one sentence naming the scope.
+? S11  Comfort words: leverage, end-to-end, disrupt. Suggest a plain restatement.
+Apply all · apply selected (list numbers) · keep source wording
+```
 
-These come from the "AI writing tells — zero tolerance" list. The text in extracted slides has usually been written by a human in a hurry, then "polished" by an LLM, which means the tells are almost always present. Strip them all.
+What to flag (from the brand pack's AI-tell list): negation pivots and "X, not Y"; rhetorical triplets (a factual list of three stays — set it as bullets); staccato fragments; comfort words; neat parallel opposition; department roll calls.
 
-1. **Kill "isn't X. It's Y." negation-pivots.** Replace with a direct positive claim.
-   - Source: "It isn't another dashboard. It's a true operating view."
-   - Metafore: "Pulse is the operating view your team works from."
+## Layout-driven suggestions (also proposed, never silent)
 
-2. **Kill "X, not Y." inline contrasts.** Same fix — make the positive claim, drop the contrast.
+Slides are sparse, so some source copy won't fit a pattern at the type floors. Propose the shorter version; never shrink type and never drop items:
+- Cover headline over 6 words → suggest the product/brand name as the hero and move the description to the subtitle.
+- Paragraphs over three lines → suggest bullets (three or more parallel facts) or a split.
+- KPI labels over two lines, tile labels over ~3 words → suggest a trimmed label.
+- Agenda verb phrases → suggest noun phrases ("Reviewing customer outcomes" → "Customer outcomes").
+- Several closing CTAs → ask which one to keep.
 
-3. **Demote triplets to pairs (or promote to fours).** Three parallel bullets become two or four. This is the most common slide-level violation in source decks.
-   - Source: "Fast. Reliable. Scalable."
-   - Metafore: either pick the two that matter, or expand to four with substance.
+## Vertical guardrails
 
-4. **Strip AI comfort words.** Search-and-cut these in every line: *compounding, fundamentally different, impactful, leverage, synergy, disrupt, seamless, end-to-end, solutions*. If a sentence collapses without them, it was empty anyway.
+- **Banking / wealth:** never turn "automated insights" into "automated decisions" — the legal distinction matters.
+- **Supply chain:** "exception" is preferred over "alert" or "issue" — propose, don't force.
 
-5. **Break staccato fragments.** Source decks love three-fragment lines for "punch." Join with commas, em dashes, or conjunctions.
-   - Source: "Faster decisions. Less waste. Happier customers."
-   - Metafore: "Faster decisions, less waste, and a better customer experience." (or pick two and trim)
+## Done when
 
-6. **No neat parallel opposition.** Phrases like "scaling costs without scaling returns" are reliably AI-tell. Rewrite directly.
-
-7. **No department roll calls.** "Customer service runs X. Network ops has Y. Billing has Z." → one sentence naming the scope, not a list of departments.
-
----
-
-## Slide-element-specific rules
-
-**Cover headlines** — strict cap of 6 words. Two-tone hero (first word(s) in `--ink`, last word in `--logo-dark`). If the source cover headline is 8 words of feature soup, cut it to 6 of vision.
-
-**Agenda items** — noun phrases, not verb phrases.
-- Source: "We will discuss the platform" → Metafore: "The platform"
-- Source: "Reviewing customer outcomes" → Metafore: "Customer outcomes"
-
-**KPI labels** — 2 lines max under the number. Source labels are usually too long ("Increase in operational efficiency across regions"). Trim to "Operational efficiency."
-
-**Capability tile labels** — ≤3 words. Source decks often have full sentences here. Cut to a noun phrase.
-
-**Statement slides** — one sentence, ≤14 words. Source statement slides are usually a paragraph; the redesign keeps the sentence the customer would have ended on.
-
-**Closing CTAs** — one CTA, one verb. Source closings often have three CTAs (book a demo, read the case study, follow us). Pick one.
-
----
-
-## Vertical-specific guardrails
-
-- **Telecom decks**: Mira naming is allowed and encouraged for the personal-agent product. Do not use Mira on banking, wealth, travel, health, or supply chain decks — strip any Mira references the source picks up from cross-vertical material.
-- **Banking / wealth**: extra care on compliance phrasing — never claim "automated decisions" where the source said "automated insights"; the legal distinction matters.
-- **Supply chain**: "exception" is the preferred term over "alert" or "issue."
-
----
-
-## Quick checklist (run after rewrite)
-
-Before declaring rewrite done, every slide passes:
-
-- [ ] Zero instances of "dashboard" — all replaced with Pulse
-- [ ] Zero negation-pivots ("isn't X, it's Y")
-- [ ] Zero triplet bullet lists (everything is 2, 4, or more)
-- [ ] Zero AI comfort words (`leverage`, `seamless`, `end-to-end`, etc.)
-- [ ] Cover headline ≤6 words
-- [ ] Agenda items are noun phrases
-- [ ] Statement slides are one sentence ≤14 words
-- [ ] One CTA on closing, not multiple
-- [ ] No future-tense references to MWC Barcelona March 2026
-- [ ] Correct vertical-specific naming (Mira only on telecom)
-
-If any of these fail, the rewrite isn't done — don't hand off to HTML drafting yet.
+- [ ] Every Part 1 swap applied and listed
+- [ ] Part 2 list shown and the user's choice applied (or source wording kept)
+- [ ] No source item dropped; layout-driven cuts approved

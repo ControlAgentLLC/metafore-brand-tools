@@ -88,7 +88,7 @@ The dashboard uses the same canonical scale as every other Metafore artifact. He
   --h3-size: 18px;      /* fixed */
   --body-size: 16px;    /* FIXED — never shrinks */
   --lede-size: 18px;    /* FIXED — never shrinks */
-  --eyebrow-size: 11px; /* Plex Mono */
+  --eyebrow-size: 14px; /* Plex Mono — UI-chrome floor */
 
   --lh-header: 1.125;
   --lh-body:   1.200;
@@ -106,8 +106,8 @@ The dashboard uses the same canonical scale as every other Metafore artifact. He
 | Section h3 | 18px | 1.125 | 0 | Fixed. |
 | Body lede | 18px | 1.200 | 0 | Never shrinks. |
 | Body | 16px | 1.200 | 0 | Never shrinks. |
-| KPI label | 11px | 1.200 | 0 | UPPERCASE, IBM Plex Mono, no tracking. |
-| Eyebrow / pill | 11px | 1.200 | 0 | UPPERCASE, IBM Plex Mono, no tracking. |
+| KPI label | 14px | 1.200 | 0 | UPPERCASE, IBM Plex Mono, no tracking. |
+| Eyebrow / pill | 14px | 1.200 | 0 | UPPERCASE, IBM Plex Mono, no tracking. |
 
 ### Typography rules
 

@@ -40,21 +40,23 @@
   --mono: 'IBM Plex Mono', monospace;
 
   /* ---------------------------------------------------------------- */
-  /* CANONICAL TYPE SCALE — Perfect Fifth default, Perfect Fourth floor */
+  /* CANONICAL TYPE SCALE — Perfect Fifth on an 18px body               */
   /*                                                                    */
+  /*  Legibility floor (brand pack §2): nothing essential below 15px;   */
+  /*  eyebrows/labels 13px. Body 18, lede 20–22.                        */
   /*  • Headers shrink within their ladder to fit max 2 lines           */
-  /*  • Body / lede / eyebrow NEVER shrink                              */
-  /*  • Line-height: headers 1.125, body+lede+eyebrow 1.200             */
-  /*  • Letter-spacing: 0 everywhere (no tracking)                      */
+  /*  • Body / lede / eyebrow / caption NEVER shrink                    */
+  /*  • When copy overflows, widen the well or cut words                */
   /* ---------------------------------------------------------------- */
-  --h1-size: 36px;       /* default — Perfect Fifth × body 16 */
-  --h1-floor: 28px;      /* floor   — Perfect Fourth × body 16 */
-  --h2-size: 24px;       /* default — Perfect Fifth × body 16 */
-  --h2-floor: 21px;      /* floor   — Perfect Fourth × body 16 */
-  --h3-size: 18px;       /* fixed (no shrink) */
-  --body-size: 16px;     /* FIXED — never shrinks */
-  --lede-size: 18px;     /* FIXED — never shrinks */
-  --eyebrow-size: 11px;  /* Plex Mono */
+  --h1-size: 40px;       /* default — Perfect Fifth² × body 18 */
+  --h1-floor: 32px;      /* floor */
+  --h2-size: 27px;       /* default — Perfect Fifth × body 18 */
+  --h2-floor: 24px;      /* floor */
+  --h3-size: 21px;       /* fixed (no shrink) */
+  --body-size: 18px;     /* FIXED — never shrinks */
+  --lede-size: 21px;     /* FIXED — 20–22px band */
+  --caption-size: 15px;  /* card meta, footnotes, KPI captions — the floor */
+  --eyebrow-size: 13px;  /* Plex Mono labels */
 
   --lh-header: 1.125;
   --lh-body:   1.200;

@@ -1,6 +1,6 @@
 {
   "name": "metafore",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Metafore-branded artifact suite for Claude Code: brochures, dashboards, slide decks, Word docs, and HTML graphics. Encodes Metafore brand invariants (voice rules, AI-tell blocklist, design tokens, type stack, Pulse vocabulary) so every artifact comes out on-brand.",
   "author": {
     "name": "Metafore"

@@ -1,95 +1,171 @@
 ---
 name: Metafore brand system
-description: Canonical Metafore voice, AI-tell blocklist, design tokens, and layout blueprints for brochures, dashboards, decks, and docs
+description: The single source of truth for Metafore positioning, voice, legibility floors, density, visual coverage, design tokens, and content-preservation rules. Every metafore:* skill reads this file; skill files only add format-specific deltas.
 type: reference
-originSessionId: e6765f71-516d-4239-b31f-ac8cc956509f
 ---
-# Canonical positioning
-- **Metafore** = AI-Native transformation platform for enterprise. Product is **Metafore One**. Second product: **Mira** (personal AI twin for mobile subscribers, deployed in carrier IMS — renamed from Echo 2026-04-24).
-- Differentiator: AI transformation **partner** (not vendor). Looks for topline growth, not just margin/cost reduction.
+
+# Metafore brand pack
+
+Read this once per task. Skill files (`skills/*/SKILL.md`) add only what is specific to their format; if a skill file and this pack disagree, this pack wins unless the skill names the rule as a deliberate format exception.
+
+## 1. Positioning
+
+- **Metafore** is the AI-Native transformation platform for the enterprise. The platform product is **Metafore One**; the operating system is **MetaWorks**. **Mira** is the personal AI twin for mobile subscribers, deployed in carrier IMS (renamed from Echo on 2026-04-24) — **Mira naming appears on telecom material only**.
+- Metafore is an AI transformation **partner**, focused on topline growth as well as margin.
 - CEO: Ori Sasson. HQ: San Francisco. Industries: Telecom, Banking, Wealth, Travel, Health, Finance.
-- CONFIDENTIAL partnerships (do NOT name publicly): Kloudspot (airports), mimik (edge AI), Airlinq (telco IoT). Use generic vertical framing.
-- MWC Barcelona March 2-5 2026 is in the past — never pitch as forward-looking.
+- **Confidential partnerships — never name publicly:** Kloudspot (airports), mimik (edge AI), Airlinq (telco IoT). Use generic vertical framing.
+- MWC Barcelona (2–5 March 2026) is in the past. Never pitch it as forward-looking.
+- Signature lines: "Amplify human intelligence", "Sense, reason, and act", "Living cognitive system", "Grow the topline, not just protect the margin".
 
-# Voice — preferred vocab
-- Cognitive agents (not AI bots/chatbots/virtual assistants)
-- Orchestration (not automation)
-- Knowledge fabric, enterprise knowledge graph (not data layer/warehouse)
-- Self-evolving (not self-learning)
-- Sense, reason, and act (not detect/process/respond)
-- Cognitive system, Enterprise General Intelligence (EGI), Enterprise Operating Platform (EOP)
-- Amplify human intelligence (not replace humans)
-- AI transformation partner (not vendor/provider/supplier)
-- **Pulse** = Metafore's term for what others call a dashboard. NEVER use "dashboard" — always "Pulse". A Pulse is a live, role-scoped operating view assembled from Bricks widgets. Define on first use in customer-facing copy. Confirmed 2026-05-15.
-- Signature lines: "Amplify Human Intelligence", "Sense, reason, and act", "Living cognitive system", "Grow the topline, not just protect the margin"
+## 2. Universal rules — every format
 
-# AI WRITING TELLS — ZERO TOLERANCE (Elana's flagged list)
-- **NO "isn't X. It's Y."** negation-pivot. Includes softer versions ("aren't waiting…", "The gap isn't X — it's Y"). Most-flagged pattern.
-- **NO "X, not Y"** inline contrasts
-- **NO "[Subject] doesn't need X — it needs Y"** pivots
-- **NO short staccato fragment sentences** — join with commas, em dashes, conjunctions
-- **NO triplet structural lists** — three parallel items/sentences as recurring device. Use 2 or 4 instead.
-- **NO department roll calls** — "Customer service runs X. Network ops has Y. Billing has Z."
-- **NO "compounding" / "fundamentally different" / "impactful" / "collectively unintelligent"** — AI comfort words
-- **NO neat parallel opposition** — "scaling costs without scaling returns"
-- **NO leverage, synergy, disrupt, seamless (overuse), end-to-end, solutions (vague)**
+### Legibility floor
+Nothing essential renders below **15px on screen** or **11pt in print**. On slides, nothing essential renders below **22px**. Decorative labels are the only exception (and still have a floor, below).
 
-# Design system — white-first, single-accent teal
-- **No dark-first mode.** Default bg `#FFFFFF`. Alternating `#F8FAFA` (`bgSolid`) for vertical rhythm. Saturated teal only as deliberate accent block (KPI band, outcome commitment, hero second word).
-- **One accent family.** Teal stack only. No mint `#A9E0DF`, no accent blue `#80A3F8`, no second hue.
-- **No gradients. No drop shadows on cards. No accent line under titles** (AI tell). **No centered body copy. No italic headers. No bold hero text.**
+| Format | Body default | Floor for anything readable | Labels / eyebrows |
+|---|---|---|---|
+| Deck (1920×1080) | **32px** | 22px | **24px** |
+| Brochure (1440 wide) | **18px**; lede 20–22px | 15px | 13px |
+| Word doc | **11pt / 17pt leading** (12pt for executive memos) | 11pt | 9pt mono labels |
+| Graphic | **16px** card body; **18px** lede | 15px | 13px |
+| Dashboard | **16px** content | 14px (UI chrome only) | 14px |
 
-## Teal stack
+**When type overflows, widen the well or cut words. Shrinking type is never the fix.** Headlines fit on two lines or the copy gets shorter.
+
+### Density
+- Body paragraphs run **at most three lines** at rendered width (roughly 45–60 words).
+- **Three or more parallel facts become bullets**, not one running sentence.
+
+### Visual coverage
+- **Every section carries at least one visual** — a line icon, diagram, UI card, KPI band, or pull-quote block. In Word docs, every two facing pages. No section stands on text alone.
+- The bundled **29-icon LineIcons library** (`assets/graphics/line-icons/`, index in `skills/graphic/references/line-icons-library.md`) is the first reach in every format. Reference icons by name (`@icon:Name`, see §6) — never redraw an icon the library already has, never recolor one.
+- A graphic must explain the headline. If you can remove it and lose nothing, it was decoration. Charts show real numbers or are clearly marked as placeholders.
+
+### Layout
+- Stack content with **flex or grid and gaps**, never absolute offsets. Absolute positioning is for corner chrome only (logo, section label, footer). Every text block owns its own space; if two blocks touch, the copy is too long for the layout.
+- **White-first canvas** (`#FFFFFF`, alternate `#F8FAFA`). Saturated teal is a deliberate accent block (KPI band, outcome commitment, hero second word, divider), never the default surface.
+- **One accent family** — the teal stack. Solid fills. **No gradients, no drop shadows, no accent line under titles, no centered body copy.** Everything left-aligned except deliberate quote/KPI layouts.
+- Tile and card eyebrows in a row all use the **same `--teal`** — never step through the teal stack across tiles.
+
+### Typography — three families, three roles
+| Role | Design intent | Web / Office fallback | Rules |
+|---|---|---|---|
+| Headers, hero, KPI numbers | Brut Grotesque | **Geist** → Inter (Arial in Word) | **Weight 400 only. Never bold, never italic.** Size carries weight; weight never does. Sentence case. |
+| Body | GT America | **Inter** (Calibri in Word) | 400–500. Inline bold only for proper nouns / key terms. |
+| Labels, eyebrows, data | IBM Plex Mono | IBM Plex Mono (Consolas in Word) | Uppercase. Never bold, never italic. **Never letter-spaced in PPTX.** |
+
+- Negative letter-spacing only on headers above ~22px.
+- **Two-tone hero:** first word(s) in ink, last word(s) in `--logo-dark #035657` (on dark surfaces `--teal-on-dark #88DCE0`). Same font and size; only color changes. No italic, no underline, no brackets.
+- Slide/section titles do not end in a period (deck closing slide excepted).
+
+### Logo
+- Always the shipped SVG (`assets/graphics/logos/`) at its native ratio — never stretched, recolored, or rebuilt from CSS quarter-circles. Light variant on light surfaces, dark variant on dark.
+- Insert with `<!-- @logo:logo-light -->` etc. (§6) instead of pasting SVG paths.
+- Placement is format-specific (deck: wordmark top-left on the cover only, icon-only 72×60 top-right everywhere else; brochure: wordmark in the topbar).
+
+## 3. Voice
+
+### Brand vocabulary — applied automatically
+These are terminology, not editorial judgment. Apply them in every piece, including customer-supplied copy.
+
+| Use | Instead of |
+|---|---|
+| **Pulse** (define on first customer-facing use: "a live, role-scoped operating view assembled from widgets") | dashboard |
+| Cognitive agents | AI bots, chatbots, virtual assistants |
+| Orchestration | automation |
+| Knowledge fabric, enterprise knowledge graph | data layer, data warehouse, data lake |
+| Sense, reason, and act | detect, process, respond |
+| Self-evolving | self-learning |
+| Amplify human intelligence | replace humans |
+| AI transformation partner | vendor, provider, supplier |
+| Enterprise General Intelligence (EGI), Enterprise Operating Platform (EOP) | generic AI platform |
+| Mira (telecom only) | Echo |
+
+"Dashboard" may appear only as the antagonist concept being replaced.
+
+### AI writing tells
+When **you write original copy**, avoid all of these. When the copy **came from the user or a source document**, flag them and propose fixes; never rewrite silently (see "Editing someone else's words").
+
+- "**isn't X. It's Y.**" negation pivots, including soft versions ("aren't waiting…", "the gap isn't X — it's Y"). Most-flagged pattern.
+- "**X, not Y**" inline contrasts, and "**[Subject] doesn't need X — it needs Y**" pivots.
+- **Rhetorical triplets** — three parallel items or sentences used for rhythm ("Fast. Reliable. Scalable."). A *factual* list of three things is fine, set as bullets.
+- **Staccato fragments** — join with commas, em dashes, or conjunctions.
+- **Department roll calls** — "Customer service runs X. Network ops has Y. Billing has Z."
+- **Comfort words** — compounding, fundamentally different, impactful, collectively unintelligent, leverage, synergy, disrupt, seamless, end-to-end, solutions (when vague).
+- **Neat parallel opposition** — "scaling costs without scaling returns".
+
+The fix is almost always: state what is true and stop.
+
+### Editing someone else's words
+Customer decks, source docs, and teammate drafts are their authors' words. Two passes:
+
+1. **Automatic:** the brand-vocabulary table above (dashboard → Pulse, chatbot → cognitive agent, automation → orchestration…). Note what you swapped.
+2. **Proposed, then approved:** everything editorial — triplet-breaking, negation-pivot removal, comfort-word stripping, sentence joining, restructuring, shortening. Show a numbered change list ("Applied: … / Suggest: …") and wait for the user to pick *apply all / apply selected / keep source wording*. **Default is to keep the source wording.**
+
+Exception: a hard layout constraint (a cover title that cannot fit in two lines at the floor) — propose the shorter version; don't shrink the type.
+
+## 4. Content preservation
+
+Redesigning or converting someone's material is brand application, not editorial.
+
+- **Never trim content to fit a pattern.** If the source has N items, find a layout that holds N or split it across sections/slides. Slide and section count are flexible; content is not.
+- Keep every source slide/section and every named item unless it is true chrome (blank divider, "thank you" placeholder, navigational filler).
+- **Audit before drafting.** For each source slide/section, list every named axis, column, list, callout, and sub-tagline, and confirm where each lands in the new outline (`S04 — Problems (4), Products (4), Value (9) → new 04, 05, 06 ✓`). Any gap: split, re-pattern, or ask the user before drafting.
+- Length targets (e.g. "15–25 slides") cap bloat; they are not a floor to compress toward. If the source is far longer, ask before compressing.
+
+## 5. Design tokens
+
+### Teal stack
 | Token | Hex | Use |
 |---|---|---|
-| tealDark | #004D50 | Deep emphasis, KPI band bg |
-| teal | #006B6F | Primary brand, active, links, **light-surface accents, strokes & dots** |
-| tealOnDark | #88DCE0 | **Accents, strokes, labels & two-tone-hero second word on `tealDark` surfaces** |
-| tealLight | #E8F4F5 | Tinted callouts, table headers |
-| logoDark | #035657 | Hero second-word on light surfaces, default chart series |
-| logoLight | #67A4A4 | Secondary chart series |
-| tealAccent | #00989E | **Legacy — not for text, strokes, or accents.** Low contrast on both white and `tealDark`. Use `teal #006B6F` on light, `tealOnDark #88DCE0` on dark. Decorative/gradient mid-stop only. |
-| tealBright | #00C4CC | **Retired** — too cyan. Do not use. |
+| `--teal-dark` | `#004D50` | Deep emphasis, KPI bands, dark surfaces |
+| `--teal` | `#006B6F` | Primary brand; eyebrows, links, light-surface accents, strokes, dots |
+| `--teal-on-dark` | `#88DCE0` | Accents, strokes, labels, and hero word on `--teal-dark` |
+| `--teal-light` | `#E8F4F5` | Tinted callouts, table headers (decoration, never essential text) |
+| `--logo-dark` | `#035657` | Hero second word on light surfaces; default chart series |
+| `--logo-light` | `#67A4A4` | Secondary chart series |
+| ~~`--teal-accent`~~ | `#00989E` | **Retired** everywhere — text, strokes, labels, accents, and fills. Legacy alias only. |
+| ~~`--teal-bright`~~ | `#00C4CC` | **Retired.** Do not use. |
 
-**Contrast floor (legibility).** Essential elements — accent text, strokes, labels, KPI numbers, two-tone-hero second word — must read at a distance. On white use `teal #006B6F` (or `logoDark #035657` for hero text); on `tealDark` use `tealOnDark #88DCE0`. Never `#00989E`/`#00C4CC` for these. Light tints (`tealLight`, `textFaint #999999`) are for decoration and muted/inert elements only, never for text the reader must parse.
+**Contrast floor:** accent text, strokes, labels, KPI numbers, and the hero word must read at a distance — `--teal`/`--logo-dark` on white, `--teal-on-dark` on `--teal-dark`. Light tints and `#999999` are for decoration and deliberately inert elements only. A CSS-variable swap does not reach hex hardcoded inside inline SVG — `check.py` greps for it.
 
-## Text
-- text/ink `#1A1A1A` (brochure) or `#0A0A0A` (dashboard); body color in docx `#111111`
-- textMid `#404040`, textDim `#666666`, textFaint `#999999`
+### Neutrals and status
+- Ink `#1A1A1A` (web), `#0A0A0A` (dashboard), `#111111` (docx). `--ink-2 #404040`, `--ink-3 #666666`, `--ink-4 #999999`, `--line #ECECEC`, `--bg-solid #F8FAFA`, `--card-grey #F4F4F4`.
+- Status — **state only, never decoration**: success `#00896A`, warn `#C48800`, danger `#D94A30`.
+- Forbidden hues: mint `#A9E0DF`, accent blue `#80A3F8`, indigo, violet, coral as decoration, any second accent.
 
-## Status (state only, never decoration)
-- success #00896A, warn #C48800, danger #D94A30
+## 6. Build and verify — the shared toolchain
 
-## Typography — three families, three roles
-- Headers: **Brut Grotesque** → web fallback `'Geist', 'Inter'`
-- Body: **GT America** → fallback `'Inter'`
-- Labels/Mono: **IBM Plex Mono** (Google Fonts)
-- Hero is always weight 400, never bold, never italic. Size carries weight.
-- Negative letter-spacing only above ~22px on header font.
-- All-caps tracked labels = IBM Plex Mono only.
-- Eyebrows get +1.0–1.6 tracking.
-- Plex Mono NEVER bold and NEVER letter-spaced in PPTX (different rule).
+Scripts live in the plugin's `scripts/` folder (paths below are relative to the plugin root; skills reference them as `../../scripts/…`). Requirements, once per machine: `pip install playwright pillow python-pptx python-docx && python3 -m playwright install chromium`.
 
-## Signature: two-tone hero
-- First word(s) inky black, **last word** in logoDark `#035657` (or tealDark `#004D50`). No italic, no underline. Most distinctive type moment.
+**Author a small source file, let the script assemble it.** Write `name.src.html` with placeholders instead of pasting assets:
 
-## Brochure layout blueprint (1440px wide, ~3400-3600 tall)
-1. Hero — white, 88/96 padding, top bar + headline + lede + stat split
-2. Three transformation pillars — bgSolid, 3 equal 402px cards, accent rotation teal/tealAccent/tealDark
-3. What [Product] Delivers — white, capability table + KPI band (tealDark bg, 4 cells)
-4. Why Metafore — bgSolid, 3 value-prop cards + outcome commitment band (teal fill, white text)
-5. Footer — white, top hairline, small product logo + "Powered by METAFORE" + confidential line
-- Usable width 1248px. Card gap 18-20px. Card radius 6px, pills 999px.
+| Placeholder | Becomes |
+|---|---|
+| `<!-- @fonts -->` | Google Fonts links for Geist, Inter, IBM Plex Mono |
+| `/* @tokens:deck */`, `/* @tokens:brochure */` (inside `<style>`) | that skill's `assets/tokens.css` |
+| `<!-- @logo:logo-light width="155" height="36" class="logo-tl" -->` | inline SVG (`logo-light`, `logo-dark`, `icon-light`, `icon-dark`, `dashboard-icon`) |
+| `src="@icon:Nodes"` / `url('@icon:Nodes')` | the line icon as an embedded data URI |
+| `@asset:graphics/…` | any file under plugin `assets/` as a data URI |
 
-## Dashboard rules (when building HTML dashboards, not brochures)
-- 64px icon sidebar, search in topbar left, "I want to…" composer at bottom (domain-specific prompts), 4-col card grid, 14px radius, 18px gap, no drop shadows. Toggle = white pill active (never black-fill). Charts use logo teals only.
+```
+python3 scripts/build_html.py name.src.html          # → name.html, self-contained
+python3 scripts/check.py name.html --kind deck --sheet name.sheet.png
+```
 
-## Doc (DOCX) rules
-- US Letter, 1" margins, all left-aligned, body color `#111111`.
-- Plex Mono eyebrow above every H1 (`01 - SUMMARY` format), H1 carries 1/2pt teal underline `#005354`.
-- Two cover styles: light (white + two-tone hero) or dark (full-bleed teal + white/mint hero).
-- Field Note callouts: tealLight `#E8F4F5` fill, Plex Mono "FIELD NOTE" header.
+**Edit `name.src.html` with targeted edits, then rebuild.** Don't rewrite the whole file to change one slide or section, and don't Read the built `name.html` (it carries embedded assets).
 
-## Logo
-- Two overlapping quarter-circles (large tealDark + small tealAccent) + wordmark in BLACK Brut Grotesque Medium 48px, tracking -1.4, 12px gap between mark and word.
-- Dashboard inline SVG provided in setup (53x42 viewBox).
+**Verify with `check.py`, not screenshots.** It reports, as text: type below the floors in §2, paragraphs over three lines, clipped/overflowing text, text overlapping text, absolutely positioned text, sections or slides with no visual, retired colors, gradients/shadows/italics, off-stack fonts, and voice flags (flags only — never auto-fixed). Fix every ERROR; judge each WARN. Then **Read the one contact sheet once** (≤1600px wide; units with errors are outlined red). Zoom only into a flagged unit with `--zoom N`.
+
+**Image budget.** Never Read a PNG larger than ~2000px on its long edge — it breaks the session's image budget. Final 2× renders (decks, graphics) are for delivery, not for looking at; `scripts/render.py` writes a `.preview.png` for that.
+
+## 7. Before you deliver — every format
+
+- [ ] Brand vocabulary applied; AI tells avoided in your copy and *flagged, not silently fixed* in source copy
+- [ ] Nothing essential below the floor (§2 table); no type shrunk to fit
+- [ ] No paragraph over three lines; parallel facts of three or more are bullets
+- [ ] Every section (every two facing pages in a doc) carries a visual; library icons used first
+- [ ] Teal stack only, solid fills, no gradients/shadows/italics/bold heroes; retired hexes absent
+- [ ] Real logo SVG at native ratio, correct light/dark variant
+- [ ] Source content preserved; any cut was approved by the user
+- [ ] `check.py` reports zero ERRORs

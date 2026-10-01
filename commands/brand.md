@@ -9,9 +9,7 @@ You are the entry point for the Metafore brand-tools suite. The user invoked `/m
 
 Before anything else, Read the shared brand pack so whatever you produce stays on-brand:
 
-- `${CLAUDE_PLUGIN_ROOT}/assets/brand/metafore_brand.md` — voice rules, AI-tell blocklist, design tokens, three-font type stack, Pulse vocabulary
-
-If the request turns out to be a deck, also skim the deck-specific calibrations in `${CLAUDE_PLUGIN_ROOT}/assets/brand/feedback_*.md`.
+- `${CLAUDE_PLUGIN_ROOT}/assets/brand/metafore_brand.md` — positioning, voice and AI tells, legibility floors, density and visual-coverage rules, design tokens, content preservation, and the build/check toolchain. It is the only shared file; read it once.
 
 ## Step 2 — Figure out which artifact to build
 
@@ -33,4 +31,4 @@ Decide based on the arguments:
 
 ## Step 3 — Hand off to the matching skill
 
-Once the type is settled, invoke the corresponding `metafore:*` skill and build the artifact according to that skill's rules, applying the brand pack you loaded in Step 1. Do not re-implement the skill's logic here — defer to it.
+Once the type is settled, invoke the corresponding `metafore:*` skill and build the artifact according to that skill's rules, applying the brand pack you loaded in Step 1. Do not re-implement the skill's logic here — defer to it, including its build and `check.py` steps.

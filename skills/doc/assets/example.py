@@ -19,6 +19,8 @@ from build_doc import (
     add_section_eyebrow, add_h2, add_subhead,
     add_body, add_takeaway, add_bullet,
     add_callout, add_data_table, add_signature_block,
+    # Visuals — every two facing pages carry one
+    add_icon, add_icon_row, add_figure, add_kpi_band, add_pull_quote,
 )
 
 OUTPUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'metafore-doc-example.docx')
@@ -62,7 +64,7 @@ page_break(doc)
 # ---- Body ------------------------------------------------------------
 
 # Section 01 — first section uses no top rule (nothing above it)
-add_section_eyebrow(doc, '01 · Executive summary', with_top_rule=False)
+add_section_eyebrow(doc, '01 · Summary', with_top_rule=False)
 add_h2(doc, 'Beyond historical reporting, into probabilistic intent.')
 add_callout(doc,
     "The Metafore EGI platform unifies a deterministic data layer with a probabilistic "
@@ -91,6 +93,12 @@ add_body(doc,
     'We divide the network into four causal layers, flowing from macro-level drivers '
     'down to specific business outputs. Each layer narrows uncertainty into a more '
     'concrete decision surface for the layer below.')
+add_icon_row(doc, [
+    ('Fan', 'Macro drivers', 'GDP, policy, and global gas pricing.'),
+    ('Process', 'Sector activity', 'Power, industry, transport, real estate.'),
+    ('Stack', 'Infrastructure', 'Production, pipelines, and capacity.'),
+    ('Transform', 'Strategic action', 'Where and when to expand.'),
+])
 
 add_subhead(doc, '1', 'Macro-economic and policy drivers')
 add_body(doc, 'Independent variables that initiate the probability chain.')
@@ -125,7 +133,7 @@ add_callout(doc,
     "if delayed, that probability collapses below 15% in the current run of the network.")
 
 headers = ['Node', 'Layer', 'Name', 'Discrete states', 'Parents']
-col_widths = [0.6, 1.15, 1.6, 1.95, 1.7]  # sums to 7.0"
+col_widths = [0.55, 1.45, 1.45, 1.85, 1.7]  # sums to 7.0" — Layer column fits INFRASTRUCTURE at 9pt
 rows_data = [
     [('N1','id'),('Root Driver','layer'),('Global LNG Price','name'),
      ('High, Avg, Low','states'),('— (independent)','parents')],
@@ -143,6 +151,13 @@ rows_data = [
      ('Prime, Monitor, Unviable','states'),('N6, N19, N20','parents')],
 ]
 add_data_table(doc, headers, rows_data, col_widths)
+
+add_kpi_band(doc, [
+    ('64%', "Demand-surge probability with TA'ZIZ on time"),
+    ('<15%', 'The same probability if TA\'ZIZ is delayed'),
+    ('21', 'Nodes in the influence network'),
+    ('4', 'Causal layers'),
+], source='Source: current run of the 21-node network')
 
 add_takeaway(doc,
     "Variable Elimination collapses this 21-node graph into clean conditional probability "

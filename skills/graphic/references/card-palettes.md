@@ -8,18 +8,18 @@ Type 4 tile backgrounds stay inside the teal stack. The legacy rainbow palette (
 |---|---|---|---|
 | `.bg-dark` | `--teal-dark` | `#004D50` | Heaviest emphasis tiles |
 | `.bg-teal` | `--teal` | `#006B6F` | Primary brand tiles |
-| `.bg-acc` | `--teal-accent` | `#00989E` | Mid-stack accent tiles — **solid fill only** (white content on top). `#00989E` is retired as a text/stroke/accent color, but remains valid as a solid tile background here. |
+| `.bg-acc` | `--logo-dark` | `#035657` | Mid-stack accent tiles — solid fill, white content on top. (Previously `#00989E`, now retired everywhere.) |
 | `.bg-light` | `--teal-light` | `#E8F4F5` | Light accent tiles (pair with teal dots) |
 | `.bg-solid` | `--bg-solid` | `#F8FAFA` | Quiet / neutral tiles (pair with teal dots) |
 
-When arranging tiles in a row, order them so the fills read as a deliberate teal progression (e.g. `bg-dark → bg-teal → bg-acc → bg-light`) rather than a random mix. Never put `#00989E` on text or strokes — only as a tile fill.
+When arranging tiles in a row, order them so the fills read as a deliberate teal progression (e.g. `bg-dark → bg-teal → bg-acc → bg-light`) rather than a random mix. `#00989E` is retired — never use it, including as a fill.
 
 ## Dot-fade overlays
 
 Each tile uses **one** duotone-fade dot pattern. Vary the corner-origin across tiles in the same row so the set reads as visual variety without leaving the brand.
 
 Pick the dot color based on the fill:
-- **WHITE dots** on `--teal-dark`, `--teal`, `--teal-accent`
+- **WHITE dots** on `--teal-dark`, `--teal`, `--logo-dark`
 - **TEAL dots** on `--teal-light`, `--bg-solid`
 
 ```css
@@ -72,16 +72,16 @@ Each tile holds a small floating UI mockup depicting the capability. Across a 4-
   position:relative; z-index:2;
   background:#fff; border-radius:10px;
   padding:14px 16px; width:90%;
-  box-shadow:0 8px 32px rgba(0,0,0,.16),0 1px 3px rgba(0,0,0,.08);
+  border:1px solid var(--line);   /* no shadow — solid surfaces only */
 }
 .tile .uic .h{
   font-family:'IBM Plex Mono',monospace;
-  font-size:9px;font-weight:600;letter-spacing:.16em;
+  font-size:13px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-3);
   margin-bottom:10px;display:flex;justify-content:space-between;
 }
 .tile .uic .h .p{
-  font-size:8px;padding:2px 6px;border-radius:999px;
+  font-size:13px;padding:2px 6px;border-radius:999px;
   background:var(--teal-light);color:var(--teal);
 }
 .tile .uic .h .p.warn{background:#FEF3C7;color:#92400E}
@@ -100,7 +100,7 @@ Each tile holds a small floating UI mockup depicting the capability. Across a 4-
   width:54px;height:54px;border-radius:50%;background:#fff;
   display:flex;align-items:center;justify-content:center;
   font-family:'IBM Plex Mono',monospace;
-  font-size:14px;font-weight:600;color:var(--teal-dark);
+  font-size:15px;font-weight:600;color:var(--teal-dark);
 }
 ```
 
@@ -125,4 +125,4 @@ Each tile holds a small floating UI mockup depicting the capability. Across a 4-
 - **No diagonal stripes** — `repeating-linear-gradient` stripe overlays are forbidden anywhere on the surface
 - **No double-stacking** — never combine a full dot grid with a duotone-fade on the same surface; pick one
 - **No untextured tiles** — every tile needs ONE dot-fade overlay for tactile depth
-- **No drop shadows on the illustration block itself** — shadows belong on the inner UI card, not on the tile's outer rectangle
+- **No drop shadows anywhere** — the illustration block and the inner UI card both separate with a 1px border.
