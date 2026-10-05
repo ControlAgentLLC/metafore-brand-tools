@@ -238,7 +238,16 @@ function frameOf(el, slide, S, bg) {
   const paras = buildParas(el, slide, bg);
   const maxLh = Math.max(0, ...paras.map(p => p.lineHeight));
   const h = r.height - t - b;
-  return {x: r.left - S.left + l, y: r.top - S.top + t, w: r.width - l - rr, h, paras,
+  // A ::before marker (CSS bullet, counter) or grid column can push the text right of the
+  // content box. Start the frame where the text actually starts so it doesn't sit on the marker.
+  let shift = 0;
+  if (!['center', 'right', 'end'].includes(cs.textAlign)) {
+    const rg = document.createRange(); rg.selectNodeContents(el);
+    const lefts = [...rg.getClientRects()].filter(q => q.width > 0).map(q => q.left);
+    if (lefts.length) shift = Math.max(0, Math.min(...lefts) - (r.left + l));
+    if (shift < 2) shift = 0;
+  }
+  return {x: r.left - S.left + l + shift, y: r.top - S.top + t, w: r.width - l - rr - shift, h, paras,
           single: paras.length <= 1 && h < 1.5 * maxLh,
           label: (el.tagName.toLowerCase() + (el.classList[0] ? '.' + el.classList[0] : ''))};
 }

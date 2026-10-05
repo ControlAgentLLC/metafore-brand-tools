@@ -11,6 +11,8 @@
 /* ===================================================================== */
 
 .slide { color: var(--ink); }
+/* Speaker notes go to the PPTX notes pane, never onto the slide */
+aside.speaker-notes { display: none; }
 /* Dark surfaces: .dark modifier plus the patterns that are always teal-dark */
 .slide.dark, .slide.p-cover-1b, .slide.p-divider, .slide.p-kpi { background: var(--teal-dark); color: #fff; }
 
