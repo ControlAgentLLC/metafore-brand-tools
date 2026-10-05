@@ -35,6 +35,7 @@ Brand rules the builder enforces: 1920px → 13.333" at 6350 EMU/px and 0.5 pt/p
 - `font not available` / `fonts.ready > 10s` — Google Fonts didn't load; positions may be off. Re-run online.
 - `::before/::after dropped` (semantic) — move the decoration into real markup, or make the slide `hybrid`.
 - `visible text outside [data-pptx-text]` — explicit-mode slide missing a marker; remove the markers to use automatic mode.
+- `centred … text frame(s) with a ::before marker` — left-aligned text frames start after CSS bullets/counters automatically; centred ones can't, so check those in PowerPoint (`office_check.py`).
 
 ## Limits
 

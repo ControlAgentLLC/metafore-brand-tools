@@ -22,7 +22,7 @@ python3 extract.py SOURCE.(pptx|pdf|md) [--out DIR] [-v]
 ```
 Default output `<source dir>/manifest/`. One summary line on stdout (`extracted 18 slides → … (3 need_visual) · contact-sheet.png 1596×812`) plus any warnings; `-v` adds a one-line-per-slide table.
 
-Dependencies: `pip install python-pptx pymupdf pillow` (pdfplumber is used for PDF text if installed). PPTX thumbnails also need LibreOffice (`brew install --cask libreoffice`); without it the manifest is still written and the script says thumbnails were skipped.
+Dependencies: `pip install python-pptx pymupdf pillow` (pdfplumber is used for PDF text if installed). PPTX thumbnails come from LibreOffice if installed, otherwise (macOS) from Microsoft PowerPoint itself; with neither, the manifest is still written and the script says thumbnails were skipped. PowerPoint may ask once to *Grant access* to the source folder.
 
 **Context-window discipline**
 1. **The manifest is the source of truth.** Map and rewrite from `slide-manifest.json` — it has titles, body, bullets, tables, notes, and inferred roles. Don't Read slide images to do this work.

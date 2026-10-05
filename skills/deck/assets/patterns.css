@@ -70,6 +70,11 @@ ul.bullets.small li { font-size: var(--small-size); }
 
 /* Line icon from the bundled library (img.lineicon, src = icon placeholder) */
 .lineicon { display: block; width: 100%; height: 160px; object-fit: contain; }
+/* The icon PNGs have a white background: multiply drops it on light surfaces; on dark
+   surfaces invert + screen turns it into light line art with no box */
+.lineicon { mix-blend-mode: multiply; }
+.slide.dark .lineicon, .p-divider .lineicon, .p-kpi .lineicon, .p-cover-1b .lineicon,
+.p-hero-card .stage .lineicon { filter: invert(1); mix-blend-mode: screen; }
 .lineicon.sm { height: 96px; width: auto; max-width: 100%; }
 .lineicon.lg { height: 420px; }
 
@@ -495,3 +500,60 @@ ul.bullets.small li { font-size: var(--small-size); }
 .p-vertical .rows .row:first-child { border-top: 0; padding-top: 0; }
 .p-vertical .rows .row strong { display: block; font-family: var(--header); font-weight: 400; font-size: 30px; color: var(--ink); margin-bottom: 4px; }
 .p-vertical .media { display: grid; place-items: center; }
+
+/* ===================================================================== */
+/* SHARED COMPONENTS — reach for these before writing per-deck CSS       */
+/* ===================================================================== */
+
+/* [ADD: …] placeholders the author still has to fill */
+.ph { color: var(--ink-3); border-bottom: 2px dotted var(--ink-4); }
+
+/* Commands and config. Inline <code> inside any text; .code for a block */
+code { font-family: var(--mono); font-size: 0.9em; color: var(--logo-dark); }
+pre.code { font-family: var(--mono); font-size: var(--label-size); line-height: 1.45; color: var(--ink-2);
+  background: var(--bg-solid); border: 1px solid var(--line); border-radius: 10px; padding: 18px 24px; margin: 32px 0 0;
+  white-space: pre-wrap; }
+
+/* One-line mono note under the content (a prompt, a source, a rule of thumb) */
+.note-line { font-family: var(--mono); font-size: var(--label-size); line-height: 1.45; color: var(--teal); margin-top: 40px; max-width: 1600px; }
+
+/* Numbered list with mono numbers: <ol class="numbered"><li>…</li></ol> */
+ol.numbered { list-style: none; margin: 0; padding: 0; counter-reset: n; display: flex; flex-direction: column; gap: 18px; }
+ol.numbered li { counter-increment: n; display: grid; grid-template-columns: 48px 1fr; gap: 12px;
+  font-size: var(--small-size); line-height: 1.35; color: var(--ink-2); }
+ol.numbered li::before { content: counter(n, decimal-leading-zero); font-family: var(--mono); color: var(--teal); }
+
+/* Scale / ladder: labelled bars with a one-line description each */
+.scale { display: flex; flex-direction: column; gap: 22px; margin-top: 40px; }
+.scale .row .top { display: flex; justify-content: space-between; align-items: baseline; }
+.scale .track { height: 10px; background: var(--line); border-radius: 5px; margin: 10px 0 8px; }
+.scale .fill { height: 100%; background: var(--teal); border-radius: 5px; }
+.scale .tag { font-family: var(--mono); font-size: var(--label-size); color: var(--teal); border: 1px solid var(--teal); border-radius: 999px; padding: 2px 12px; }
+
+/* Folder tree inside a .mini card */
+.tree { display: grid; grid-template-columns: 170px 1fr; row-gap: 10px; font-family: var(--mono); font-size: 22px; }
+.tree .d { color: var(--teal); } .tree .f { color: var(--ink-2); } .tree .muted { color: var(--ink-3); }
+
+/* Change list inside a .mini card (proposed edits awaiting approval) */
+.changelist .item { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 20px; color: var(--ink-2); }
+.changelist .item b { font-weight: 500; color: var(--teal); }
+.changelist .btns { display: flex; gap: 10px; margin-top: 8px; }
+.changelist .btn { font-size: 18px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; color: var(--ink-2); }
+.changelist .btn.pri { background: var(--teal-dark); color: #fff; border-color: var(--teal-dark); }
+
+/* Specimen: a deliberately off-brand mini slide for training ("what's wrong here").
+   Always pair with data-pptx-lock data-decorative data-check-ignore="…". */
+.specimen { position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+.specimen .tag { position: absolute; top: 10px; right: 10px; font-family: var(--mono); font-size: 16px; color: #D94A30;
+  border: 1px solid #D94A30; border-radius: 999px; padding: 2px 10px; background: #fff; }
+
+/* Pattern options */
+.p-grid8 .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.p-grid8 .cap .skill { font-family: var(--mono); font-size: var(--label-size); color: var(--logo-dark); margin-bottom: 8px; }
+.p-industries .card .label { margin-bottom: 8px; }
+.p-industries .card .quote-text { font-size: var(--small-size); line-height: 1.4; color: var(--ink); }
+.p-compare ul.bullets li { font-size: var(--small-size); }
+.p-compare ul.bullets li b { font-family: var(--header); font-weight: 400; color: var(--ink); }
+.p-timeline > p.small { margin-top: 40px; }
+.p-statement .art.stack { min-height: 0; flex-direction: column; align-items: stretch; gap: 16px; }
+.p-radial:not(.dark) h1, .p-radial:not(.dark) h2 { font-size: var(--h2-size); letter-spacing: -1.6px; line-height: 1.04; }

@@ -136,7 +136,9 @@ Redesigning or converting someone's material is brand application, not editorial
 
 ## 6. Build and verify — the shared toolchain
 
-Scripts live in the plugin's `scripts/` folder (paths below are relative to the plugin root; skills reference them as `../../scripts/…`). Requirements, once per machine: `pip install playwright pillow python-pptx python-docx && python3 -m playwright install chromium`.
+Scripts live in the plugin's `scripts/` folder (paths below are relative to the plugin root; skills reference them as `../../scripts/…`). Requirements, once per machine: `pip install playwright pillow python-pptx python-docx pymupdf pyyaml && python3 -m playwright install chromium`.
+
+**Decks are authored as a YAML content file** (`skills/deck/references/deck-yaml.md`) and built, checked, and converted in one command. Brochures, graphics and dashboards use the placeholder HTML below.
 
 **Author a small source file, let the script assemble it.** Write `name.src.html` with placeholders instead of pasting assets:
 
@@ -155,7 +157,11 @@ python3 scripts/check.py name.html --kind deck --sheet name.sheet.png
 
 **Edit `name.src.html` with targeted edits, then rebuild.** Don't rewrite the whole file to change one slide or section, and don't Read the built `name.html` (it carries embedded assets).
 
-**Verify with `check.py`, not screenshots.** It reports, as text: type below the floors in §2, paragraphs over three lines, clipped/overflowing text, text overlapping text, absolutely positioned text, sections or slides with no visual, retired colors, gradients/shadows/italics, off-stack fonts, and voice flags (flags only — never auto-fixed). Fix every ERROR; judge each WARN. Then **Read the one contact sheet once** (≤1600px wide; units with errors are outlined red). Zoom only into a flagged unit with `--zoom N`.
+**Verify with `check.py`, not screenshots.** It reports, as text: type below the floors in §2, paragraphs over three lines, titles over two lines, clipped/overflowing text, text overlapping text, text below 3:1 contrast against what's actually behind it, absolutely positioned text, sections or slides with no visual, visible speaker notes, retired colors, gradients/shadows/italics, off-stack fonts, and voice flags (flags only — never auto-fixed). Fix every ERROR; judge each WARN.
+
+**Deliberate rule-breaking** (a training slide quoting banned words, a "what's wrong" specimen): mark it `data-check-ignore="voice,font,…"` (YAML: `ignore:`). Waived findings are counted in the summary line, never hidden; overlap, overflow, retired colours, and visible notes can't be waived.
+
+**Office check (macOS):** `python3 scripts/office_check.py file.pptx|file.docx` exports through PowerPoint/Word itself and writes one overview sheet — the final word on how the file opens. A new folder may need one *Grant access* click in the app. Then **Read the one contact sheet once** (≤1600px wide; units with errors are outlined red). Zoom only into a flagged unit with `--zoom N`.
 
 **Image budget.** Never Read a PNG larger than ~2000px on its long edge — it breaks the session's image budget. Final 2× renders (decks, graphics) are for delivery, not for looking at; `scripts/render.py` writes a `.preview.png` for that.
 

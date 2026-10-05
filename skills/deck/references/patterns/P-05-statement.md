@@ -7,7 +7,7 @@
   <div class="section-label">The problem</div>
   <!-- @logo:icon-light width="72" height="60" class="icon-tr" -->
   <div>
-    <h2>Every function has its own view. The enterprise still can't <span class="accent">see itself</span></h2>
+    <h2>Each function sees its own view, never the <span class="accent">whole</span></h2>
     <p class="body">One paragraph, three lines at most.</p>
     <!-- optional: <div class="stats"><div class="stat"><div class="n">47%</div><div class="label l">Less time per ticket</div></div>…</div> -->
   </div>

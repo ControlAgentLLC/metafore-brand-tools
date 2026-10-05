@@ -1,0 +1,117 @@
+# Every deck pattern once (twice for variants). Regression fixture + worked example.
+# python3 scripts/build_deck.py references/examples/all-patterns.yaml --out /tmp/all.html --check
+title: All patterns — Metafore
+slides:
+- pattern: cover-1a
+  title: [47% less time, "*per ticket*"]
+  subtitle: How a North-American carrier orchestrated outage triage in 90 days
+  card: {eyebrow: Handling time · per ticket, meta: 90 days, kpis: [[38m, Before], [20m, After], [−47%, Delta]],
+         bars: [[Before, 100, 38m], [After, 53, 20m]]}
+- pattern: cover-1c
+  title: [What is, "*Mira*"]
+  subtitle: A cognitive agent for every subscriber, deployed in carrier IMS
+  card: {eyebrow: Mira · personal agent, meta: "18:04", title: Roaming pass added before you land,
+         trace: [[Sense, Flight booked], [Reason, No roaming plan], [Act, 7-day pass]], cta: View plan}
+- pattern: company
+  label: The company
+  title: The AI transformation *partner*
+  body: Metafore builds cognitive systems that sense, reason, and act across the enterprise.
+  signature: Amplify human intelligence
+  facts:
+    - [Orbit, Headquarters, San Francisco, "Team across NA, EMEA, APAC"]
+    - [Collaborate, Founded by, Ori Sasson, "Leaders from Amazon, Genesys, Vodafone"]
+    - [Stack, Flagship platform, Metafore One, MetaWorks operating system]
+    - [Connected, Industries, Telecom · Banking · Wealth, Travel · Health · Finance]
+- pattern: track
+  label: Team
+  title: A proven *track record*
+  body: C-level experience at Amazon, Genesys, Microsoft, VMware, and Vodafone.
+  cards:
+    - {icon: Connected, title: Invented enterprise integration, body: Frameworks that let complex systems work together.}
+    - {icon: Cycle, title: Defined the CRM category, body: Made customer relationships a core function.}
+    - {icon: Process, title: Transformed call centers, body: Set the standard for global support operations.}
+    - {icon: Scale, title: Led a global mobile group, body: Growth at scale across telecommunications.}
+- pattern: statement
+  label: The problem
+  title: Each function sees its own view, never the *whole*
+  body: Finance, sales, operations, and people each read a different number from a different system.
+  art: {dead: [[Finance, $4.2M], [Sales, "118"], [Operations, 92%], [People, "1,204"]]}
+- pattern: statement
+  label: Why Metafore
+  dark: true
+  title: One connected *reality*
+  body: Every system of record feeds one governed knowledge graph.
+  stats: [[12, Source systems], [1, Governed graph]]
+  art: {icon: Venn}
+- pattern: modules
+  label: The suite
+  title: Twelve surfaces, one *reality*
+  modules:
+    - {for: For the CEO, name: MetaWorks *Focus*, body: Strategy and execution in one view.}
+    - {for: For the CFO, name: MetaWorks *Ledger*, body: "Close and forecast, live."}
+    - {for: For the COO, name: MetaWorks *Operate*, body: Operations that re-plan themselves.}
+    - {for: For the CRO, name: MetaWorks *Revenue*, body: Pipeline with its reasons.}
+    - {for: For the CHRO, name: MetaWorks *People*, body: Workforce plans that adapt.}
+    - {for: For the CIO, name: MetaWorks *Fabric*, body: One governed knowledge graph.}
+    - {for: For the CMO, name: MetaWorks *Market*, body: Campaigns tied to revenue.}
+    - {for: For the CCO, name: MetaWorks *Success*, body: "Every account, every signal."}
+    - {for: For risk, name: MetaWorks *Risk*, body: Exposure seen early.}
+    - {for: For supply, name: MetaWorks *Supply*, body: Exceptions resolved in hours.}
+    - {for: For legal, name: MetaWorks *Comply*, body: Policy checked at the moment of action.}
+    - {for: For builders, name: MetaWorks *Build*, body: New surfaces in days.}
+- pattern: scenario
+  label: MetaWorks in action
+  title: A supplier slips; the plan *re-forms*
+  body: One delay ripples through revenue, operations, and people within the hour.
+  card: {eyebrow: Exceptions · ranked, meta: Today,
+         rows: [[Supplier A — 6-day slip, High, high], [Line 3 — capacity, Watch, watch], [Port congestion, Normal, ok]]}
+  traces:
+    - {num: 01 / Operate, title: Re-sequence, role: Primary surface, body: Agents re-plan the affected lines inside policy.}
+    - {num: 02 / Revenue, title: Re-forecast, role: Adjacent surface, body: Deals at risk are flagged with their reason.}
+    - {num: 03 / People, title: Re-staff, role: Agents · policy-bound, body: Shift plans update and managers approve.}
+  sources: {label: Sources, pills: [SAP, Kinaxis, Workday]}
+- pattern: anchor
+  label: MetaWorks for airlines
+  title: Disruption recovery that *re-plans itself*
+  anchor: MetaWorks Operate
+  body: When weather closes a hub, agents rebuild crew, aircraft, and passenger plans together.
+  traces:
+    - {num: 01 / Operate, title: Recovery plan, role: Primary surface, body: Crew and aircraft re-paired in minutes.}
+    - {num: 02 / Success, title: Passenger care, role: Adjacent surface, body: Rebooking offers sent before the queue forms.}
+    - {num: 03 / Ledger, title: Cost control, role: Adjacent surface, body: Compensation tracked against policy.}
+  sources: {label: Systems, pills: [Sabre, Jeppesen]}
+- pattern: quote
+  quote: Metafore changed what tier-one *means* for our care team
+  attribution: Placeholder name · VP Customer Operations · Carrier X
+- pattern: arch
+  label: Architecture
+  title: How the platform is *built*
+  layers:
+    - {title: Experience, body: Generative and branded interfaces, chips: [Generative UI, Pulse, Voice gateway]}
+    - {title: Orchestration, body: Agents and workflows, chips: [Agent runtime, Policy engine]}
+    - {title: Intelligence, body: Reasoning over the graph, chips: [Graph reasoning, Model router]}
+    - {title: Integration, body: Every system of record, chips: [Connectors, Event streams]}
+    - {title: Platform, body: Governed and observable, chips: [Identity, Audit trail]}
+- pattern: team
+  label: Team
+  title: The people behind *Metafore*
+  people: [[Name Surname, Role · Company], [Name Surname, Role · Company], [Name Surname, Role · Company], [Name Surname, Role · Company]]
+- pattern: industries
+  label: Industries
+  title: Six industries, one *platform*
+  cards:
+    - {icon: Connected, title: Telecom, body: "Network operations, subscriber care, Mira."}
+    - {icon: Measure, title: Banking, body: "Onboarding, disputes, servicing."}
+    - {icon: Scale2, title: Wealth, body: "Advisor support, portfolio review."}
+    - {icon: Fan, title: Travel, body: "Disruption recovery, loyalty."}
+    - {icon: Detection, title: Health, body: "Care coordination, claims."}
+    - {icon: NestedSquares, title: Finance, body: "Close, reconciliation, controls."}
+- pattern: vertical
+  label: Industries
+  title: Banking
+  lede: Self-evolving agents across service, compliance, and operations.
+  rows: [[Built-in governance, Every action explainable and auditable.], [Faster time to value, Modular agents deploy in weeks.]]
+  art: {icon: Axis}
+- pattern: closing
+  title: Let's design your first *cognitive workflow.*
+  cta: hello@metafore.ai · metafore.ai

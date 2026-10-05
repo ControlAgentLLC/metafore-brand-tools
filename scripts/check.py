@@ -16,6 +16,10 @@ voice and deck-structure checks per unit (slide / section / frame / card).
   --json         machine-readable output
 
 Exit: 0 = no errors, 1 = errors found, 2 = usage / missing dependency.
+
+Waivers: data-check-ignore="font,italic,voice,…" on an element waives those checks for it and
+its descendants (e.g. a deliberately off-brand training specimen). Waived findings are counted
+in the summary line. overlap, overflow, color and notes can never be waived.
 No PNG written by this script exceeds 2000px on either edge.
 """
 import argparse
@@ -145,6 +149,24 @@ CHECK_JS = r"""
   const uIndex = new Map(units.map((u, i) => [u, i]));
   const unitOf = (el) => { for (let e = el; e; e = e.parentElement) if (uIndex.has(e)) return uIndex.get(e); return -1; };
   const add = (u, lvl, chk, key, extra = '') => F.push({u, lvl, chk, key, extra});
+  // data-check-ignore="font,italic,voice" on an element waives those checks for it and its
+  // descendants. Overlap, clipped/outside text, retired colours, contrast errors and visible
+  // speaker notes can never be waived. Waived findings are counted, not hidden.
+  const NON_WAIVABLE = new Set(['overlap', 'overflow', 'color', 'notes']);
+  const SUP = {};
+  const waived = (el, chk) => {
+    if (!el || NON_WAIVABLE.has(chk)) return false;
+    for (let e = el.nodeType === 1 ? el : el.parentElement; e; e = e.parentElement) {
+      const v = e.getAttribute && e.getAttribute('data-check-ignore');
+      if (v && v.split(/[\s,]+/).includes(chk)) return true;
+    }
+    return false;
+  };
+  const addE = (el, u, lvl, chk, key, extra = '') => {
+    if (waived(el, chk)) { SUP[chk] = (SUP[chk] || 0) + 1; return; }
+    if (chk === 'contrast' && lvl === 'ERROR' && el && el.closest('[data-check-ignore]')) { /* contrast errors still report */ }
+    add(u, lvl, chk, key, extra);
+  };
 
   // ---------- text owners (elements with direct visible text)
   const owners = new Map();
@@ -190,18 +212,18 @@ CHECK_JS = r"""
   for (const o of ownerList) {
     const fs = o.fs, s = selOf(o.el, o.root), t = `"${snip(o.text)}"`;
     const k = `${s} ${fs}px`;
-    if (o.decor) { const lim = kind === 'deck' ? 16 : 12; if (fs < lim - 0.05) add(o.u, 'WARN', 'type-floor', k + ' (svg/decorative)', t); continue; }
+    if (o.decor) { const lim = kind === 'deck' ? 16 : 12; if (fs < lim - 0.05) addE(o.el, o.u, 'WARN', 'type-floor', k + ' (svg/decorative)', t); continue; }
     if (kind === 'deck') {
-      if (fs < 21.95) add(o.u, 'ERROR', 'type-floor', k, t);
-      else if (o.label && !o.footer && fs < 23.95) add(o.u, 'WARN', 'type-floor', k + ' label<24', t);
+      if (fs < 21.95) addE(o.el, o.u, 'ERROR', 'type-floor', k, t);
+      else if (o.label && !o.footer && fs < 23.95) addE(o.el, o.u, 'WARN', 'type-floor', k + ' label<24', t);
     } else if (kind === 'brochure' || kind === 'graphic') {
-      if (o.label && fs < 12.95) add(o.u, 'ERROR', 'type-floor', k + ' label<13', t);
-      else if (!o.label && fs < 14.95) add(o.u, 'ERROR', 'type-floor', k, t);
-      else if (!o.label && kind === 'brochure' && o.body && fs < 17.95) add(o.u, 'WARN', 'type-floor', k + ' body<18', t);
-      else if (!o.label && kind === 'graphic' && o.bodyish && fs < 15.95) add(o.u, 'WARN', 'type-floor', k + ' body<16', t);
+      if (o.label && fs < 12.95) addE(o.el, o.u, 'ERROR', 'type-floor', k + ' label<13', t);
+      else if (!o.label && fs < 14.95) addE(o.el, o.u, 'ERROR', 'type-floor', k, t);
+      else if (!o.label && kind === 'brochure' && o.body && fs < 17.95) addE(o.el, o.u, 'WARN', 'type-floor', k + ' body<18', t);
+      else if (!o.label && kind === 'graphic' && o.bodyish && fs < 15.95) addE(o.el, o.u, 'WARN', 'type-floor', k + ' body<16', t);
     } else if (kind === 'dashboard') {
-      if (fs < 13.95) add(o.u, 'ERROR', 'type-floor', k, t);
-      else if (!o.label && !o.chrome && fs < 15.95) add(o.u, 'WARN', 'type-floor', k + ' content<16', t);
+      if (fs < 13.95) addE(o.el, o.u, 'ERROR', 'type-floor', k, t);
+      else if (!o.label && !o.chrome && fs < 15.95) addE(o.el, o.u, 'WARN', 'type-floor', k + ' content<16', t);
     }
   }
 
@@ -235,7 +257,7 @@ CHECK_JS = r"""
     const mids = [...rg.getClientRects()].filter(r => r.width > 1 && r.height > 1).map(r => (r.top + r.bottom) / 2).sort((a, b) => a - b);
     let lines = 0, last = -1e9;
     for (const m of mids) { if (m - last > fs * 0.5) { lines++; last = m; } }
-    if (lines > 3) add(u, 'ERROR', 'para-length', `${selOf(el, root)} ${lines} lines`, `"${snip(txt)}"`);
+    if (lines > 3) addE(el, u, 'ERROR', 'para-length', `${selOf(el, root)} ${lines} lines`, `"${snip(txt)}"`);
   }
 
   // ---------- overflow: clipped content
@@ -270,7 +292,7 @@ CHECK_JS = r"""
   }
   // ---------- heading orphan
   for (const h of document.querySelectorAll('h1, h2, h3')) {
-    if (!visible(h) || h.querySelector('.line')) continue;   // deliberate line-by-line headings
+    if (!visible(h) || h.closest('svg, [data-decorative]')) continue;
     const words = [];
     const w2 = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
     for (let n = w2.nextNode(); n; n = w2.nextNode()) {
@@ -282,8 +304,11 @@ CHECK_JS = r"""
     const fs = parseFloat(cs(h).fontSize); const lines = [];
     for (const w of words) { const L = lines.find(l => Math.abs(l.y - w.y) < fs * 0.5); if (L) L.n.push(w.w); else lines.push({y: w.y, n: [w.w]}); }
     lines.sort((a, b) => a.y - b.y);
-    if (lines.length >= 2 && lines[lines.length - 1].n.length === 1) {
-      const u = unitOf(h); add(u, 'WARN', 'orphan', `${selOf(h, u >= 0 ? units[u] : document.body)} last line "${lines[lines.length - 1].n[0]}"`, `"${snip(h.textContent)}"`);
+    const uh = unitOf(h);
+    if ((kind === 'deck' || kind === 'brochure') && /^H[12]$/.test(h.tagName) && lines.length > 2)
+      addE(h, uh, 'ERROR', 'title-lines', `${selOf(h, uh >= 0 ? units[uh] : document.body)} ${lines.length} lines (max 2 — shorten it, don't shrink it)`, `"${snip(h.textContent)}"`);
+    if (lines.length >= 2 && lines[lines.length - 1].n.length === 1 && !h.querySelector('.line')) {
+      const u = uh; addE(h, u, 'WARN', 'orphan', `${selOf(h, u >= 0 ? units[u] : document.body)} last line "${lines[lines.length - 1].n[0]}"`, `"${snip(h.textContent)}"`);
     }
   }
   // ---------- overlap
@@ -310,10 +335,63 @@ CHECK_JS = r"""
       const p = cs(e).position;
       if (p === 'absolute' || p === 'fixed') {
         if (!absSeen.has(e) && !e.closest(CHROME)) { absSeen.add(e);
-          add(o.u, 'WARN', 'absolute', `${selOf(e, stop)} position:${p} on text — use flex/grid with gaps`, `"${snip(e.textContent)}"`); }
+          addE(e, o.u, 'WARN', 'absolute', `${selOf(e, stop)} position:${p} on text — use flex/grid with gaps`, `"${snip(e.textContent)}"`); }
         break;
       }
     }
+  }
+  // ---------- speaker notes must never render on the slide
+  for (const a of document.querySelectorAll('aside.speaker-notes')) {
+    const r = a.getBoundingClientRect();
+    if (r.width > 0 && r.height > 0 && cs(a).visibility !== 'hidden')
+      add(unitOf(a), 'ERROR', 'notes', 'speaker notes are visible on the slide (hide aside.speaker-notes)', `"${snip(a.textContent)}"`);
+  }
+  // ---------- contrast (WCAG ratio of text colour against the background actually behind it)
+  const rgba = (str) => { const m = str.match(/rgba?\(([^)]+)\)/); if (!m) return null;
+    const v = m[1].split(/[\s,\/]+/).filter(Boolean).map(Number); return [v[0], v[1], v[2], v.length > 3 ? v[3] : 1]; };
+  const over = (top, bot) => [0, 1, 2].map(i => top[i] * top[3] + bot[i] * (1 - top[3])).concat(1);
+  const lum = (c) => { const f = (x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]); };
+  const bgBehind = (el) => {           // composite semi-transparent layers down to the first opaque one
+    const layers = [];
+    for (let e = el; e; e = e.parentElement) {
+      const c = cs(e);
+      if (c.backgroundImage && c.backgroundImage !== 'none') return null;   // image/gradient: can't know
+      const b = rgba(c.backgroundColor);
+      if (b && b[3] > 0) { layers.push(b); if (b[3] >= 0.99) break; }
+    }
+    let base = [255, 255, 255, 1];
+    for (let i = layers.length - 1; i >= 0; i--) base = over(layers[i], base);
+    return base;
+  };
+  // What is actually painted under the text: the DOM ancestors are usually right, but an
+  // absolutely positioned element (corner chrome) can sit over a sibling panel instead.
+  const bgPainted = (el) => {
+    el.scrollIntoView({block: 'center', inline: 'center'});
+    const r = el.getBoundingClientRect(); const x = r.left + Math.min(6, r.width / 2), y = r.top + r.height / 2;
+    const layers = [];
+    for (const e of document.elementsFromPoint(x, y)) {
+      if (e === el || el.contains(e)) continue;
+      const c = cs(e);
+      if (c.backgroundImage && c.backgroundImage !== 'none') return null;
+      const b = rgba(c.backgroundColor);
+      if (b && b[3] > 0) { layers.push(b); if (b[3] >= 0.99) break; }
+    }
+    let base = [255, 255, 255, 1];
+    for (let i = layers.length - 1; i >= 0; i--) base = over(layers[i], base);
+    return base;
+  };
+  const ratioOf = (tc, bg) => { const fg = over(tc, bg), L1 = lum(fg), L2 = lum(bg); return (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05); };
+  for (const o of owners.values()) {
+    if (o.decor || o.inSvg) continue;
+    const tc = rgba(cs(o.el).color); let bg = bgBehind(o.el);
+    if (!tc || !bg) continue;
+    let ratio = ratioOf(tc, bg);
+    if (ratio < 4.5) { const bp = bgPainted(o.el); if (!bp) continue; ratio = ratioOf(tc, bp); }
+    const large = o.fs >= (kind === 'deck' ? 24 : 18.5);
+    const k = `${selOf(o.el, o.root)} ${ratio.toFixed(1)}:1`;
+    if (ratio < 3) addE(o.el, o.u, 'ERROR', 'contrast', k + ' (min 3:1)', `"${snip(o.text)}"`);
+    else if (!large && !o.chrome && ratio < 4.5) addE(o.el, o.u, 'WARN', 'contrast', k + ' (small text wants 4.5:1)', `"${snip(o.text)}"`);
   }
   // ---------- visual presence
   const isVisual = (el) => {
@@ -326,7 +404,7 @@ CHECK_JS = r"""
     return /url\(/.test(cs(el).backgroundImage) && r.width >= 48 && r.height >= 48;
   };
   const unitVisual = units.map(u => [u, ...u.querySelectorAll('*')].some(isVisual));
-  if (kind === 'deck' || kind === 'brochure') units.forEach((u, i) => { if (!unitVisual[i]) add(i, 'ERROR', 'no-visual', `no visual in this ${kind === 'deck' ? 'slide' : 'section'}`); });
+  if (kind === 'deck' || kind === 'brochure') units.forEach((u, i) => { if (!unitVisual[i]) addE(u, i, 'ERROR', 'no-visual', `no visual in this ${kind === 'deck' ? 'slide' : 'section'}`); });
   if (kind === 'dashboard' && !unitVisual.some(Boolean) && ![...document.body.querySelectorAll('*')].some(isVisual)) add(-1, 'ERROR', 'no-visual', 'no visual (chart/svg/img/canvas) on the page');
 
   // ---------- color / gradient / shadow / italic / font
@@ -352,16 +430,17 @@ CHECK_JS = r"""
       if (x) add(u, 'ERROR', 'color', `${s()} background ${x} \u2014 retired teal (never allowed, including fills)`); }
     if (el instanceof SVGElement) continue;
     const big = r.width > 2 && r.height > 2;
-    if (big && /gradient\(/.test(c.backgroundImage)) add(u, 'WARN', 'gradient', `${s()} ${c.backgroundImage.match(/(repeating-)?(linear|radial|conic)-gradient/)[0]}`);
-    if (big && c.boxShadow && c.boxShadow !== 'none') add(u, 'WARN', 'shadow', `${s()} box-shadow`);
-    if (big && /drop-shadow/.test(c.filter)) add(u, 'WARN', 'shadow', `${s()} filter:drop-shadow`);
-    if (owners.has(el) && c.textShadow && c.textShadow !== 'none') add(u, 'WARN', 'shadow', `${s()} text-shadow`);
+    const dots = /radial-gradient/.test(c.backgroundImage) && /^\s*\d+(\.\d+)?px/.test(c.backgroundSize) && parseFloat(c.backgroundSize) <= 24;   // brand dot texture
+    if (big && !dots && /gradient\(/.test(c.backgroundImage)) addE(el, u, 'WARN', 'gradient', `${s()} ${c.backgroundImage.match(/(repeating-)?(linear|radial|conic)-gradient/)[0]}`);
+    if (big && c.boxShadow && c.boxShadow !== 'none') addE(el, u, 'WARN', 'shadow', `${s()} box-shadow`);
+    if (big && /drop-shadow/.test(c.filter)) addE(el, u, 'WARN', 'shadow', `${s()} filter:drop-shadow`);
+    if (owners.has(el) && c.textShadow && c.textShadow !== 'none') addE(el, u, 'WARN', 'shadow', `${s()} text-shadow`);
   }
   for (const o of ownerList) {
     const c = cs(o.el), s = selOf(o.el, o.root);
-    if (/italic|oblique/.test(c.fontStyle)) add(o.u, 'WARN', 'italic', `${s} font-style:${c.fontStyle}`, `"${snip(o.text)}"`);
+    if (/italic|oblique/.test(c.fontStyle)) addE(o.el, o.u, 'WARN', 'italic', `${s} font-style:${c.fontStyle}`, `"${snip(o.text)}"`);
     const fam = firstFam(c.fontFamily);
-    if (!BRAND_FONTS.includes(fam)) add(o.u, 'WARN', 'font', `${s} font-family "${fam}"`, `"${snip(o.text)}"`);
+    if (!BRAND_FONTS.includes(fam)) addE(o.el, o.u, 'WARN', 'font', `${s} font-family "${fam}"`, `"${snip(o.text)}"`);
   }
 
   // ---------- voice
@@ -376,8 +455,9 @@ CHECK_JS = r"""
   for (const el of leaves) {
     const t = (el.textContent || '').replace(/\s+/g, ' ').replace(/[‘’]/g, "'");
     const u = unitOf(el);
-    for (const [w, re] of VOICE) { const m = t.match(re); if (m) add(u, 'WARN', 'voice', `"${w}"`, `— "${ctx(t, m.index, m[0].length)}"`); }
-    for (const re of PIVOTS) { const m = t.match(re); if (m) { add(u, 'WARN', 'voice', 'negation pivot', `— "${snip(m[0], 40)}"`); break; } }
+    const tv = t.replace(/\/?metafore:[\w-]+/gi, ' ');   // skill names (metafore:dashboard) aren't copy
+    for (const [w, re] of VOICE) { const m = tv.match(re); if (m) addE(el, u, 'WARN', 'voice', `"${w}"`, `— "${ctx(tv, m.index, m[0].length)}"`); }
+    for (const re of PIVOTS) { const m = t.match(re); if (m) { addE(el, u, 'WARN', 'voice', 'negation pivot', `— "${snip(m[0], 40)}"`); break; } }
   }
 
   // ---------- deck structure
@@ -400,6 +480,7 @@ CHECK_JS = r"""
     for (const [p, list] of Object.entries(pat)) if (list.length > 2) add(-1, 'WARN', 'pattern', `${p} used ${list.length}× (slides ${list.join(', ')}) — max 2`);
     if (img > 2) add(-1, 'WARN', 'pptx', `${img} data-pptx="image" slides (max 2)`);
   }
+  meta.suppressed = SUP;
   return {findings: F, meta};
 }
 """
@@ -561,12 +642,13 @@ def collapse(findings):
     return out
 
 
-def emit(name, kind, nunits, items, as_json, extra_lines=(), sheets=(), zooms=()):
+def emit(name, kind, nunits, items, as_json, extra_lines=(), sheets=(), zooms=(), suppressed=None):
     errs = sum(1 for f in items if f["lvl"] == "ERROR")
     warns = len(items) - errs
     lab = UNIT_LABEL.get(kind, "unit")
     if as_json:
         print(json.dumps({"file": name, "kind": kind, "units": nunits, "errors": errs, "warnings": warns,
+                          "suppressed": suppressed or {},
                           "findings": [{"unit": f["u"] + 1 if f["u"] >= 0 else None, "level": f["lvl"], "check": f["chk"],
                                         "detail": f["key"], "context": f.get("extra", ""), "count": f["n"]} for f in items],
                           "notes": list(extra_lines),
@@ -574,7 +656,9 @@ def emit(name, kind, nunits, items, as_json, extra_lines=(), sheets=(), zooms=()
                           "zoom": [{"path": str(p), "size": list(s)} for p, s in zooms]}, ensure_ascii=False))
         return errs
     plural = {"slide": "slides", "sect": "sections", "frame": "frame", "card": "cards"}.get(lab, "units")
-    print(f"check {name} ({kind}, {nunits} {plural}): {errs} error{'s' * (errs != 1)}, {warns} warning{'s' * (warns != 1)}")
+    sup = sum((suppressed or {}).values())
+    sup_txt = (f", {sup} waived (" + ", ".join(f"{k} ×{v}" for k, v in sorted(suppressed.items())) + ")") if sup else ""
+    print(f"check {name} ({kind}, {nunits} {plural}): {errs} error{'s' * (errs != 1)}, {warns} warning{'s' * (warns != 1)}{sup_txt}")
     for line in extra_lines:
         print(f"note: {line}")
     for k, f in enumerate(items):
@@ -798,7 +882,8 @@ def main():
                     notes.append(f"--zoom {a.zoom} out of range 1..{len(rects)}")
         finally:
             browser.close()
-    errs = emit(path.name, a.kind, res["meta"]["units"], items, a.json, notes, sheets, zooms)
+    errs = emit(path.name, a.kind, res["meta"]["units"], items, a.json, notes, sheets, zooms,
+                suppressed=res["meta"].get("suppressed"))
     return 1 if errs else 0
 
 

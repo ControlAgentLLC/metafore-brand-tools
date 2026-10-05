@@ -1,93 +1,63 @@
 ---
 name: deck
-description: Build Metafore-branded slide decks (sales decks, pitch decks, customer presentations, board decks, all-hands decks) as HTML drafts that generate editable PPTX. Use this skill whenever a Metafore teammate asks for a deck, slides, a presentation, a pitch, a customer-facing slide deck, "Metafore-ify this deck", or wants to turn a brochure, BRD, product spec, or markdown outline into slides — even if they don't say "deck" explicitly (e.g. "make slides for X", "I need a presentation", "turn this into a pitch"). Authors slide HTML against a bundled pattern stylesheet at 1920×1080, lints it with a brand checker, then generates a PPTX where text is editable native shapes and complex graphics are embedded PNGs. Encodes Metafore brand invariants — two-tone hero, teal-only accent palette, three-font stack, back-of-room type floors, voice rules, Pulse vocabulary. Do NOT trigger for brochures (use `metafore:brochure`), internal dashboards (use `metafore:dashboard`), standalone graphics (use `metafore:graphic`), or DOCX documents.
+description: Build Metafore-branded slide decks (sales decks, pitch decks, customer presentations, board decks, all-hands decks) as HTML drafts that generate editable PPTX. Use this skill whenever a Metafore teammate asks for a deck, slides, a presentation, a pitch, a customer-facing slide deck, "Metafore-ify this deck", or wants to turn a brochure, BRD, product spec, or markdown outline into slides — even if they don't say "deck" explicitly (e.g. "make slides for X", "I need a presentation", "turn this into a pitch"). Authors slide content in a compact YAML file rendered through 22 tested 1920×1080 patterns, lints it with a brand checker, then generates a PPTX where text is editable native shapes and complex graphics are embedded PNGs. Encodes Metafore brand invariants — two-tone hero, teal-only accent palette, three-font stack, back-of-room type floors, voice rules, Pulse vocabulary. Do NOT trigger for brochures (use `metafore:brochure`), internal dashboards (use `metafore:dashboard`), standalone graphics (use `metafore:graphic`), or DOCX documents.
 ---
 
 # Metafore Deck Builder
 
 Deliverables, side by side in `Decks/<deck-name>/`:
-1. **`<deck-name>.src.html`** — what you author: slide HTML only, with placeholders for tokens, CSS, logos, icons, footers. This is the file you edit.
-2. **`<deck-name>.html`** — the assembled, self-contained preview (built by script; don't hand-edit or Read it).
+1. **`<deck-name>.yaml`** — what you author: slide content only, one entry per slide. This is the file you edit.
+2. **`<deck-name>.html`** — the generated, self-contained preview (don't hand-edit or Read it).
 3. **`<deck-name>.pptx`** — generated from the HTML. Editable text frames; locked visuals as PNG.
 
-**Read first:** `../../assets/brand/metafore_brand.md` (voice, floors, density, visuals, tokens, content preservation, toolchain). This file adds only deck-specific rules. Paths here are relative to this skill's directory.
+**Read first:** `../../assets/brand/metafore_brand.md` (voice, floors, density, visuals, tokens, content preservation, toolchain), then `references/deck-yaml.md` (the content-file schema). This file adds only deck-specific rules. Paths here are relative to this skill's directory.
 
 ## Workflow
 
 0. **Redesigning an existing deck?** Follow `redesign/README.md` first (extract → map → audit → vocabulary pass + proposed edits), then continue at step 2.
 1. **Understand the request** — purpose, audience, length (5–8 discovery, 15–25 board; push back above 25), source content, vertical (Mira only on telecom), cover variant.
-2. **Outline** with one pattern per slide from the index below, as a flat list: `01 Cover (P-01 1B) · 02 Agenda (P-03) · 03 Problem (P-05) …`. Then:
-   - **No pattern more than 2×** (3× only when structurally inevitable). A 15–20 slide deck should use 8–12 patterns. Reassign overflow to the next-best fit (4 items → P-08 subset, P-14, or a P-05 with bullets; 3 layers → P-12 or P-16).
+2. **Outline** with one pattern per slide from the index below, as a flat list: `01 Cover (cover-1b) · 02 Agenda (agenda) · 03 Problem (statement) …`. Then:
+   - **No pattern more than 2×** (3× only when structurally inevitable). A 15–20 slide deck should use 8–12 patterns. Reassign overflow to the next-best fit (4 items → modules subset, compare, or a statement with bullets; 3 layers → radial or arch).
    - If the content has N items, pick a pattern that holds N — never trim N to fit.
-3. **Read only the pattern files you picked** (`references/patterns/P-XX-*.md`). Each has the HTML skeleton, limits, and common mistakes. The CSS already exists in `assets/patterns.css` — don't rewrite it.
-4. **Author `<deck-name>.src.html`** from the skeleton below. Write slide HTML only. Per-deck CSS tweaks go in a short `<style>` after the includes.
-5. **Build and check:**
+3. **Write `<deck-name>.yaml`** using the fields in `references/deck-yaml.md`. Only open a `references/patterns/P-XX-*.md` file when you need that pattern's finer rules or are writing a `raw` slide.
+4. **Build, check, and generate in one command:**
    ```
-   python3 ../../scripts/build_html.py Decks/<deck>/<deck>.src.html
-   python3 ../../scripts/check.py Decks/<deck>/<deck>.html --kind deck --sheet Decks/<deck>/_build/sheet.png
+   python3 scripts/build_deck.py Decks/<deck>/<deck>.yaml --check --pptx
    ```
-   Fix every ERROR in the src file with targeted edits (never regenerate the whole file to change a slide), rebuild, re-check. Read `sheet.png` **once** at the end for a visual pass; `--zoom N` for a single flagged slide.
-6. **Generate the PPTX:** `python3 scripts/build_pptx.py Decks/<deck>/<deck>.html` (details: `references/pptx-build.md`). It renders only image/hybrid slides, caches unchanged ones, and prints a one-line-per-slide summary — trust the summary; don't open the PNGs.
-7. **Deliver** both files; point the user at the HTML preview and the PPTX.
+   It writes the HTML, runs the checker (text report + one overview sheet in `_build/`), and builds the PPTX only when there are no errors. Fix errors with targeted edits to the YAML (never regenerate the whole file to change a slide) and re-run. Read the sheet **once** at the end for a visual pass.
+5. **Optional Office check** (macOS, before sending): `python3 ../../scripts/office_check.py Decks/<deck>/<deck>.pptx` exports through PowerPoint itself and writes one overview sheet. If it reports a dialog, the user needs to click *Grant access* once for that folder.
+6. **Deliver** the PPTX and point the user at the HTML preview.
 
-## Source skeleton
+**Deliberate rule-breaking** (training decks quoting banned words, "what's wrong" examples): add `ignore: voice` (or the relevant check names) to that slide, or use a `specimen`. The check counts what was waived. Overlap, overflow, retired colours and visible speaker notes can never be waived.
 
-```html
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>Deck name — Metafore</title>
-<!-- @fonts -->
-<style>
-/* @tokens:deck */
-/* @css:deck/patterns */
-/* per-deck tweaks (keep short) */
-</style></head>
-<body>
-  <section class="slide p-cover-1b" data-pptx="hybrid" data-pattern="P-01"> … </section>
-  …
-  <section class="slide p-closing" data-pptx="semantic" data-pattern="P-13"> … </section>
-</body></html>
-```
-
-**Chrome on every slide after the cover** (the closing slide uses its brandmark instead of the icon):
-```html
-<div class="section-label">The problem</div>                         <!-- add class on-dark on teal slides -->
-<!-- @logo:icon-light width="72" height="60" class="icon-tr" -->       <!-- icon-dark on teal surfaces -->
-<!-- @footer -->                                                         <!-- @footer on-dark on teal slides -->
-```
-`@footer` writes `© <current year> METAFORE · ALL RIGHTS RESERVED · CONFIDENTIAL` and the `NN / TT` page number — never type them by hand. The cover carries the full wordmark top-left (`@logo:logo-light` / `logo-dark`, 155×36) and the footer, but no section label or icon.
-
-**Markup the generator reads:**
-- `data-pptx="hybrid|semantic|image"` on every slide (tiers below). `data-pattern="P-xx"` lets the checker count pattern use.
-- Text becomes editable frames automatically. Wrap locked product mockups (Pulse cards, glass cards, dead-end grids) in `data-pptx-lock data-decorative` — they stay baked and may use the 16px mockup floor.
-- `data-visual` marks a structural visual (agenda grid, KPI band, timeline, table, progress rail) so the checker counts it.
-- `<aside class="speaker-notes">…</aside>` inside a slide → PPTX notes.
+**Hand-written HTML** is still supported for one-off layouts: a `raw` slide inside the YAML, or a whole `<deck>.src.html` built with `../../scripts/build_html.py` (pattern files show the HTML; `data-label="…"` on a `<section class="slide …">` adds the chrome automatically). PPTX details: `references/pptx-build.md`.
 
 ## Pattern index
 
-| ID | Pattern | Use for | Tier |
-|---|---|---|---|
-| P-01 | Cover 1A / 1B / 1C | Slide 1, always | hybrid |
-| P-02 | Section divider | Phase change; 1–2 per deck | semantic |
-| P-03 | Agenda | Slide 2 of decks > 8 slides | semantic |
-| P-04 | Company / Track record | One "about us" slide | semantic |
-| P-05 | Statement / Problem / Why | Land one message + supporting art | hybrid |
-| P-06 | Capability grid 4-up | Exactly 3–4 parallel items with icons | hybrid |
-| P-07 | Capability grid 8-up | 5–8 parallel items | hybrid |
-| P-08 | Module grid 12-up | 9–12 product items | hybrid |
-| P-09 | KPI band | 2–4 hero metrics on teal | hybrid |
-| P-10 | Integration ecosystem | What it connects to (pill clusters) | hybrid |
-| P-11 | Timeline | 3–6 sequential phases | hybrid |
-| P-12 | Radial / knowledge graph | Topology, "one connected reality" | hybrid |
-| P-13 | Closing / CTA | Last slide, always | semantic |
-| P-14 | Two-column comparison | One real before/after (sparingly) | semantic |
-| P-15 | Pull quote | One per deck max | hybrid |
-| P-16 | Architecture | Platform layers | hybrid |
-| P-17 | Content hero + product card | "Here's what it looks like" | hybrid |
-| P-18 | Scenario ("in action") | Cross-function story + UI card + trace | hybrid |
-| P-19 | Team photos | Meet the team | semantic |
-| P-20 | Wide data table | Capability → module mapping | hybrid |
-| P-21 | Vertical anchor | Fit a vertical solution into the suite | hybrid |
-| P-22 | Industries (grouped / per-vertical) | Verticals served | semantic / hybrid |
+| ID | YAML `pattern` | Pattern | Use for | Tier |
+|---|---|---|---|---|
+| P-01 | `cover-1a/1b/1c` | Cover 1A / 1B / 1C | Slide 1, always | hybrid |
+| P-02 | `divider` | Section divider | Phase change; 1–2 per deck | semantic |
+| P-03 | `agenda` | Agenda | Slide 2 of decks > 8 slides | semantic |
+| P-04 | `company / track` | Company / Track record | One "about us" slide | semantic |
+| P-05 | `statement (quiz)` | Statement / Problem / Why | Land one message + supporting art | hybrid |
+| P-06 | `grid4` | Capability grid 4-up | Exactly 3–4 parallel items with icons | hybrid |
+| P-07 | `grid8` | Capability grid 8-up | 5–8 parallel items | hybrid |
+| P-08 | `modules` | Module grid 12-up | 9–12 product items | hybrid |
+| P-09 | `kpi` | KPI band | 2–4 hero metrics on teal | hybrid |
+| P-10 | `integrations` | Integration ecosystem | What it connects to (pill clusters) | hybrid |
+| P-11 | `timeline` | Timeline | 3–6 sequential phases | hybrid |
+| P-12 | `radial` | Radial / knowledge graph | Topology, "one connected reality" | hybrid |
+| P-13 | `closing` | Closing / CTA | Last slide, always | semantic |
+| P-14 | `compare` | Two-column comparison | One real before/after (sparingly) | semantic |
+| P-15 | `quote` | Pull quote | One per deck max | hybrid |
+| P-16 | `arch` | Architecture | Platform layers | hybrid |
+| P-17 | `hero-card` | Content hero + product card | "Here's what it looks like" | hybrid |
+| P-18 | `scenario` | Scenario ("in action") | Cross-function story + UI card + trace | hybrid |
+| P-19 | `team` | Team photos | Meet the team | semantic |
+| P-20 | `table` | Wide data table | Capability → module mapping | hybrid |
+| P-21 | `anchor` | Vertical anchor | Fit a vertical solution into the suite | hybrid |
+| P-22 | `industries / vertical` | Industries (grouped / per-vertical) | Verticals served | semantic / hybrid |
 
 A visual catalog of every pattern, rendered live from `assets/patterns.css`, is in `references/pattern-library.html` — for people; don't Read it (Claude works from the pattern files). Rebuild it after any CSS change with `python3 ../../scripts/build_html.py references/pattern-library.src.html`.
 
@@ -116,10 +86,10 @@ A visual catalog of every pattern, rendered live from `assets/patterns.css`, is 
 ## Quality checklist (deck-specific; the brand pack's §7 also applies)
 
 - [ ] Slide 1 is a P-01 cover with title + subtitle only; the last slide is P-13
-- [ ] `check.py --kind deck` reports zero ERRORs; every WARN considered
+- [ ] `build_deck.py --check` reports zero ERRORs; every WARN considered; waivers only on deliberate rule-breaking
 - [ ] No pattern more than twice; Pulse cards structurally different from each other
 - [ ] Every slide has `data-pptx`; `image` tier used at most 1–2×
-- [ ] Footer via `@footer` on every slide; chrome icon/variant correct per surface
+- [ ] Every content slide has a `label` (auto chrome); cover, divider, closing get theirs automatically
 - [ ] Agenda matches the final slide order; dividers' progress rail matches the agenda
 - [ ] No typos in product names (Complexity, Multimodal, MetaWorks module names)
 - [ ] `build_pptx.py` summary shows every slide with no warnings you haven't addressed
