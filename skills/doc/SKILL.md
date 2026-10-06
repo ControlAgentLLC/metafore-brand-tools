@@ -200,7 +200,7 @@ Copy `example.py`, modify it, run it. Output a `.docx` next to your script. Then
 ```
 python3 ../../scripts/check.py metafore-<topic>-<type>.docx
 ```
-It warns on runs under the floor (11pt, labels 9pt), paragraphs over 60 words, sections with no visual, and errors on retired teal. Fix and re-run before opening Word.
+It warns on runs under the floor (11pt, labels 9pt), paragraphs over 60 words, sections with no visual, and errors on retired teal. Fix and re-run. Then, on macOS, `python3 ../../scripts/office_check.py metafore-<topic>-<type>.docx` exports through Word itself and writes one overview sheet of every page — read it once instead of opening the document page by page.
 
 ### 5. Verify in Word
 Open the file. Word prompts to update fields the first time — accept (this populates the TOC). Check:

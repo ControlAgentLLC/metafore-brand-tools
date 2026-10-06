@@ -19,7 +19,7 @@ All skills read one shared brand pack, `assets/brand/metafore_brand.md` (voice, 
 Once per machine:
 
 ```
-pip install playwright pillow python-pptx python-docx pymupdf
+pip install playwright pillow python-pptx python-docx pymupdf pyyaml
 python3 -m playwright install chromium
 ```
 
@@ -32,6 +32,8 @@ Claude authors a small `name.src.html` with placeholders (`<!-- @fonts -->`, `/*
 | Script | Does |
 |---|---|
 | `scripts/build_html.py` | Assembles the self-contained HTML (tokens, pattern CSS, logos, icons, footers) |
+| `skills/deck/scripts/build_deck.py` | Deck YAML content file → HTML → check → PPTX in one command |
+| `scripts/office_check.py` | Exports a .pptx/.docx through PowerPoint/Word (macOS) and makes one overview sheet |
 | `scripts/check.py` | Brand + layout lint as text (type floors, 3-line paragraphs, overflow, overlap, missing visuals, retired colors, voice flags) plus one ≤1600px contact sheet; also checks `.docx` |
 | `scripts/render.py` | Final PNG (2×) or PDF export, plus a small preview |
 | `skills/deck/scripts/build_pptx.py` | HTML deck → editable PPTX (renders only image/hybrid slides, caches unchanged ones) |
@@ -92,7 +94,7 @@ metafore-plugin/
 │   ├── deck/       (SKILL.md + assets/patterns.css + references/patterns/ + scripts + redesign)
 │   ├── doc/        (SKILL.md + assets + references)
 │   └── graphic/    (SKILL.md + assets + references)
-├── scripts/        (build_html.py, check.py, render.py — shared toolchain)
+├── scripts/        (build_html.py, check.py, render.py, office_check.py — shared toolchain)
 ├── assets/
 │   ├── brand/      (metafore_brand.md — the shared brand pack)
 │   └── graphics/   (logos, 29 line icons)

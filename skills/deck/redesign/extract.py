@@ -19,7 +19,8 @@ Dependencies (all optional except the one needed for the source type):
     PPTX text      python-pptx                      (required for .pptx)
     PDF text       pdfplumber, else PyMuPDF          (one required for .pdf)
     PDF render     PyMuPDF, else pdf2image+poppler   (+ Pillow)
-    PPTX render    LibreOffice (soffice) -> PDF -> PDF render
+    PPTX render    LibreOffice (soffice) -> PDF -> PDF render; on macOS without LibreOffice,
+                   Microsoft PowerPoint exports the PDF instead (scripts/office_check.py)
 Missing renderers only skip thumbnails/contact sheet. A missing text package exits 2.
 
 stdout is deliberately short: one summary line plus a few warnings.
@@ -612,9 +613,29 @@ def find_soffice():
     return None
 
 
+def pptx_to_pdf_powerpoint(src: Path):
+    """macOS fallback: let Microsoft PowerPoint render the PDF (via scripts/office_check.py)."""
+    if sys.platform != "darwin" or not Path("/Applications/Microsoft PowerPoint.app").exists():
+        return None, None
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "scripts"))
+    try:
+        import office_check
+    except ImportError:
+        return None, None
+    pdf = src.with_name(src.stem + ".office-export.pdf")
+    try:
+        office_check.export(src.resolve(), pdf.resolve())
+    except Exception as e:  # dialog, timeout, permission
+        return None, f"PowerPoint export failed ({str(e)[:120]}) — answer any PowerPoint dialog and re-run"
+    return (pdf, None) if pdf.exists() else (None, "PowerPoint export produced no PDF")
+
+
 def pptx_to_pdf(src: Path, tmpdir: str):
     soffice = find_soffice()
     if not soffice:
+        pdf, err = pptx_to_pdf_powerpoint(src)
+        if pdf or err:
+            return pdf, err
         return None, "LibreOffice not found (macOS: brew install --cask libreoffice; Linux: apt install libreoffice)"
     profile = Path(tmpdir, "lo-profile").as_uri()
     try:
